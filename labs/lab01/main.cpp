@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 
-int main()  {
+int main() {
   
   // instantiate an output stream object with filename "private.pvt"
   // If the file exists, it will be deleted and recreated.
