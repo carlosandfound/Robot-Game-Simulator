@@ -1,6 +1,6 @@
 ### Feedback for Lab 01
 
-Run on September 08, 23:35:17 PM.
+Run on September 08, 23:52:24 PM.
 
 + Pass: Check that directory "labs" exists.
 
@@ -18,11 +18,13 @@ Run on September 08, 23:35:17 PM.
 
 + Pass: Check that no files with extension ".out" exist in directory "."
 
-+ Fail: Check that file "shared.md" exists.
++ Pass: Check that file "shared.md" exists.
 
-     "shared.md" not found.
++ Pass: Check that make succeeds on the specified target when invoked from the specified directory.
 
-+ Skip: Check that make succeeds on the specified target when invoked from the specified directory.
+    make finished compiling target=all, directory=. with no errors.
 
-  This test was not run because of an earlier failing test.
+
+
+    Result lab01.out found
 
