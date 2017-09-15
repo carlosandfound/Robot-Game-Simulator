@@ -22,7 +22,7 @@ int main() {
     MallardDuck maloy;
     RubberDuck lemon;
     DecoyDuck decoy;
-    MysteryDuck myst = new MysteryDuck("DES","SOUN");
+    MysteryDuck myst("A","B");
 
     cout << endl;
 
