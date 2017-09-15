@@ -1,6 +1,6 @@
 ### Feedback for Lab 02
 
-Run on September 15, 12:54:25 PM.
+Run on September 15, 13:18:39 PM.
 
 + Pass: Check that directory "labs" exists.
 
@@ -20,5 +20,5 @@ Run on September 15, 12:54:25 PM.
 
 + Fail: Check that no files with extension ".o" exist in directory "."
 
- "Duck.o" found
+ "DecoyDuck.o" found
 
