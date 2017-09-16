@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Sarit Ghildayal. All rights reserved.
 //
 
+
 #include <iostream>
 #include "MallardDuck.h"
 #include "RubberDuck.h"
