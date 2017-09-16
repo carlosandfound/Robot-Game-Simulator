@@ -2,7 +2,7 @@
 
 #### Total score: _115.0_ / _115.0_
 
-Run on September 12, 20:16:53 PM.
+Run on September 16, 13:28:35 PM.
 
 +  _15_ / _15_ : Pass: Check that directory "labs" exists.
 
