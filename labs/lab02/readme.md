@@ -1,4 +1,3 @@
-
 ## Lab 2 - Compiling and Linking
 
 > A reminder that in Dr. Larson's section, attendance is required for you to receive credit for the lab.
