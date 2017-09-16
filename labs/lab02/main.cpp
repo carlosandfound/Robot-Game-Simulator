@@ -22,7 +22,6 @@ int main() {
     MallardDuck maloy;
     RubberDuck lemon;
     DecoyDuck decoy;
-    MysteryDuck myst("A","B");
 
     cout << endl;
 
@@ -44,6 +43,21 @@ int main() {
     // Introduce a decoy duck
     cout << "This" << " is " << decoy.getDescription() << " who says ";
     decoy.performQuack();
+    cout << endl;
+
+    // Prompt user to enter description and sound of mystery duck
+    std::string sound;
+    std::string description;
+    std::cout << "Enter duck description: ";
+    std::getline(std::cin, description);
+    std::cout << "Enter duck sound: ";
+    std::getline(std::cin, sound);
+    MysteryDuck who(description,sound);
+    cout << endl;
+
+    // Introduce a mystery duck
+    cout << "This" << " is " << who.getDescription() << " who says ";
+    who.performQuack();
     cout << endl;
 
 

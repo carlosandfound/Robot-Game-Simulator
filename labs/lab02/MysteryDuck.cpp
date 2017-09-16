@@ -6,9 +6,6 @@ using std::cout;
 using std::endl;
 using std::string;
 
-//MysteryDuck::MysteryDuck() : Duck() {
-//}
-
 MysteryDuck :: MysteryDuck(std::string inputDescription, std::string inputSound) {
   sound = inputSound;
   description = inputDescription;

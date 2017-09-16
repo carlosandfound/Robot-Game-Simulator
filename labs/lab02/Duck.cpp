@@ -23,17 +23,3 @@ std::string Duck::getDescription() {
   std::string descriptionText = "a plain duck";
   return descriptionText;
 }
-
-/*
-std::string Duck::getSound() {
-  return sound;
-}
-
-void Duck::setSound(String soundText) {
-  sound = soundText;
-}
-
-void Duck::setDescription(String descriptionText) {
-  description = descriptionText;
-}
-*/
