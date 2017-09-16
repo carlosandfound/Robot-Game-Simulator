@@ -1,3 +1,4 @@
+
 #ifndef LAB02_DECOYDUCK_H_
 #define LAB02_DECOYDUCK_H_
 

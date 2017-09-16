@@ -1,3 +1,4 @@
+
 #ifndef LAB02_MYSTERYDUCK_H_
 #define LAB02_MYSTERYDUCK_H_
 
