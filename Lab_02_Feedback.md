@@ -1,6 +1,6 @@
 ### Feedback for Lab 02
 
-Run on September 15, 13:18:39 PM.
+Run on September 17, 11:06:54 AM.
 
 + Pass: Check that directory "labs" exists.
 
@@ -18,7 +18,23 @@ Run on September 15, 13:18:39 PM.
 
 + Pass: Check that file/directory "duck" does not exist.
 
-+ Fail: Check that no files with extension ".o" exist in directory "."
++ Pass: Check that no files with extension ".o" exist in directory "."
 
- "DecoyDuck.o" found
++ Fail: Script Error: Failed in adding file to repo for testing
+
++ Skip: Adding file /Users/amylarson/Documents/__CodingandGit/CourseRepos/__3081F17/_scripts/grading-scripts/main2.cpp to repo.
+
+  This test was not run because of an earlier failing test.
+
++ Skip: Check that make succeeds on the specified target when invoked from the specified directory.
+
+  This test was not run because of an earlier failing test.
+
++ Skip: Removing makefile file from repo.
+
+  This test was not run because of an earlier failing test.
+
++ Skip: Removing main2.cpp file from repo.
+
+  This test was not run because of an earlier failing test.
 
