@@ -1,6 +1,6 @@
 ### Feedback for Lab 03
 
-Run on September 22, 10:44:40 AM.
+Run on September 22, 10:46:44 AM.
 
 + Pass: Check that directory "labs" exists.
 
@@ -10,15 +10,15 @@ Run on September 22, 10:44:40 AM.
 
 + Pass: Check that file "makefile" exists.
 
-+ Fail: Check that file/directory "ducks" does not exist.
++ Pass: Check that file/directory "ducks" does not exist.
 
-     "ducks" found.
++ Pass: Check that no files with extension ".o" exist in directory "."
 
-+ Skip: Check that no files with extension ".o" exist in directory "."
++ Pass: Check that make succeeds on the specified target when invoked from the specified directory.
 
-  This test was not run because of an earlier failing test.
+    make finished compiling target=all, directory=. with no errors.
 
-+ Skip: Check that make succeeds on the specified target when invoked from the specified directory.
 
-  This test was not run because of an earlier failing test.
+
+    Result ducks found
 
