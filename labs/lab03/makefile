@@ -8,11 +8,10 @@ all: $(OBJS)
 
 
 Duck.o: Duck.h Duck.cpp
-	g++ -c Duck.cpp
+	$(CXX) $(CXXFLAGS) Duck.cpp
 
 main.o: main.cpp
-	g++ -c main.cpp
-	$(CXX) $(CXXFLAGS) -o main.o main.cpp
+	$(CXX) $(CXXFLAGS) main.cpp
 
 MallardDuck.o: MallardDuck.h MallardDuck.cpp
 	$(CXX) $(CXXFLAGS) MallardDuck.cpp
