@@ -1,0 +1,31 @@
+all: Duck.o DecoyDuck.o main.o MallardDuck.o MuteQuack.o QuackBehavior.o Quack.o RubberDuck.o Squeak.o
+	g++ *.o -o ducks
+Duck.o: Duck.h Duck.cpp
+	g++ -c Duck.cpp
+
+main.o: main.cpp
+	g++ -c main.cpp
+
+MallardDuck.o: MallardDuck.h MallardDuck.cpp
+	g++ -c MallardDuck.cpp
+
+MuteQuack.o: MuteQuack.h MuteQuack.cpp
+	g++ -c MuteQuack.cpp
+
+DecoyDuck.o: DecoyDuck.h DecoyDuck.cpp
+	g++ -c DecoyDuck.cpp
+
+QuackBehavior.o: QuackBehavior.cpp
+	g++ -c QuackBehavior.cpp
+
+Quack.o: Quack.h Quack.cpp
+	g++ -c Quack.cpp
+
+RubberDuck.o: RubberDuck.h RubberDuck.cpp
+	g++ -c RubberDuck.cpp
+
+Squeak.o: Squeak.h Squeak.cpp
+		g++ -c Squeak.cpp
+
+clean:
+	rm -rf *.o
