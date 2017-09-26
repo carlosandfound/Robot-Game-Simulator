@@ -2,7 +2,10 @@
 
 #### Total score: _100_ / _100_
 
-Run on September 25, 00:52:22 AM.
+Run on September 26, 12:45:25 PM.
+
+
+#### Necessary Files and Structure
 
 + Pass: Check that directory "labs" exists.
 
@@ -12,35 +15,52 @@ Run on September 25, 00:52:22 AM.
 
 +  _5_ / _5_ : Pass: Check that file "makefile" exists.
 
+
+#### .gitignore configured properly
+
 +  _5_ / _5_ : Pass: Check that file/directory "ducks" does not exist.
 
 +  _5_ / _5_ : Pass: Check that no files with extension ".o" exist in directory "."
 
-+  _10_ / _10_ : Pass: Check CXX exists in makefile.
 
-+  _10_ / _10_ : Pass: Check OBJS exists in makefile.
+#### Specific Target - Duck.o
 
-+  _5_ / _5_ : Pass: Check Duck.o: exists in makefile.
++  _15_ / _15_ : Pass: Attempt make Duck.o in directory ..
 
-+  _5_ / _5_ : Pass: Check that make succeeds on the specified target when invoked from the specified directory.
-
-    make finished compiling target=Duck.o, directory=. with no errors.
+            make successful. Check Duck.o exists.
 
 
 
     Result Duck.o found
 
-+  _10_ / _10_ : Pass: Check all: exists in makefile.
 
-+  _30_ / _30_ : Pass: Check that make succeeds on the specified target when invoked from the specified directory.
+#### make all functional
 
-    make finished compiling target=all, directory=. with no errors.
++  _40_ / _40_ : Pass: Attempt make all in directory ..
+
+            make successful. Check ducks exists.
 
 
 
     Result ducks found
 
-+  _10_ / _10_ : Pass: Check clean: exists in makefile.
+
+#### make clean functional
+
++  _10_ / _10_ : Pass: Attempt make clean in directory ..
+
+            make successful. Check makefile exists.
+
+
+
+    Result makefile found
+
++  _5_ / _5_ : Pass: Check that file/directory "Duck.o" does not exist.
+
+
+#### Variables used in makefile
+
++  _10_ / _10_ : Pass: Check $( exists in makefile.
 
 #### Total score: _100_ / _100_
 
