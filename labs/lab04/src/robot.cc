@@ -2,48 +2,50 @@
  * Includes
  ******************************************************************************/
 #include "src/robot.h"
+#include <iostream>
+#include <string>
 
+using std::string;
 /*******************************************************************************
  * Member fucntions
  ****************************** ************************************************/
 
-Robot::void set_size(double t) {
+void Robot::set_size(double t) {
     size = t;
   }
 
-Robot::double get_size(void) {
+double Robot::get_size() {
     return size;
   }
 
-Robot::void set_color(std::string t) {
-    size = t;
+void Robot::set_color(std::string t) {
+    color = t;
   }
 
-Robot::string get_color(void) {
+std::string Robot::get_color() {
     return color;
   }
 
-Robot::void set_x_pos(double t) {
+void Robot::set_x_pos(double t) {
     x_pos = t;
   }
 
-Robot::double get_x_pos(void) {
+double Robot::get_x_pos() {
     return x_pos;
   }
 
-Robot::void set_y_pos(double t) {
+void Robot::set_y_pos(double t) {
     y_pos = t;
   }
 
-Robot::double get_y_pos(void) {
+double Robot::get_y_pos() {
     return y_pos;
   }
 
-Robot::void set_velocity(double t) {
+void Robot::set_velocity(double t) {
     velocity = t;
   }
 
-Robot::double get_velocity(void) {
+double Robot::get_velocity() {
     return velocity;
   }
-};
