@@ -6,6 +6,7 @@
 using namespace std ;
 
 void doInterestingThing(int yr) {
+  
   //variables used in this method
   int array_len = 4;
   Date d1;
