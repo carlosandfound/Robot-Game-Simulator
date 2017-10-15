@@ -46,7 +46,6 @@ void doInterestingThing(int yr) {
   cout << "the first date is: " << birthday_list[0].show() << endl;
 
   delete[] birthday_list;
-
 }
 
 int main() {
