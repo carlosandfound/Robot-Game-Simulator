@@ -1,0 +1,13 @@
+*.o
+*.obj
+
+*.out
+
+*~
+
+duckStrategyComplete.cpp
+duckStrategyPolyComplete.cpp
+
+*_print.*
+
+*.txt
