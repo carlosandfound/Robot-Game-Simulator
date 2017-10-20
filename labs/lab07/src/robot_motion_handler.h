@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_ROBOT_MOTION_HANDLER_H_
 #define SRC_ROBOT_MOTION_HANDLER_H_
 
 /*******************************************************************************
@@ -77,5 +76,3 @@ class RobotMotionHandler {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_ACTUATOR_HANDLER_H_ */

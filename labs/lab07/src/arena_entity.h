@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_ARENA_ENTITY_H_
 #define SRC_ARENA_ENTITY_H_
 
 /*******************************************************************************
@@ -76,5 +75,3 @@ class ArenaEntity {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_ARENA_ENTITY_H_ */

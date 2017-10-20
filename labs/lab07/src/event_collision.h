@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_EVENT_COLLISION_H_
 #define SRC_EVENT_COLLISION_H_
 
 /*******************************************************************************
@@ -61,5 +60,3 @@ class EventCollision : public EventBaseClass {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_COLLISION_EVENT_H_ */

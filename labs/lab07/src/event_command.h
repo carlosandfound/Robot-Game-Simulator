@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_EVENT_COMMAND_H_
 #define SRC_EVENT_COMMAND_H_
 
 /*******************************************************************************
@@ -38,5 +37,3 @@ class EventCommand : public EventBaseClass {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_ACTUATOR_CMD_EVENT_H_ */

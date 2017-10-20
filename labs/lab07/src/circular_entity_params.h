@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_CIRCULAR_ENTITY_PARAMS_H_
 #define SRC_CIRCULAR_ENTITY_PARAMS_H_
 
 /*******************************************************************************
@@ -35,5 +34,3 @@ struct circular_entity_params {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_CIRCULAR_ENTITY_PARAMS_H_ */

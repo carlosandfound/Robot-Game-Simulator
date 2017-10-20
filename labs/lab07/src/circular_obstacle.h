@@ -4,7 +4,6 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_CIRCULAR_OBSTACLE_H_
 #define SRC_CIRCULAR_OBSTACLE_H_
 
 /*******************************************************************************
@@ -47,5 +46,3 @@ class CircularObstacle: public ArenaImmobileEntity {
 };
 
 NAMESPACE_END(csci3081);
-
-#endif /* SRC_CIRCULAR_OBSTACLE_H_ */
