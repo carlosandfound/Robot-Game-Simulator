@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef SRC_EVENT_COMMANDS_H_
-#define SRC_EVENT_COMMANDS_H_
+#ifndef PROJECT_ITERATION1_SRC_EVENT_COMMANDS_H_
+#define PROJECT_ITERATION1_SRC_EVENT_COMMANDS_H_
 
 /*******************************************************************************
  * Includes
@@ -28,4 +28,4 @@ enum event_commands {
 };
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_EVENT_COMMANDS_H_ */
+#endif /* PROJECT_ITERATION1_SRC_EVENT_COMMANDS_H_ */

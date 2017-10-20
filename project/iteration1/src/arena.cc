@@ -189,7 +189,8 @@ void Arena::CheckForEntityCollision(const ArenaEntity* const ent1,
     std::pow(ent2_x - ent1_x, 2) + std::pow(ent2_y - ent1_y, 2));
   if (dist > ent1->radius() + ent2->radius() + collision_delta) {
     event->collided(false);
-  } else {
+  }
+  else {
     // Populate the collision event.
     // Collided is true
     // Point of contact is point along perimeter of ent1

@@ -3,6 +3,11 @@
 The robot simulator consists of 2 primary components: the _graphics\_area\_viewer_ and _arena_. Robots and other similar entities live in the arena and are quite oblivious to being viewed by the viewer. The viewer is in control of everything in that it sends a message to the arena to update, meaning move the arena entities the appropriate amount given how much time has passed since the last update. It then gets the appropriate positional information from each entity and draws these to the screen. All the while, the system is listening for keyboard and mouse activity by the user. If any action occurs, the associated callback is executed.
 
 <hr>
+#### EDITS:
+
+- Arrow keys handles with OnSpecialKeyDown not OnKeyDown.
+
+<hr>
 
 Iteration 1 Requirements are in a separate document. This is a general overview
 of the framework.
@@ -148,7 +153,7 @@ in the arena. All event classes are subclasses of the EventBaseClass.
 
 ### Keyboard and Mouse Event Handling
 
-Events are handled inside the viewer, because this manages all aspects of the GUI. Look in graphics\_area\_viewer.cc to see the various events to be handled (e.g. OnKeyDown(), which handles the down arrow key). The name gives an indication of which event it is responding to. When that event occurs, this is the function that is called. You never see the call to this function, but know that it does happen. Currently, for the most part, events are handled by printing messages to a terminal, but they really come in handy when you want the user to interact with the graphics window. For example, you might want the functionality that wherever the user clicks the mouse, a robot is created at that position.
+Events are handled inside the viewer, because this manages all aspects of the GUI. Look in graphics\_area\_viewer.cc to see the various events to be handled (e.g. <s>OnKeyDown()</s> **OnSpecialKeyDown()**, which handles the down arrow key). The name gives an indication of which event it is responding to. When that event occurs, this is the function that is called. You never see the call to this function, but know that it does happen. Currently, for the most part, events are handled by printing messages to a terminal, but they really come in handy when you want the user to interact with the graphics window. For example, you might want the functionality that wherever the user clicks the mouse, a robot is created at that position.
 
 The menu you see in the application with a reset and pause button was a custom menu made for this application. If you downloaded the nanogui examples, you saw how complex these menus can be. It is quite easy to add buttons with various functionality to the menu. Let's trace that process through the code ...
 

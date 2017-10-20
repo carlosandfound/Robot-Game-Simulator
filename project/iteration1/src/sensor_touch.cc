@@ -35,7 +35,8 @@ void SensorTouch::Accept(EventCollision * e) {
     activated_ = true;
     point_of_contact_ = e->point_of_contact();
     angle_of_contact_ = e->angle_of_contact();
-  } else {
+  }
+  else {
     activated_ = false;
   }
 }

@@ -20,6 +20,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 void RobotMotionBehavior::UpdatePosition(ArenaMobileEntity * const ent,
                                        unsigned int dt) {
+
   // Save position for debugging purposes
   Position new_pos = ent->pos();
   Position old_pos = ent->pos();

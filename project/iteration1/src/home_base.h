@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_HOME_BASE_H_
-#define SRC_HOME_BASE_H_
+#ifndef PROJECT_ITERATION1_SRC_HOME_BASE_H_
+#define PROJECT_ITERATION1_SRC_HOME_BASE_H_
 
 /*******************************************************************************
  * Includes
@@ -24,7 +24,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 class HomeBase: public ArenaImmobileEntity {
  public:
-  explicit HomeBase(const struct home_base_params* const params) :
+  HomeBase(const struct home_base_params* const params) :
     ArenaImmobileEntity(params->radius, params->pos, params->color) {
   }
   std::string name(void) const { return "Home Base"; }
@@ -32,4 +32,4 @@ class HomeBase: public ArenaImmobileEntity {
 
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_HOME_BASE_H_ */
+#endif /* PROJECT_ITERATION1_SRC_HOME_BASE_H_ */

@@ -49,8 +49,7 @@ int main(int, char **) {
 
   // Start up the graphics (which creates the arena).
   // Run will enter the nanogui::mainloop()
-  csci3081::GraphicsArenaViewer *app =
-       new csci3081::GraphicsArenaViewer(&aparams);
+  csci3081::GraphicsArenaViewer *app = new csci3081::GraphicsArenaViewer(&aparams);
   app->Run();
   csci3081::ShutdownGraphics();
   return 0;

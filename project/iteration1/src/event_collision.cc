@@ -20,7 +20,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 EventCollision::EventCollision() :
   collided_(false),
-  point_of_contact_(0, 0),
+  point_of_contact_(0,0),
   angle_of_contact_(0) {
 }
 
@@ -29,7 +29,7 @@ EventCollision::EventCollision() :
  ******************************************************************************/
 void EventCollision::EmitMessage(void) {
   printf("Collision event at point %d %d. Angle %f",
-  point_of_contact_.x, point_of_contact_.y, angle_of_contact_);
+  point_of_contact_.x, point_of_contact_.y, angle_of_contact_ );
 } /* EmitMessage() */
 
 NAMESPACE_END(csci3081);
