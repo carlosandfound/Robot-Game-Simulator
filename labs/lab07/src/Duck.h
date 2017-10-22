@@ -16,8 +16,6 @@ class Duck {
 protected:
   FlyBehavior *flyBehavior;
   QuackBehavior *quackBehavior;
-  FlyWithWings *flyWithWings;
-  NoFly *noFly;
 public:
   Duck() { }
   virtual string display() = 0;
