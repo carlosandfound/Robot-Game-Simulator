@@ -5,6 +5,7 @@
  *
  */
 
+#ifndef SRC_ARENA_PARAMS_H_
 #define SRC_ARENA_PARAMS_H_
 
 /*******************************************************************************
@@ -45,3 +46,5 @@ struct arena_params {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_ARENA_PARAMS_H_ */

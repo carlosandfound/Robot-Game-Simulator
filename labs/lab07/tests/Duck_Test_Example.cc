@@ -9,11 +9,47 @@ TO THE LAB DOCUMENT.
 //#include <iostream>
 #include <string.h>
 
-#ifdef FEEDBACK_TEST_01
-// Initial Test for Rubber Duck.  YayYay
+//#ifdef FEEDBACK_TEST_01
+
+//test display function
+TEST(MallardTest,Display){
+  Mallard my_mallard;
+  string except_str = "I am a Mallard.";
+  EXPECT_STREQ(except_str.c_str(),my_mallard.display().c_str()) << "FAIL: display" ;
+}
+
+//test fly behavior in mallard constructor
+TEST(MallardTest2,Constructor1){
+  Duck * my_mallard = new Mallard();
+  string except_str = "Fly with wings at speed of 5 mph.";
+  EXPECT_STREQ(except_str.c_str(),my_mallard->performFly().c_str()) << "FAIL: constructor" ;
+}
+
+//test quack behavior in mallard constructor
+TEST(MallardTest3,Constructor2){
+  Duck * my_mallard = new Mallard();
+  string except_str = "Quack at 10 decibels.";
+  EXPECT_STREQ(except_str.c_str(),my_mallard->performQuack().c_str()) << "FAIL: constructor" ;
+}
+
+// test display function of rubber duck
 TEST(RubberDuckTest,display){
   RubberDuck my_ralph;
-  string except_str="I am a Rubber Duck.";
-  ASSERT_STREQ(except_str.c_str(),my_ralph.display().c_str()) << "FAIL: display" ;
+  string except_str = "I am a Rubber Duck.";
+  EXPECT_STREQ(except_str.c_str(),my_ralph.display().c_str()) << "FAIL: display" ;
 }
-#endif
+
+//test fly behavior in rubber duck constructor
+TEST(RubberDuckTest2,Constructor){
+  Duck * my_ralph = new RubberDuck();
+  string except_str = "Cannot fly.";
+  EXPECT_STREQ(except_str.c_str(),my_ralph->performFly().c_str()) << "FAIL: constructor" ;
+}
+
+//test quack behavior in rubber duck constructor
+TEST(RubberDuckTest3,Constructor){
+  Duck * my_ralph = new RubberDuck();
+  string except_str = "Quack at 2 decibels.";
+  EXPECT_STREQ(except_str.c_str(),my_ralph->performQuack().c_str()) << "FAIL: constructor" ;
+}
+//#endif

@@ -18,7 +18,7 @@ protected:
   double milesPerHour;
 public:
   FlyBehavior() : milesPerHour(MPH_DEFAULT) {}
-  string fly() {
+  virtual string fly() {
     stringstream stream;
     string fly_speed;
     string result_str;

@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_POSITION_H_
 #define SRC_POSITION_H_
 
 /*******************************************************************************
@@ -44,3 +45,5 @@ class Position {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_POSITION_H_ */

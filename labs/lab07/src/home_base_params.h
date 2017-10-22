@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_HOME_BASE_PARAMS_H_
 #define SRC_HOME_BASE_PARAMS_H_
 
 /*******************************************************************************
@@ -30,3 +31,5 @@ struct home_base_params : public arena_mobile_entity_params {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_HOME_BASE_PARAMS_H_ */

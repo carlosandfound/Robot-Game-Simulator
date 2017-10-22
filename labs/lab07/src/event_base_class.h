@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_EVENT_BASE_CLASS_H_
 #define SRC_EVENT_BASE_CLASS_H_
 
 /*******************************************************************************
@@ -36,3 +37,5 @@ class EventBaseClass {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_BASE_EVENT_H_ */

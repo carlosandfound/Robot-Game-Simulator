@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_COMMON_H_
 #define SRC_COMMON_H_
 
 /*******************************************************************************
@@ -19,3 +20,5 @@
  * satisfy the compiler - otherwise a warning is given.
  */
 #define __unused __attribute__((unused))
+
+#endif /* SRC_COMMON_H_ */

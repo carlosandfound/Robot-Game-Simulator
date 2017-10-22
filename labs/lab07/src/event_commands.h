@@ -5,6 +5,7 @@
  *
  */
 
+#ifndef SRC_EVENT_COMMANDS_H_
 #define SRC_EVENT_COMMANDS_H_
 
 /*******************************************************************************
@@ -31,3 +32,5 @@ enum event_commands {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_ACTUATOR_COMMANDS_H_ */

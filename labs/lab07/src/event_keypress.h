@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_EVENT_KEYPRESS_H_
 #define SRC_EVENT_KEYPRESS_H_
 
 /*******************************************************************************
@@ -40,3 +41,5 @@ class EventKeypress : public EventBaseClass {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_KEYPRESS_EVENT_H_ */

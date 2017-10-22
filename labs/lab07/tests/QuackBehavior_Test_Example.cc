@@ -8,7 +8,7 @@ TO THE LAB DOCUMENT.
 #include "../src/QuackBehavior.h"
 #include <string.h>
 
-#ifdef FEEDBACK_TEST_03
+//#ifdef FEEDBACK_TEST_03
 
 TEST(QuackBehaviorTest, Constructor) {
   Quack my_quack;
@@ -16,4 +16,18 @@ TEST(QuackBehaviorTest, Constructor) {
   EXPECT_STREQ(expect_str.c_str(),my_quack.quack().c_str())<<"FAIL:Quack Constructor!";
 }
 
-#endif
+// test 1st constructor (i.e. doesn't take any arguments) and quack function
+TEST(SqueakBehaviorTest2, ConstructorandFly) {
+  Squeak my_squeak;
+  string expect_str = "Quack at 10 decibels.";
+  EXPECT_STREQ(expect_str.c_str(), my_squeak.quack().c_str())<<"FAIL:Quack Constructor!";
+}
+
+// test 2nd constructor and quack function
+TEST(SqueakBehaviorTest, ConstructorandFly) {
+  Squeak * my_squeak = new Squeak(5);
+  string expect_str = "Quack at 5 decibels.";
+  EXPECT_STREQ(expect_str.c_str(), my_squeak->quack().c_str())<<"FAIL:Quack Constructor!";
+}
+
+//#endif

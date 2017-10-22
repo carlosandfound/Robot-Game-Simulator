@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_ROBOT_MOTION_BEHAVIOR_H_
 #define SRC_ROBOT_MOTION_BEHAVIOR_H_
 
 /*******************************************************************************
@@ -42,3 +43,5 @@ class RobotMotionBehavior {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_ROBOT_MOTION_BEHAVIOR_H_ */

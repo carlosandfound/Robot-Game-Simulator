@@ -4,6 +4,7 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
+#ifndef SRC_RECHARGE_STATION_H_
 #define SRC_RECHARGE_STATION_H_
 
 /*******************************************************************************
@@ -36,3 +37,5 @@ class RechargeStation: public CircularObstacle {
 };
 
 NAMESPACE_END(csci3081);
+
+#endif /* SRC_RECHARGE_STATION_H_ */
