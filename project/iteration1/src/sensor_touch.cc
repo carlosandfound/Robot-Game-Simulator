@@ -19,7 +19,7 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Constructors/Destructor
  ******************************************************************************/
-SensorTouch::SensorTouch() :
+SensorTouch::SensorTouch(void) :
   activated_(false),
   point_of_contact_(0, 0),
   angle_of_contact_(0) {
@@ -29,14 +29,14 @@ SensorTouch::SensorTouch() :
  * Member Functions
  ******************************************************************************/
 
-void SensorTouch::Accept(EventCollision * e) {
+void SensorTouch::Accept(const EventCollision * const e) {
   // Determine if the sensor should be activated or inactivated.
   if (e->collided()) {
+    std::cout << "FATALlllllll" << std::endl;
     activated_ = true;
     point_of_contact_ = e->point_of_contact();
     angle_of_contact_ = e->angle_of_contact();
-  }
-  else {
+  } else {
     activated_ = false;
   }
 }

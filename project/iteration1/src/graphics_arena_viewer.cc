@@ -31,7 +31,8 @@ GraphicsArenaViewer::GraphicsArenaViewer(
     : csci3081::GraphicsApp(params->x_dim, params->y_dim, "Robot Simulation"),
       arena_(new Arena(params)),
       paused_(false),
-      pause_btn_(nullptr) {
+      pause_btn_(nullptr),
+      last_dt(-1) {
   nanogui::FormHelper *gui = new nanogui::FormHelper(this);
   nanogui::ref<nanogui::Window> window = gui->addWindow(Eigen::Vector2i(10, 10),
                                                        "Simulation Controls");
@@ -40,6 +41,7 @@ GraphicsArenaViewer::GraphicsArenaViewer(
   pause_btn_ = gui->addButton("Pause",
     std::bind(&GraphicsArenaViewer::OnPauseBtnPressed, this));
 
+  last_dt = 0;
   performLayout();
 }
 
@@ -51,7 +53,12 @@ GraphicsArenaViewer::GraphicsArenaViewer(
 // It will be called at each iteration of nanogui::mainloop()
 void GraphicsArenaViewer::UpdateSimulation(double dt) {
   if (!paused_) {
-    arena_->AdvanceTime(dt);
+    if ((last_dt + dt) > .05) {
+      arena_->AdvanceTime(dt+last_dt);
+      last_dt = 0;
+    } else {
+      last_dt += dt;
+    }
   }
 }
 
@@ -119,15 +126,15 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
   // translate and rotate all graphics calls that follow so that they are
   // centered, at the position and heading for this robot
   nvgSave(ctx);
-  nvgTranslate(ctx, robot->pos().x, robot->pos().y);
+  nvgTranslate(ctx, robot->get_pos().x(), robot->get_pos().y());
   nvgRotate(ctx, robot->heading_angle());
 
   // robot's circle
   nvgBeginPath(ctx);
   nvgCircle(ctx, 0.0, 0.0, robot->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(robot->color().r() * 255),
-                            static_cast<int>(robot->color().g() * 255),
-                            static_cast<int>(robot->color().b() * 255),
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(robot->get_color().r() * 255),
+                            static_cast<int>(robot->get_color().g() * 255),
+                            static_cast<int>(robot->get_color().b() * 255),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
@@ -137,46 +144,47 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
   nvgSave(ctx);
   nvgRotate(ctx, M_PI / 2.0);
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, 0.0, 10.0, robot->name().c_str(), NULL);
+  nvgText(ctx, 0.0, 10.0, robot->get_name().c_str(), NULL);
   nvgRestore(ctx);
+
   nvgRestore(ctx);
 }
 
 void GraphicsArenaViewer::DrawObstacle(NVGcontext *ctx,
                                        const Obstacle* const obstacle) {
   nvgBeginPath(ctx);
-  nvgCircle(ctx, obstacle->pos().x, obstacle->pos().y, obstacle->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(obstacle->color().r() * 255),
-                            static_cast<int>(obstacle->color().g() * 255),
-                            static_cast<int>(obstacle->color().b() * 255),
+  nvgCircle(ctx, obstacle->get_pos().x(), obstacle->get_pos().y(),
+            obstacle->radius());
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(obstacle->get_color().r() * 255),
+                            static_cast<int>(obstacle->get_color().g() * 255),
+                            static_cast<int>(obstacle->get_color().b() * 255),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
 
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, obstacle->pos().x, obstacle->pos().y,
-          obstacle->name().c_str(), NULL);
+  nvgText(ctx, obstacle->get_pos().x(), obstacle->get_pos().y(),
+          obstacle->get_name().c_str(), NULL);
 }
 
 void GraphicsArenaViewer::DrawHomeBase(NVGcontext *ctx,
                                const HomeBase* const home) {
   nvgBeginPath(ctx);
-  nvgCircle(ctx, home->pos().x, home->pos().y, home->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(home->color().r() * 255),
-                            static_cast<int>(home->color().g() * 255),
-                            static_cast<int>(home->color().b() * 255),
+  nvgCircle(ctx, home->get_pos().x(), home->get_pos().y(), home->radius());
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(home->get_color().r() * 255),
+                            static_cast<int>(home->get_color().g() * 255),
+                            static_cast<int>(home->get_color().b() * 255),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
 
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, home->pos().x, home->pos().y, home->name().c_str(), NULL);
+  nvgText(ctx, home->get_pos().x(), home->get_pos().y(),
+          home->get_name().c_str(), NULL);
 }
 
-// This is the primary driver for drawing all entities in the arena.
-// It is called at each iteration of nanogui::mainloop()
 void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
   // initialize text rendering settings
   nvgFontSize(ctx, 18.0f);

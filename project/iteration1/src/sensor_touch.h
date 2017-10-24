@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_
-#define PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_
+#ifndef SRC_SENSOR_TOUCH_H_
+#define SRC_SENSOR_TOUCH_H_
 
 /*******************************************************************************
  * Includes
@@ -27,11 +27,12 @@ NAMESPACE_BEGIN(csci3081);
 class ArenaEntity;
 
 /**
- * @brief A representation of a touch sensor. Touch or "bump" sensors are
- * "active" when pressed. For our purposes, imagine a series of bump sensors
- * around the perimeter of the robot. A collision will activate the sensor
- * at a particular point of contact, which translates to an angle of contact
+ * @brief A representation of a touch sensor.
  *
+ * Touch or "bump" sensors are "active" when pressed. For our purposes, imagine
+ * a series of bump sensors around the perimeter of the robot. A collision will
+ * activate the sensor at a particular point of contact, which translates to an
+ * angle of contact.
  */
 class SensorTouch {
  public:
@@ -45,8 +46,7 @@ class SensorTouch {
 
   Position point_of_contact() { return point_of_contact_; }
   void point_of_contact(Position p) {
-    point_of_contact_.x = p.x;
-    point_of_contact_.y = p.y;
+    point_of_contact_ = p;
   }
 
   double angle_of_contact(void) { return angle_of_contact_; }
@@ -59,8 +59,7 @@ class SensorTouch {
    * will inactivate the sensor.
    *
    */
-
-  void Accept(EventCollision * e);
+  void Accept(const EventCollision * const e);
 
   /**
    * @brief Reset the proximity sensor to its newly constructed state.
@@ -75,4 +74,4 @@ class SensorTouch {
 
 NAMESPACE_END(csci3081);
 
-#endif   /* PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_ */
+#endif /* SRC_SENSOR_TOUCH_H_ */

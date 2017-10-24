@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ROBOT_MOTION_BEHAVIOR_H_
-#define PROJECT_ITERATION1_SRC_ROBOT_MOTION_BEHAVIOR_H_
+#ifndef SRC_ROBOT_MOTION_BEHAVIOR_H_
+#define SRC_ROBOT_MOTION_BEHAVIOR_H_
 
 /*******************************************************************************
  * Includes
@@ -21,6 +21,14 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
+/**
+ * @brief Manages the modification to the velocity based on user
+ * input and collisions.
+ *
+ * Translates velocity and position to a new position. Both of these are
+ * straightforward, but the framework allows for more sophisticated models of
+ * motion in which each wheel has distinct speed.
+ */
 class RobotMotionBehavior {
  public:
   RobotMotionBehavior(void) {}
@@ -29,17 +37,11 @@ class RobotMotionBehavior {
    * @brief Update the position for an ArenaEntity, based on its current
    * position and velocity.
    *
-   * RobotMotionHandler manages the modification to the velocity based on
-   * user input and collisions.
-   * RobotMotionBehavior translates velocity and position to a new position.
-   * Both of these are straightforward, but the framework allows for more
-   * sophisticated models of motion in which each wheel has distinct speed.
-   *
    * @param[in] ent The entitity to update.
    */
-  void UpdatePosition(class ArenaMobileEntity * const ent, uint dt);
+  void UpdatePosition(class ArenaMobileEntity * const ent, unsigned int dt);
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_ROBOT_MOTION_BEHAVIOR_H_ */
+#endif /* SRC_ROBOT_MOTION_BEHAVIOR_H_ */

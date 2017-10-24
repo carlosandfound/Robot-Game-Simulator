@@ -24,7 +24,7 @@ int main(int, char **) {
   rparams.angle_delta = 10;
   rparams.collision_delta = 1;
   rparams.radius = 20.0;
-  rparams.pos = Position(500, 500);
+  rparams.pos = csci3081::Position(500, 500);
   rparams.color = nanogui::Color(0, 0, 255, 255); /* blue */
 
   csci3081::arena_params aparams;
@@ -49,7 +49,8 @@ int main(int, char **) {
 
   // Start up the graphics (which creates the arena).
   // Run will enter the nanogui::mainloop()
-  csci3081::GraphicsArenaViewer *app = new csci3081::GraphicsArenaViewer(&aparams);
+  csci3081::GraphicsArenaViewer *app =
+      new csci3081::GraphicsArenaViewer(&aparams);
   app->Run();
   csci3081::ShutdownGraphics();
   return 0;

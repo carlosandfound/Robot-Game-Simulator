@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_BASE_CLASS_H_
-#define PROJECT_ITERATION1_SRC_EVENT_BASE_CLASS_H_
+#ifndef SRC_EVENT_BASE_CLASS_H_
+#define SRC_EVENT_BASE_CLASS_H_
 
 /*******************************************************************************
  * Includes
@@ -38,4 +38,4 @@ class EventBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_BASE_CLASS_H_ */
+#endif /* SRC_EVENT_BASE_CLASS_H_ */

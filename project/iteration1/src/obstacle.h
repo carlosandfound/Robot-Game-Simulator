@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_OBSTACLE_H_
-#define PROJECT_ITERATION1_SRC_OBSTACLE_H_
+#ifndef SRC_OBSTACLE_H_
+#define SRC_OBSTACLE_H_
 
 /*******************************************************************************
  * Includes
@@ -26,7 +26,7 @@ class Obstacle: public ArenaImmobileEntity {
   Obstacle(double radius, const Position& pos,
                    const nanogui::Color& color);
 
-  std::string name(void) const {
+  std::string get_name(void) const override {
     return "Obstacle" + std::to_string(id_);
   }
 
@@ -38,4 +38,4 @@ class Obstacle: public ArenaImmobileEntity {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_OBSTACLE_H_ */
+#endif /* SRC_OBSTACLE_H_ */

@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ROBOT_MOTION_HANDLER_H_
-#define PROJECT_ITERATION1_SRC_ROBOT_MOTION_HANDLER_H_
+#ifndef SRC_ROBOT_MOTION_HANDLER_H_
+#define SRC_ROBOT_MOTION_HANDLER_H_
 
 /*******************************************************************************
  * Includes
@@ -28,18 +28,18 @@ NAMESPACE_BEGIN(csci3081);
  * wheel actuators. Its main job is to translate the directional commands from
  * the user into the appropriate differential drive wheel speeds.
  *
- * RobotMotionHandler manages the modification to the velocity based on
- * user input and collisions.
- * RobotMotionBehavior translates velocity and position to a new position.
- * Both of these are straightforward, but the framework allows for more
- * sophisticated models of motion in which each wheel has distinct speed.
+ * Manages the modification to the velocity based on user input and
+ * collisions. \ref RobotMotionBehavior translates velocity and position to a
+ * new position.  Both of these are straightforward, but the framework allows
+ * for more sophisticated models of motion in which each wheel has distinct
+ * speed.
  *
  * For this iteration, both wheels are always going at maximum speed, and
  * cannot be controlled independently.
  */
 class RobotMotionHandler {
  public:
-  RobotMotionHandler();
+  RobotMotionHandler(void);
 
   /**
    * @brief Reset the actuators to their newly constructed/un-commanded state.
@@ -61,14 +61,13 @@ class RobotMotionHandler {
   */
   void UpdateVelocity(SensorTouch st);
 
-  double speed() { return speed_; }
-  void speed(double sp) {
-    speed_ = sp; }
+  double speed(void) const { return speed_; }
+  void speed(double sp) { speed_ = sp; }
 
-  double heading_angle() const { return heading_angle_;}
+  double heading_angle(void) const { return heading_angle_;}
   void heading_angle(double ha) { heading_angle_ = ha; }
 
-  double max_speed() { return max_speed_; }
+  double max_speed(void) const { return max_speed_; }
   void max_speed(double ms) { max_speed_ = ms; }
 
  private:
@@ -79,4 +78,4 @@ class RobotMotionHandler {
 
 NAMESPACE_END(csci3081);
 
-#endif   /* PROJECT_ITERATION1_SRC_ROBOT_MOTION_HANDLER_H_ */
+#endif /* SRC_ROBOT_MOTION_HANDLER_H_ */

@@ -53,7 +53,7 @@ CXX = g++
 # -c is required, it tells the compiler to output a .o file
 # Optionally include -g to turn on debugging or include -O or -O2 to turn on optimizations instead
 # Optionally include -Wall to turn on most warnings
-CXXFLAGS = -g -W -Wall -Weffc++ -Wshadow -std=c++14 -c $(INCLUDEDIRS)
+CXXFLAGS = -g -W -Wall -Weffc++ -Wshadow -std=c++14 -Wsuggest-override -c $(INCLUDEDIRS)
 
 # Arguments to pass to the C++ linker, such as -L, but not -lfoo, which should go in LDLIBS
 LDFLAGS = $(LIBDIRS)

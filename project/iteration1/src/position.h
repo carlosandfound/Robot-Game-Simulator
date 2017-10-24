@@ -1,17 +1,16 @@
 /**
- * @file event_recharge.h
+ * @file position.h
  *
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_EVENT_RECHARGE_H_
-#define SRC_EVENT_RECHARGE_H_
+#ifndef SRC_POSITION_H_
+#define SRC_POSITION_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include <stdio.h>
-#include "src/event_base_class.h"
+#include "src/common.h"
 
 /*******************************************************************************
  * Namespaces
@@ -22,16 +21,29 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief An event representing an encounter (really a collision) that a robot
- * has with a \ref RechargeStation.
+ * @brief A simple representation of a position of an entity within the arena.
  */
-class EventRecharge : public EventBaseClass {
+class Position {
  public:
-  EventRecharge(void) {}
+  Position(void) : x_(0), y_(0) {}
+  Position(int in_x, int in_y) : x_(in_x), y_(in_y) { }
 
-  void EmitMessage(void) override { printf("Robot Battery recharged!\n"); }
+  int x(void) const { return x_; }
+  int y(void) const { return y_; }
+  void x(double x) { x_ = x; }
+  void y(double y) { y_ = y; }
+
+  Position& operator=(const Position& other) {
+    this->x_ = other.x_;
+    this->y_ = other.y_;
+    return *this;
+  }
+
+ private:
+  int x_;
+  int y_;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_EVENT_RECHARGE_H_ */
+#endif /* SRC_POSITION_H_ */

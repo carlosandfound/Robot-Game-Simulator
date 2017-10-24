@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_RECHARGE_STATION_H_
-#define PROJECT_ITERATION1_SRC_RECHARGE_STATION_H_
+#ifndef SRC_RECHARGE_STATION_H_
+#define SRC_RECHARGE_STATION_H_
 
 /*******************************************************************************
  * Includes
@@ -21,16 +21,20 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
+ /**
+  * @brief A class representing a recharge station within the arena that is used
+  * to recharge robot batteries.
+  */
 class RechargeStation: public Obstacle {
  public:
   RechargeStation(double radius, const Position& pos,
                   const nanogui::Color& color) :
       Obstacle(radius, pos, color) {}
-  std::string name(void) const {
+  std::string get_name(void) const override {
     return "Recharge Station";
   }
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_RECHARGE_STATION_H_ */
+#endif /* SRC_RECHARGE_STATION_H_ */

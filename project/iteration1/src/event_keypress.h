@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_KEYPRESS_H_
-#define PROJECT_ITERATION1_SRC_EVENT_KEYPRESS_H_
+#ifndef SRC_EVENT_KEYPRESS_H_
+#define SRC_EVENT_KEYPRESS_H_
 
 /*******************************************************************************
  * Includes
@@ -23,22 +23,27 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief @todo
+ * @brief An event representing that a key on the keyboard has been
+ * pressed.
+ *
+ * They are sent from the graphics framework to the \ref GraphicsArenaViewer,
+ * where they are interpreted further
  */
 class EventKeypress : public EventBaseClass {
  public:
   explicit EventKeypress(int key) : key_(key) {}
 
-  void EmitMessage(void) { printf("Keypress command received\n"); }
+  void EmitMessage(void) override { printf("Keypress command received\n"); }
+
+  int getKey() {return key_;}
+
+  enum event_commands getCommand(){return keypress_to_cmd(key_);}
 
  private:
   enum event_commands keypress_to_cmd(int key);
   int key_;
-
-  EventKeypress& operator=(const EventKeypress& other) = delete;
-  EventKeypress(const EventKeypress& other) = delete;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_KEYPRESS_H_ */
+#endif /* SRC_EVENT_KEYPRESS_H_ */

@@ -4,14 +4,15 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_
-#define PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_
+#ifndef SRC_EVENT_COLLISION_H_
+#define SRC_EVENT_COLLISION_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
 #include <stdlib.h>
 #include "src/event_base_class.h"
+#include "src/position.h"
 
 /*******************************************************************************
  * Namespaces
@@ -21,15 +22,36 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
+/**
+ * @brief A collision event class, which is created after a
+ * \ref MobileArenaEntity gets within a specified distance of another entity in
+ * the arena, OR when an entity that was previously within the collision delta
+ * of other entity outside of that threshold.
+ */
 class EventCollision : public EventBaseClass {
  public:
-  EventCollision();
-  void EmitMessage(void);
-  bool collided() { return collided_; }
+  EventCollision(void);
+  void EmitMessage(void) override;
+
+  /**
+   * @brief If \c TRUE, then this instance represents an active collision
+   * event. If \c FALSE, then it represents a previous collision event that has
+   * been resolved.
+   */
+  bool collided(void) const { return collided_; }
   void collided(bool c) { collided_ = c; }
-  Position point_of_contact() { return point_of_contact_; }
+
+  /**
+   * @brief The point in the arena at which the entities have collided/touched.
+   */
+  Position point_of_contact(void) const { return point_of_contact_; }
   void point_of_contact(Position p) { point_of_contact_ = p; }
-  double angle_of_contact() { return angle_of_contact_; }
+
+  /**
+   * @brief The angle, in degrees, as specified on the unit circle, that the
+   * collision occurred at. Needed to calculate the outgoing/bounceback angle.
+   */
+  double angle_of_contact(void) const { return angle_of_contact_; }
   void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
  private:
@@ -40,4 +62,4 @@ class EventCollision : public EventBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_ */
+#endif /* SRC_EVENT_COLLISION_H_ */

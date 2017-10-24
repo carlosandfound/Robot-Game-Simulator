@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_
-#define PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_
+#ifndef SRC_ARENA_PARAMS_H_
+#define SRC_ARENA_PARAMS_H_
 
 /*******************************************************************************
  * Includes
@@ -23,11 +23,19 @@ NAMESPACE_BEGIN(csci3081);
  * Constant Definitions
  ******************************************************************************/
 #define MAX_OBSTACLES 8
-
 /*******************************************************************************
  * Structure Definitions
  ******************************************************************************/
+ /**
+ * @brief Define the parameter for the arena.
+ *
+ * This includes the arena geometry as well as the parameters for \c ALL
+ * entities within the arena.
+ */
 struct arena_params {
+  arena_params(void) : robot(), recharge_station(), home_base(),
+                       obstacles(), n_obstacles(), x_dim(), y_dim() {}
+
   struct robot_params robot;
   struct arena_entity_params recharge_station;
   struct home_base_params home_base;
@@ -39,4 +47,4 @@ struct arena_params {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_ */
+#endif /* SRC_ARENA_PARAMS_H_ */

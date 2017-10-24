@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_HOME_BASE_H_
-#define PROJECT_ITERATION1_SRC_HOME_BASE_H_
+#ifndef SRC_HOME_BASE_H_
+#define SRC_HOME_BASE_H_
 
 /*******************************************************************************
  * Includes
@@ -22,14 +22,19 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
+/**
+ * @brief The goal the the robot is trying to drive to within the arena.
+ *
+ * Initially an immobile entity, it should be made to move during iteration 1.
+ */
 class HomeBase: public ArenaImmobileEntity {
  public:
-  HomeBase(const struct home_base_params* const params) :
+  explicit HomeBase(const struct home_base_params* const params) :
     ArenaImmobileEntity(params->radius, params->pos, params->color) {
   }
-  std::string name(void) const { return "Home Base"; }
+  std::string get_name(void) const override { return "Home Base"; }
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_HOME_BASE_H_ */
+#endif /* SRC_HOME_BASE_H_ */

@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ARENA_H_
-#define PROJECT_ITERATION1_SRC_ARENA_H_
+#ifndef SRC_ARENA_H_
+#define SRC_ARENA_H_
 
 /*******************************************************************************
  * Includes
@@ -15,9 +15,6 @@
 #include <vector>
 #include "src/event_keypress.h"
 #include "src/event_collision.h"
-#include "src/robot.h"
-#include "src/home_base.h"
-#include "src/recharge_station.h"
 
 /*******************************************************************************
  * Namespaces
@@ -33,14 +30,10 @@ struct arena_params;
  * @brief The main class for the simulation of a 2D world with many robots running
  * around.
  *
- * RobotViewer or Tests call \ref set_time and \ref advance_time to control the
+ * \ref GraphicsArenaViewer or Tests call \ref AdvanceTime to control the
  * simulation and use the get*() functions to read out the current state of the
  * simulation (i.e., the current positions and orientations of robots and
  * obstacles).
- *
- *  For now, RobotArena is hard coded to run a simulation of two robots running
- *  around in a circle.  You can see their sensors, but they don't yet respond
- *  to each other or to obstacles.
  */
 class Arena {
  public:
@@ -52,7 +45,7 @@ class Arena {
    *
    * @param[in] dt The # of steps to increment by.
    */
-  void AdvanceTime(unsigned int dt);
+  void AdvanceTime(double dt);
 
   /**
   * @brief Handle the key press passed along by the viewer.
@@ -62,7 +55,9 @@ class Arena {
   */
   void Accept(EventKeypress * e);
 
-  // Reset all in the arena
+  /**
+   * @brief Reset all entities in the arena, effectively restarting the game.
+   */
   void Reset(void);
 
   /*
@@ -86,12 +81,21 @@ class Arena {
   std::vector<class ArenaMobileEntity*> mobile_entities(void)
     { return mobile_entities_; }
 
-  Robot* robot(void) const { return robot_; }
-  HomeBase* home_base(void) const { return home_base_; }
-  RechargeStation* recharge_station(void) const { return recharge_station_; }
+  class RechargeStation* recharge_station(void) const {
+    return recharge_station_;
+  }
 
+  class Robot* robot(void) const { return robot_; }
+  class HomeBase* home_base(void) const { return home_base_; }
 
  private:
+  /**
+   * @brief Determine if any entities in the arena are overlapping.
+   *
+   * @return TRUE if any entities overlap, FALSE if no entities overlap.
+   */
+  bool any_entities_overlap(void);
+
   /**
    * @brief Determine if two entities have collided in the arena. Collision is
    * defined as the difference between the extents of the two entities being less
@@ -104,9 +108,9 @@ class Arena {
    * Collision Event is populated appropriately.
    */
   void CheckForEntityCollision(const class ArenaEntity* const ent1,
-    const class ArenaEntity* const ent2,
-    EventCollision * ec,
-    double collision_delta);
+                               const class ArenaEntity* const ent2,
+                               EventCollision * const ec,
+                               double collision_delta);
 
   /**
    * @brief Determine if a particular entity is gone out of the boundaries of
@@ -118,7 +122,7 @@ class Arena {
    * Collision event is populated appropriately.
    */
   void CheckForEntityOutOfBounds(const class ArenaMobileEntity* const ent,
-    EventCollision * ec);
+                                 EventCollision * const ec);
 
   /**
    * @brief Update all entities for a single timestep
@@ -146,4 +150,4 @@ class Arena {
 
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION1_SRC_ARENA_H_
+#endif  // SRC_ARENA_H_

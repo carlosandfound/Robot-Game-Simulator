@@ -1,11 +1,11 @@
 /**
- * @file actuator_cmd_event.h
+ * @file event_command.h
  *
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_
-#define PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_
+#ifndef SRC_EVENT_COMMAND_H_
+#define SRC_EVENT_COMMAND_H_
 
 /*******************************************************************************
  * Includes
@@ -23,14 +23,14 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief The base event class from which all visitor-enabled events should
- * derived from.
+ * @brief An event representing a keypress command from the user that should be
+ * sent to the robot.
  */
 class EventCommand : public EventBaseClass {
  public:
   explicit EventCommand(enum event_commands cmd) : cmd_(cmd) {}
 
-  void EmitMessage(void) { printf("Motion cmd %d received\n", cmd_); }
+  void EmitMessage(void) override { printf("Motion cmd %d received\n", cmd_); }
   enum event_commands cmd(void) const { return cmd_; }
 
  private:
@@ -39,4 +39,4 @@ class EventCommand : public EventBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_ */
+#endif /* SRC_EVENT_COMMAND_H_ */

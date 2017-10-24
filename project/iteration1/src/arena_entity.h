@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ARENA_ENTITY_H_
-#define PROJECT_ITERATION1_SRC_ARENA_ENTITY_H_
+#ifndef SRC_ARENA_ENTITY_H_
+#define SRC_ARENA_ENTITY_H_
 
 /*******************************************************************************
  * Includes
@@ -13,6 +13,7 @@
 #include <nanogui/nanogui.h>
 #include <string>
 #include "src/common.h"
+#include "src/position.h"
 
 /*******************************************************************************
  * Namespaces
@@ -28,11 +29,15 @@ NAMESPACE_BEGIN(csci3081);
  *
  * 1. Update themselves each timestep (i.e. in accordance with current velocity
  *    and position).
+ *
  * 2. Reset themselves to a newly constructed state. This is so the user can
  *    click the reset button after completing a game and have things work as
  *    expected.
  *
- * Note that not all classes need to be able to do these two things.
+ * Please note that here use the upper-left coordinate, which means that the
+ * origin point (0.0,0.0) is at the upper left.
+ *
+ * Also, all arena entities are circular.
  */
 class ArenaEntity {
  public:
@@ -52,13 +57,16 @@ class ArenaEntity {
    */
   virtual void Reset(void) {}
 
-  virtual std::string name(void) const = 0;
+  /**
+   * @brief Get the name of an entity for visualization purposes, to aid in
+   * debugging.
+   */
+  virtual std::string get_name(void) const = 0;
 
-  void pos(const Position& pos) { pos_ = pos; }
-  const Position& pos(void) const { return pos_; }
-  const nanogui::Color& color(void) const { return color_; }
-  void color(const nanogui::Color& color) { color_ = color; }
-  virtual bool is_mobile(void) = 0;
+  void set_pos(const Position& pos) { pos_ = pos; }
+  const Position& get_pos(void) const { return pos_; }
+  const nanogui::Color& get_color(void) const { return color_; }
+  void set_color(const nanogui::Color& color) { color_ = color; }
   double radius(void) const { return radius_; }
 
  private:
@@ -69,4 +77,4 @@ class ArenaEntity {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_ARENA_ENTITY_H_ */
+#endif /* SRC_ARENA_ENTITY_H_ */
