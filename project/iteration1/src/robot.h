@@ -68,6 +68,7 @@ class Robot : public ArenaMobileEntity {
    *
    * @param e The recharge event.
    */
+   
   void Accept(const EventRecharge * const e) override;
 
   /**
