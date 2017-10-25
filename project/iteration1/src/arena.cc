@@ -42,6 +42,7 @@ Arena::Arena(const struct arena_params* const params) :
   mobile_entities_.push_back(robot_);
   entities_.push_back(recharge_station_);
   entities_.push_back(home_base_);
+  mobile_entities_.push_back(home_base_);
 
   for (size_t i = 0; i < n_obstacles_; ++i) {
     entities_.push_back(new Obstacle(

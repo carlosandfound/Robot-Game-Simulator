@@ -38,7 +38,7 @@ struct arena_params {
 
   struct robot_params robot;
   struct arena_entity_params recharge_station;
-  struct home_base_params home_base;
+  struct robot_params home_base;
   struct arena_entity_params obstacles[MAX_OBSTACLES];
   size_t n_obstacles;
   uint x_dim;

@@ -15,6 +15,8 @@
 #include "src/event_base_class.h"
 #include "src/event_recharge.h"
 #include "src/event_collision.h"
+#include "src/color.h"
+
 
 /*******************************************************************************
  * Namespaces
@@ -34,7 +36,7 @@ NAMESPACE_BEGIN(csci3081);
 class ArenaMobileEntity : public ArenaEntity {
  public:
   ArenaMobileEntity(double radius, double collision_delta,
-                    const Position& pos, const nanogui::Color& color) :
+                    const Position& pos, const Color& color) :
       ArenaEntity(radius, pos, color),
       collision_delta_(collision_delta) {}
 

@@ -14,6 +14,8 @@
 #include <string>
 #include "src/common.h"
 #include "src/position.h"
+#include "src/color.h"
+
 
 /*******************************************************************************
  * Namespaces
@@ -42,7 +44,7 @@ NAMESPACE_BEGIN(csci3081);
 class ArenaEntity {
  public:
   ArenaEntity(double radius, const Position& pos,
-              const nanogui::Color& color) :
+              const Color& color) :
       radius_(radius), pos_(pos), color_(color) {}
   virtual ~ArenaEntity(void) {}
 
@@ -65,14 +67,14 @@ class ArenaEntity {
 
   void set_pos(const Position& pos) { pos_ = pos; }
   const Position& get_pos(void) const { return pos_; }
-  const nanogui::Color& get_color(void) const { return color_; }
-  void set_color(const nanogui::Color& color) { color_ = color; }
+  const Color& get_color(void) const { return color_; }
+  void set_color(const Color& color) { color_ = color; }
   double radius(void) const { return radius_; }
 
  private:
   double radius_;
   Position pos_;
-  nanogui::Color color_;
+  Color color_;
 };
 
 NAMESPACE_END(csci3081);

@@ -39,6 +39,7 @@ The arena viewer is a subclass of GraphicsApp, which can be found in the libSimp
 
 Makefile:
 - make all and make clean for the whole project (calls make recursively in subdirs).
+- good place for students to add a Doxygen rule for make doc later on in the course.
 
 src/:
 - the main source code where you will find robot_viewer.h/cc and robot_land.h/cc
@@ -48,6 +49,25 @@ src/Makefile:
 - **creates an executable in build/bin/exename**
 - uses auto dependency generation to get dependencies from #includes
 
+tests/:
+- directory for all unit tests
+
+tests/Makefile:
+- builds an Google Test executabe in build/bin/unittest
+- (re)compiles all of the .cc and .cpp files in src/ (EXECPT FOR main.cc AND/OR main.cpp) to be part of this exe so that functionality from any of them can be called within the tests.
+- also compiles all of the .cc and .ccp files in tests/
+- links with the Google Test framework, set the path to the Google Test install using the GTEST_DIR Makefile variable
+
+tests/student-tests1.cc:
+- a file for students to fill in
+- they can rename this or add to it or do whatever they want
+- really, the only reason to include this file is to encourage them to create their own tests somewhere, since we actively discourage them from editing the next file
+
+tests/feedback-tests-iter1.cc:
+- a file for the CS3081W staff.
+- when the project goes out, this file should contain the series of feedback tests that will run automatically via the github webhooks auto grader.
+- this is important to setup correctly -- see more detail below on best practices
+
 build/:
 - created by the Makefiles
 
@@ -56,6 +76,8 @@ build/bin:
 
 build/obj:
 - all .o's and .d's (from make depend) go in here
+- they are intentionally put in subdirs for src/ and tests/ to keep the .o's separate for each exe
+- to keep it simple, the tests exe actually recompiles everything in src/ even if it has already been built as part of compiling the exe inside src
 
 <hr>
 
@@ -153,7 +175,7 @@ in the arena. All event classes are subclasses of the EventBaseClass.
 
 ### Keyboard and Mouse Event Handling
 
-Events are handled inside the viewer, because this manages all aspects of the GUI. Look in graphics\_area\_viewer.cc to see the various events to be handled (e.g. <s>OnKeyDown()</s> **OnSpecialKeyDown()**, which handles the down arrow key). The name gives an indication of which event it is responding to. When that event occurs, this is the function that is called. You never see the call to this function, but know that it does happen. Currently, for the most part, events are handled by printing messages to a terminal, but they really come in handy when you want the user to interact with the graphics window. For example, you might want the functionality that wherever the user clicks the mouse, a robot is created at that position.
+Events are handled inside the viewer, because this manages all aspects of the GUI. Look in graphics\_area\_viewer.cc to see the various events to be handled (e.g. OnKeyDown(), which handles the down arrow key). The name gives an indication of which event it is responding to. When that event occurs, this is the function that is called. You never see the call to this function, but know that it does happen. Currently, for the most part, events are handled by printing messages to a terminal, but they really come in handy when you want the user to interact with the graphics window. For example, you might want the functionality that wherever the user clicks the mouse, a robot is created at that position.
 
 The menu you see in the application with a reset and pause button was a custom menu made for this application. If you downloaded the nanogui examples, you saw how complex these menus can be. It is quite easy to add buttons with various functionality to the menu. Let's trace that process through the code ...
 

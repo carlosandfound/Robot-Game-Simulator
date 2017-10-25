@@ -32,7 +32,7 @@ SensorTouch::SensorTouch(void) :
 void SensorTouch::Accept(const EventCollision * const e) {
   // Determine if the sensor should be activated or inactivated.
   if (e->collided()) {
-    std::cout << "FATALlllllll" << std::endl;
+    //std::cout << "FATALlllllll" << std::endl;
     activated_ = true;
     point_of_contact_ = e->point_of_contact();
     angle_of_contact_ = e->angle_of_contact();

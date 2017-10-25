@@ -12,6 +12,8 @@
  ******************************************************************************/
 #include <string>
 #include "src/arena_immobile_entity.h"
+#include "src/color.h"
+
 
 /*******************************************************************************
  * Namespaces
@@ -24,7 +26,7 @@ NAMESPACE_BEGIN(csci3081);
 class Obstacle: public ArenaImmobileEntity {
  public:
   Obstacle(double radius, const Position& pos,
-                   const nanogui::Color& color);
+                   const Color& color);
 
   std::string get_name(void) const override {
     return "Obstacle" + std::to_string(id_);

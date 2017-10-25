@@ -132,9 +132,9 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
   // robot's circle
   nvgBeginPath(ctx);
   nvgCircle(ctx, 0.0, 0.0, robot->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(robot->get_color().r() * 255),
-                            static_cast<int>(robot->get_color().g() * 255),
-                            static_cast<int>(robot->get_color().b() * 255),
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(robot->get_color().r),
+                            static_cast<int>(robot->get_color().g),
+                            static_cast<int>(robot->get_color().b),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
@@ -155,9 +155,9 @@ void GraphicsArenaViewer::DrawObstacle(NVGcontext *ctx,
   nvgBeginPath(ctx);
   nvgCircle(ctx, obstacle->get_pos().x(), obstacle->get_pos().y(),
             obstacle->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(obstacle->get_color().r() * 255),
-                            static_cast<int>(obstacle->get_color().g() * 255),
-                            static_cast<int>(obstacle->get_color().b() * 255),
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(obstacle->get_color().r),
+                            static_cast<int>(obstacle->get_color().g),
+                            static_cast<int>(obstacle->get_color().b),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
@@ -172,9 +172,9 @@ void GraphicsArenaViewer::DrawHomeBase(NVGcontext *ctx,
                                const HomeBase* const home) {
   nvgBeginPath(ctx);
   nvgCircle(ctx, home->get_pos().x(), home->get_pos().y(), home->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(home->get_color().r() * 255),
-                            static_cast<int>(home->get_color().g() * 255),
-                            static_cast<int>(home->get_color().b() * 255),
+  nvgFillColor(ctx, nvgRGBA(static_cast<int>(home->get_color().r),
+                            static_cast<int>(home->get_color().g),
+                            static_cast<int>(home->get_color().b),
                             255));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));

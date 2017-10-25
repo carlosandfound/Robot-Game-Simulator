@@ -10,9 +10,11 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+
 #include <string>
 #include "src/home_base_params.h"
-#include "src/arena_immobile_entity.h"
+#include "src/arena_mobile_entity.h"
+#include "src/robot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -27,10 +29,11 @@ NAMESPACE_BEGIN(csci3081);
  *
  * Initially an immobile entity, it should be made to move during iteration 1.
  */
-class HomeBase: public ArenaImmobileEntity {
+
+class HomeBase: public Robot {
  public:
-  explicit HomeBase(const struct home_base_params* const params) :
-    ArenaImmobileEntity(params->radius, params->pos, params->color) {
+  explicit HomeBase(const struct robot_params* const params) :
+    Robot(params) {
   }
   std::string get_name(void) const override { return "Home Base"; }
 };

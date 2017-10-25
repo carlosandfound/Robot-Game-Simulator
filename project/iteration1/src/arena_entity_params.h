@@ -13,6 +13,7 @@
 #include <nanogui/nanogui.h>
 #include "src/common.h"
 #include "src/position.h"
+#include "src/color.h"
 
 /*******************************************************************************
  * Namespaces
@@ -26,7 +27,7 @@ struct arena_entity_params {
   arena_entity_params(void) : radius(), pos(), color() {}
   double radius;
   Position pos;
-  nanogui::Color color;
+  Color color;
 };
 
 NAMESPACE_END(csci3081);

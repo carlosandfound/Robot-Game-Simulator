@@ -12,6 +12,8 @@
  ******************************************************************************/
 #include <string>
 #include "src/obstacle.h"
+#include "src/color.h"
+
 
 /*******************************************************************************
  * Namespaces
@@ -28,7 +30,7 @@ NAMESPACE_BEGIN(csci3081);
 class RechargeStation: public Obstacle {
  public:
   RechargeStation(double radius, const Position& pos,
-                  const nanogui::Color& color) :
+                  const Color& color) :
       Obstacle(radius, pos, color) {}
   std::string get_name(void) const override {
     return "Recharge Station";

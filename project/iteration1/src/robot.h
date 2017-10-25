@@ -96,6 +96,8 @@ class Robot : public ArenaMobileEntity {
     return motion_handler_.heading_angle();
   }
   void heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
+  double speed(void) { return motion_handler_.speed(); }
+  void speed(double sp) { motion_handler_.speed(sp); }
   double get_speed(void) const override { return motion_handler_.speed(); }
   void set_speed(double sp) override { motion_handler_.speed(sp); }
   std::string get_name(void) const override {

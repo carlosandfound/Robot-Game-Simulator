@@ -11,7 +11,7 @@
 | Date | Item | Description |
 |:----:|:-----|:------------|
 | Wed, Oct 11, 10pm | UML diagram of base code | submit via Github |
-| <s>Mon</s>WED, Oct 25, 10pm | Preliminary code tests   | Pass automated tests |
+| Mon, Oct 23, 10pm | Preliminary code tests   | Pass automated tests |
 | Mon, Oct 30, 10pm | Documentation and Code Implementation | Automated tests and inspection |
 
 </span>

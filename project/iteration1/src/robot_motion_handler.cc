@@ -55,8 +55,8 @@ RobotMotionHandler::RobotMotionHandler() :
 
 void RobotMotionHandler::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
-    std::cerr << "heading " << heading_angle_ << std::endl;
-    std::cerr << "angle " << st.angle_of_contact() << std::endl;
+    //std::cerr << "heading " << heading_angle_ << std::endl;
+    //std::cerr << "angle " << st.angle_of_contact() << std::endl;
     heading_angle_ = -st.angle_of_contact();
   }
 }
