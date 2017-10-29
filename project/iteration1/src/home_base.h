@@ -34,6 +34,7 @@ class HomeBase: public Robot {
  public:
   explicit HomeBase(const struct robot_params* const params) :
     Robot(params) {
+      this -> heading_angle(80);
   }
   std::string get_name(void) const override { return "Home Base"; }
 };

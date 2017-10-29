@@ -15,6 +15,7 @@
 
 #include "src/common.h"
 #include "src/event_collision.h"
+#include "src/sensor_base_class.h"
 
 /*******************************************************************************
  * Namespaces
@@ -34,9 +35,10 @@ class ArenaEntity;
  * activate the sensor at a particular point of contact, which translates to an
  * angle of contact.
  */
-class SensorTouch {
+class SensorTouch : public SensorBaseClass {
  public:
   SensorTouch();
+  //void EmitMessage(void) override;
 
   /**
    * @brief Get the current activation reading from the sensor.

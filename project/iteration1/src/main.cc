@@ -41,10 +41,26 @@ int main(int, char **) {
   aparams.home_base.color = csci3081::Color(255, 0, 0, 255); /* red */
 
   aparams.obstacles[0].radius = 30.0;
-  aparams.obstacles[0].pos = {200, 200};
+  aparams.obstacles[0].pos = {300, 200};
   aparams.obstacles[0].color = csci3081::Color(255, 255, 255, 255); /* white */
 
-  aparams.n_obstacles = 1;
+  aparams.obstacles[1].radius = 20.0;
+  aparams.obstacles[1].pos = {400, 100};
+  aparams.obstacles[1].color = csci3081::Color(0, 100, 0, 100); /* green */
+
+  aparams.obstacles[2].radius = 10.0;
+  aparams.obstacles[2].pos = {500, 700};
+  aparams.obstacles[2].color = csci3081::Color(300, 500, 300, 700); /* bright green */
+
+  aparams.obstacles[3].radius = 40.0;
+  aparams.obstacles[3].pos = {800, 100};
+  aparams.obstacles[3].color = csci3081::Color(200, 100, 0, 0); /* orange */
+
+  aparams.obstacles[4].radius = 20.0;
+  aparams.obstacles[4].pos = {900, 600};
+  aparams.obstacles[4].color = csci3081::Color(400, 300, 200, 100); /* pink */
+
+  aparams.n_obstacles = 5;
   aparams.x_dim = 1024;
   aparams.y_dim = 768;
 

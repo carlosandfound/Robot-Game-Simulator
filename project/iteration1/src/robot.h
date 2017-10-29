@@ -68,8 +68,8 @@ class Robot : public ArenaMobileEntity {
    *
    * @param e The recharge event.
    */
-   
-  void Accept(const EventRecharge * const e) override;
+
+  void Accept(const EventRecharge * const e);
 
   /**
    * @brief  Pass along a collision event (from arena) to the touch sensor.
@@ -93,6 +93,7 @@ class Robot : public ArenaMobileEntity {
    * @brief Get the current battery level of the robot.
    */
   double battery_level(void) { return battery_.level(); }
+  void battery_level(double level) { battery_.set_level(level); }
   double heading_angle(void) const override {
     return motion_handler_.heading_angle();
   }
@@ -103,6 +104,9 @@ class Robot : public ArenaMobileEntity {
   void set_speed(double sp) override { motion_handler_.speed(sp); }
   std::string get_name(void) const override {
     return "Robot" + std::to_string(id_);
+  }
+  std::string get_battery_level(void) const {
+    return "Battery: " + std::to_string(battery_.level());
   }
 
  private:

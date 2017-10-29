@@ -60,6 +60,16 @@ class Arena {
    */
   void Reset(void);
 
+  /**
+   * @brief decide whether or not robot is out of battery
+   */
+  bool isEmpty(void) {return lose;}
+
+  /**
+   * @brief decide whether or not robot has reached home base
+   */
+  bool hitHome(void) {return win;}
+
   /*
    * @brief Get the # of robots in the arena.
    */
@@ -139,6 +149,8 @@ class Arena {
   double y_dim_;
   unsigned int n_robots_;
   unsigned int n_obstacles_;
+  bool win = false;
+  bool lose = false;
 
   // Entities populating the arena
   Robot* robot_;

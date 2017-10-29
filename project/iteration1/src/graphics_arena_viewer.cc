@@ -17,6 +17,8 @@
 #include "src/obstacle.h"
 #include "src/arena_params.h"
 #include "src/event_keypress.h"
+#include "src/arena.h"
+#include "src/arena_params.h"
 
 /*******************************************************************************
  * Namespaces
@@ -33,6 +35,7 @@ GraphicsArenaViewer::GraphicsArenaViewer(
       paused_(false),
       pause_btn_(nullptr),
       last_dt(-1) {
+  newParams = params;
   nanogui::FormHelper *gui = new nanogui::FormHelper(this);
   nanogui::ref<nanogui::Window> window = gui->addWindow(Eigen::Vector2i(10, 10),
                                                        "Simulation Controls");
@@ -40,6 +43,8 @@ GraphicsArenaViewer::GraphicsArenaViewer(
     std::bind(&GraphicsArenaViewer::OnRestartBtnPressed, this));
   pause_btn_ = gui->addButton("Pause",
     std::bind(&GraphicsArenaViewer::OnPauseBtnPressed, this));
+//  pause_btn_ = gui->addButton("Pause",
+  //  std::bind(&GraphicsArenaViewer::OnPauseBtnPressed, this));
 
   last_dt = 0;
   performLayout();
@@ -52,6 +57,14 @@ GraphicsArenaViewer::GraphicsArenaViewer(
 // This is the primary driver for state change in the arena.
 // It will be called at each iteration of nanogui::mainloop()
 void GraphicsArenaViewer::UpdateSimulation(double dt) {
+  if (arena_ -> isEmpty()) {
+    pause_btn_ -> setCaption("You Lost!");
+    paused_ = true;
+  }
+  else if (arena_ -> hitHome()) {
+    pause_btn_ -> setCaption("You Won!");
+    paused_ = true;
+  }
   if (!paused_) {
     if ((last_dt + dt) > .05) {
       arena_->AdvanceTime(dt+last_dt);
@@ -66,7 +79,10 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
  * Handlers for User Keyboard and Mouse Events
  ******************************************************************************/
 void GraphicsArenaViewer::OnRestartBtnPressed() {
-  arena_->Reset();
+  paused_ = true;
+  pause_btn_->setCaption("Play");
+  delete arena_;
+  Arena * newArena = new Arena(newParams);
 }
 
 void GraphicsArenaViewer::OnPauseBtnPressed() {
@@ -79,7 +95,7 @@ void GraphicsArenaViewer::OnPauseBtnPressed() {
 }
 
 void GraphicsArenaViewer::OnMouseMove(int x, int y) {
-  std::cout << "Mouse moved to (" << x << ", " << y << ")" << std::endl;
+  //std::cout << "Mouse moved to (" << x << ", " << y << ")" << std::endl;
 }
 
 void GraphicsArenaViewer::OnLeftMouseDown(int x, int y) {
@@ -144,7 +160,8 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
   nvgSave(ctx);
   nvgRotate(ctx, M_PI / 2.0);
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, 0.0, 10.0, robot->get_name().c_str(), NULL);
+  nvgText(ctx, 0.0, 5.0, robot->get_name().c_str(), NULL);
+  nvgText(ctx, 0.0, 20.0, robot->get_battery_level().c_str(), NULL);
   nvgRestore(ctx);
 
   nvgRestore(ctx);

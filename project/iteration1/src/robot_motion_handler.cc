@@ -30,12 +30,30 @@ RobotMotionHandler::RobotMotionHandler() :
    //change speed/angle accordingly for each of the 4 commands
    // angle will be changed by delta 10
    switch (cmd) {
-   case COM_TURN_LEFT:
-     heading_angle_ = heading_angle_ - 10;
+   case COM_TURN_LEFT : {
+      int new_angle = heading_angle_ - 10;
+      if (new_angle < 0) {
+       heading_angle_ = 360 + (new_angle);
+     }
+     else {
+       heading_angle_ = new_angle;
+     }
+     //heading_angle_ = heading_angle_ - 10;
+     std::cout << "LEFT.........." << heading_angle_ << '\n';
      break;
-   case COM_TURN_RIGHT:
-     heading_angle_ = heading_angle_ + 10;
+   }
+   case COM_TURN_RIGHT : {
+     int new_angle = heading_angle_ + 10;
+     if (new_angle > 360) {
+       heading_angle_ = new_angle - 360;
+     }
+     else {
+       heading_angle_ = new_angle;
+     }
+     //heading_angle_ = heading_angle_ + 10;
+     std::cout << "RIGHT.........." << heading_angle_ << '\n';
      break;
+   }
    case COM_SPEED_UP:
      if (speed_ < max_speed_) {
        // max speed is 10...increase speed by 1
@@ -55,8 +73,6 @@ RobotMotionHandler::RobotMotionHandler() :
 
 void RobotMotionHandler::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
-    //std::cerr << "heading " << heading_angle_ << std::endl;
-    //std::cerr << "angle " << st.angle_of_contact() << std::endl;
     heading_angle_ = -st.angle_of_contact();
   }
 }

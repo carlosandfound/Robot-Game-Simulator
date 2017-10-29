@@ -77,7 +77,7 @@ class ArenaMobileEntity : public ArenaEntity {
    * Note that this is robot-specific, and should be removed as a pure virtual
    * function once the \ref HomeBase class is made mobile.
    */
-  virtual void Accept(const EventRecharge * const e) = 0;
+  void Accept(const EventRecharge * const e);
 
   /**
    * @brief Update an entity's position and velocity after the specified # of

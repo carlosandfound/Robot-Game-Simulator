@@ -53,6 +53,11 @@ class RobotBattery {
   double level(void) const { return charge_; }
 
   /**
+   * @brief set the battery level to a new charge
+   */
+  void set_level(double level) { charge_ = level; }
+
+  /**
    * @brief Handle a recharge event by instantly restoring the robot's battery
    * to its maximum value.
    */

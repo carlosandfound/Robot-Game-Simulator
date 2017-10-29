@@ -56,6 +56,7 @@ class GraphicsArenaViewer : public GraphicsApp {
   explicit GraphicsArenaViewer(const struct arena_params* const params);
   virtual ~GraphicsArenaViewer(void) { delete arena_; }
 
+  void display();
   /**
    * @brief Informs the arena of the new time, so that it can update.
    */
@@ -210,6 +211,7 @@ class GraphicsArenaViewer : public GraphicsApp {
   Arena *arena_;
   bool paused_;
   nanogui::Button *pause_btn_;
+  const arena_params* newParams;
 
   double last_dt;
 
