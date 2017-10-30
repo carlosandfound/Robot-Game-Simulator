@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_SENSOR_TOUCH_H_
-#define SRC_SENSOR_TOUCH_H_
+#ifndef PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_
+#define PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_
 
 /*******************************************************************************
  * Includes
@@ -28,7 +28,8 @@ NAMESPACE_BEGIN(csci3081);
 class ArenaEntity;
 
 /**
- * @brief A representation of a touch sensor.
+ * @brief A representation of a touch sensor. SensorTouch now inherits from
+ * Sensor base class.
  *
  * Touch or "bump" sensors are "active" when pressed. For our purposes, imagine
  * a series of bump sensors around the perimeter of the robot. A collision will
@@ -38,8 +39,6 @@ class ArenaEntity;
 class SensorTouch : public SensorBaseClass {
  public:
   SensorTouch();
-  //void EmitMessage(void) override;
-
   /**
    * @brief Get the current activation reading from the sensor.
    */
@@ -76,4 +75,4 @@ class SensorTouch : public SensorBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_SENSOR_TOUCH_H_ */
+#endif /* PROJECT_ITERATION1_SRC_SENSOR_TOUCH_H_ */

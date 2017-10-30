@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_GRAPHICS_ARENA_VIEWER_H_
-#define SRC_GRAPHICS_ARENA_VIEWER_H_
+#ifndef PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_
+#define PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_
 
 /*******************************************************************************
  * Includes
@@ -211,15 +211,15 @@ class GraphicsArenaViewer : public GraphicsApp {
   Arena *arena_;
   bool paused_;
   nanogui::Button *pause_btn_;
-  const arena_params* newParams;
+  const arena_params* savedParams = 0;
 
   double last_dt;
 
-  // Satisfies compilers warning that the copy constructor should exist.
+  //  Satisfies compilers warning that the copy constructor should exist.
   GraphicsArenaViewer& operator=(const GraphicsArenaViewer& other) = delete;
   GraphicsArenaViewer(const GraphicsArenaViewer& other) = delete;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_GRAPHICS_ARENA_VIEWER_H_
+#endif  //  PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_

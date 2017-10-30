@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef SRC_ARENA_PARAMS_H_
-#define SRC_ARENA_PARAMS_H_
+#ifndef PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_
+#define PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_
 
 /*******************************************************************************
  * Includes
@@ -31,6 +31,7 @@ NAMESPACE_BEGIN(csci3081);
  *
  * This includes the arena geometry as well as the parameters for \c ALL
  * entities within the arena.
+ * home base now has robot params to be mobile
  */
 struct arena_params {
   arena_params(void) : robot(), recharge_station(), home_base(),
@@ -47,4 +48,4 @@ struct arena_params {
 
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_ARENA_PARAMS_H_ */
+#endif /* PROJECT_ITERATION1_SRC_ARENA_PARAMS_H_ */

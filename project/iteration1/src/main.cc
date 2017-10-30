@@ -15,10 +15,10 @@
  * Non-Member Functions
  ******************************************************************************/
 int main(int, char **) {
-  // Essential call to initiate the graphics window
+  //  Essential call to initiate the graphics window
   csci3081::InitGraphics();
 
-  // Initialize default start values for various arena entities
+  //  Initialize default start values for various arena entities
   csci3081::robot_params rparams;
 
   rparams.battery_max_charge = 100.0;
@@ -34,7 +34,8 @@ int main(int, char **) {
 
   aparams.recharge_station.radius = 20.0;
   aparams.recharge_station.pos = {500, 300};
-  aparams.recharge_station.color = csci3081::Color(0, 128, 128, 255); /* green */
+  /* green */
+  aparams.recharge_station.color = csci3081::Color(0, 128, 128, 255);
 
   aparams.home_base.radius = 20.0;
   aparams.home_base.pos = {400, 400};
@@ -50,7 +51,8 @@ int main(int, char **) {
 
   aparams.obstacles[2].radius = 10.0;
   aparams.obstacles[2].pos = {500, 700};
-  aparams.obstacles[2].color = csci3081::Color(300, 500, 300, 700); /* bright green */
+  /* bright green */
+  aparams.obstacles[2].color = csci3081::Color(300, 500, 300, 700);
 
   aparams.obstacles[3].radius = 40.0;
   aparams.obstacles[3].pos = {800, 100};
@@ -60,12 +62,15 @@ int main(int, char **) {
   aparams.obstacles[4].pos = {900, 600};
   aparams.obstacles[4].color = csci3081::Color(400, 300, 200, 100); /* pink */
 
+/*
+ * @brief A total of 5 osbtacles are created in the arena
+ */
   aparams.n_obstacles = 5;
   aparams.x_dim = 1024;
   aparams.y_dim = 768;
 
-  // Start up the graphics (which creates the arena).
-  // Run will enter the nanogui::mainloop()
+  //  Start up the graphics (which creates the arena).
+  //  Run will enter the nanogui::mainloop()
   csci3081::GraphicsArenaViewer *app =
       new csci3081::GraphicsArenaViewer(&aparams);
   app->Run();

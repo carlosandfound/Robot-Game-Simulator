@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_POSITION_H_
-#define SRC_POSITION_H_
+#ifndef PROJECT_ITERATION1_SRC_POSITION_H_
+#define PROJECT_ITERATION1_SRC_POSITION_H_
 
 /*******************************************************************************
  * Includes
@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Namespaces
  ******************************************************************************/
-//NAMESPACE_BEGIN(csci3081);
+// NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
  * Class Definitions
@@ -44,6 +44,6 @@ class Position {
   int y_;
 };
 
-//NAMESPACE_END(csci3081);
+//  NAMESPACE_END(csci3081);
 
-#endif /* SRC_POSITION_H_ */
+#endif  //  PROJECT_ITERATION1_SRC_POSITION_H_

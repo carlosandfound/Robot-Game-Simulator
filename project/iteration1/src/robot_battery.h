@@ -4,12 +4,13 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_ROBOT_BATTERY_H_
-#define SRC_ROBOT_BATTERY_H_
+#ifndef PROJECT_ITERATION1_SRC_ROBOT_BATTERY_H_
+#define PROJECT_ITERATION1_SRC_ROBOT_BATTERY_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#include <cmath>
 #include "src/common.h"
 #include "src/event_collision.h"
 
@@ -69,18 +70,20 @@ class RobotBattery {
   void Reset(void) { EventRecharge(); }
 
   /**
-   * @brief Calculate the new battery level based on the current linear/angular speed.
+   * @brief Calculate the new battery level based on the current
+   * linear/angular speed.
    *
    * @param linear_vel The current linear speed, in m/s.
    * @param angular_vel The current angular speed, in rad/s.
    *
    * @return The updated battery level.
    */
-  double Deplete(__unused Position old_pos,
-    __unused Position new_pos, __unused double dt);
+  double Deplete(Position old_pos, Position new_pos, double dt);
 
-  // This is how the battery can be informed a collision occured.
-  // Deplete accordingly.
+  /**
+   * @brief deplete the battery of the robot by 5 whenever a collision with
+   * an obstacle is registered
+   */
   void Accept(const EventCollision * const e);
 
  private:
@@ -90,4 +93,4 @@ class RobotBattery {
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_ROBOT_BATTERY_H_
+#endif  //  PROJECT_ITERATION1_SRC_ROBOT_BATTERY_H_

@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_HOME_BASE_H_
-#define SRC_HOME_BASE_H_
+#ifndef PROJECT_ITERATION1_SRC_HOME_BASE_H_
+#define PROJECT_ITERATION1_SRC_HOME_BASE_H_
 
 /*******************************************************************************
  * Includes
@@ -27,18 +27,16 @@ NAMESPACE_BEGIN(csci3081);
 /**
  * @brief The goal the the robot is trying to drive to within the arena.
  *
- * Initially an immobile entity, it should be made to move during iteration 1.
+ * HomeBase now inherits from robot to become a mobile entity.
  */
 
 class HomeBase: public Robot {
  public:
   explicit HomeBase(const struct robot_params* const params) :
-    Robot(params) {
-      this -> heading_angle(80);
-  }
+    Robot(params) {}
   std::string get_name(void) const override { return "Home Base"; }
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* SRC_HOME_BASE_H_ */
+#endif /* PROJECT_ITERATION1_SRC_HOME_BASE_H_ */

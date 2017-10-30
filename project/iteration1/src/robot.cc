@@ -45,17 +45,17 @@ Robot::Robot(const struct robot_params* const params) :
 void Robot::TimestepUpdate(uint dt) {
   Position old_pos = get_pos();
 
-  // Update heading and speed as indicated by touch sensor
+  /* Update heading and speed as indicated by touch sensor */
   motion_handler_.UpdateVelocity(sensor_touch_);
 
-  // Use velocity and position to update position
+  /* Use velocity and position to update position */
   motion_behavior_.UpdatePosition(this, dt);
 
-  // Deplete battery as appropriate given distance and speed of movement
+  /* Deplete battery as appropriate given distance and speed of movement */
   battery_.Deplete(old_pos, get_pos(), dt);
 } /* TimestepUpdate() */
 
-void Robot::Accept( const EventRecharge * const e) {
+void Robot::Accept(__unused const EventRecharge * const e) {
   battery_.EventRecharge();
 }
 
@@ -64,10 +64,25 @@ void Robot::Accept(const EventCollision * const e) {
   motion_handler_.UpdateVelocity(sensor_touch_);
 }
 
-//  User input commands to change heading or speed
+void Robot::UpdateCharge(const EventCollision * const e) {
+  battery_.Accept(e);
+}
+
+/*
+ * @brief user inputs command to change the heading or speed of robot. This
+ * command is passed onto RobotMotionHandler.
+ */
 void Robot::Accept(const EventCommand * const e) {
-  //pass on command to robot motion handler to change speed/angle
   motion_handler_.AcceptCommand(e->cmd());
+}
+
+void Robot::UpdateVelocity(__unused const EventCollision * const e) {
+  double currentSpeed = this -> get_speed();
+  if (currentSpeed <= 0) {
+    this -> set_speed(0);
+  } else {
+    this -> set_speed(currentSpeed-1);
+  }
 }
 
 void Robot::Reset(void) {

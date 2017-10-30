@@ -19,13 +19,12 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
- enum event_commands EventKeypress::keypress_to_cmd(int key) {
+enum event_commands EventKeypress::keypress_to_cmd(int key) {
    /*
-   * @todo These values are likely not universal across all OS's.
-   * Write a wrapper for the various OS or see if nanogui has that
-   * functionality.
+   * The specific key number correspond to a command that controls the speed
+   * and direction of the robot
    */
-   switch (key) {
+  switch (key) {
      case 263:
      return COM_TURN_LEFT;
      break;
@@ -41,8 +40,8 @@ NAMESPACE_BEGIN(csci3081);
      default:
      printf("Unknown keypress: %d\n", key);
      assert(0);
-   } /* switch() */
- }
- /* keypress_to_cmd() */
+  } /* switch() */
+}
+/* keypress_to_cmd() */
 
 NAMESPACE_END(csci3081);

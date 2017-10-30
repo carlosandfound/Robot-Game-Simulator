@@ -4,8 +4,9 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_ARENA_H_
-#define SRC_ARENA_H_
+#ifndef PROJECT_ITERATION1_SRC_ARENA_H_
+#define PROJECT_ITERATION1_SRC_ARENA_H_
+#define _USE_MATH_DEFINES
 
 /*******************************************************************************
  * Includes
@@ -61,12 +62,12 @@ class Arena {
   void Reset(void);
 
   /**
-   * @brief decide whether or not robot is out of battery
+   * @brief returns whether or not robot is out of battery
    */
   bool isEmpty(void) {return lose;}
 
   /**
-   * @brief decide whether or not robot has reached home base
+   * @brief returns whether or not robot has reached home base
    */
   bool hitHome(void) {return win;}
 
@@ -108,8 +109,8 @@ class Arena {
 
   /**
    * @brief Determine if two entities have collided in the arena. Collision is
-   * defined as the difference between the extents of the two entities being less
-   * than a run-time parameter.
+   * defined as the difference between the extents of the two entities being
+   * less than a run-time parameter.
    *
    * @param ent1 Entity #1.
    * @param ent2 Entity #2.
@@ -139,12 +140,15 @@ class Arena {
    */
   void UpdateEntitiesTimestep(void);
 
-  // Under certain circumstance, the compiler requires that the copy
-  // constructor is not defined. This is deleting the default copy const.
+  //  Under certain circumstance, the compiler requires that the copy
+  //  constructor is not defined. This is deleting the default copy const.
   Arena& operator=(const Arena& other) = delete;
   Arena(const Arena& other) = delete;
 
-  // Dimensions of graphics window inside which robots must operate
+  //  Dimensions of graphics window inside which robots must operate
+  /**
+   * @brief win, lose variables dtermine whether game is won or lost
+   */
   double x_dim_;
   double y_dim_;
   unsigned int n_robots_;
@@ -152,7 +156,7 @@ class Arena {
   bool win = false;
   bool lose = false;
 
-  // Entities populating the arena
+  //  Entities populating the arena
   Robot* robot_;
   RechargeStation * recharge_station_;
   HomeBase * home_base_;
@@ -162,4 +166,4 @@ class Arena {
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_ARENA_H_
+#endif  //  PROJECT_ITERATION1_SRC_ARENA_H_

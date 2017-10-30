@@ -26,50 +26,48 @@ RobotMotionHandler::RobotMotionHandler() :
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
- void RobotMotionHandler::AcceptCommand(enum event_commands cmd) {
-   //change speed/angle accordingly for each of the 4 commands
-   // angle will be changed by delta 10
-   switch (cmd) {
-   case COM_TURN_LEFT : {
+
+/*
+ * @brief Translate 4 arrow keys to appropriate command. The angle is changed
+ * by delta 10 and is never negative or larger than 360. The speed is
+ * incremented by 1 at each press.
+ */
+
+void RobotMotionHandler::AcceptCommand(enum event_commands cmd) {
+  switch (cmd) {
+    case COM_TURN_LEFT : {
       int new_angle = heading_angle_ - 10;
       if (new_angle < 0) {
        heading_angle_ = 360 + (new_angle);
-     }
-     else {
+     } else {
        heading_angle_ = new_angle;
      }
-     //heading_angle_ = heading_angle_ - 10;
-     std::cout << "LEFT.........." << heading_angle_ << '\n';
      break;
-   }
-   case COM_TURN_RIGHT : {
+    }
+    case COM_TURN_RIGHT : {
      int new_angle = heading_angle_ + 10;
      if (new_angle > 360) {
        heading_angle_ = new_angle - 360;
-     }
-     else {
+     } else {
        heading_angle_ = new_angle;
      }
-     //heading_angle_ = heading_angle_ + 10;
-     std::cout << "RIGHT.........." << heading_angle_ << '\n';
      break;
-   }
-   case COM_SPEED_UP:
+    }
+    case COM_SPEED_UP:
      if (speed_ < max_speed_) {
-       // max speed is 10...increase speed by 1
        speed_ = speed_ + 1;
      }
      break;
-   case COM_SLOW_DOWN:
+    case COM_SLOW_DOWN:
      if (speed_ > 0) {
        speed_ = speed_ - 1;
      }
      break;
    default:
-     std::cerr << "FATAL: bad actuator command" << std::endl;
-     //assert(0);
-   } /* switch() */
- } /* accept_command() */
+    std::cerr << "FATAL: bad actuator command" << std::endl;
+    assert(0);
+  } /* switch() */
+} /* accept_command() */
 
 void RobotMotionHandler::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
