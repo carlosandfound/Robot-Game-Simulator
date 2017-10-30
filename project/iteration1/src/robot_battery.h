@@ -60,7 +60,7 @@ class RobotBattery {
 
   /**
    * @brief Handle a recharge event by instantly restoring the robot's battery
-   * to its maximum value.
+   * to 100 when it hits the recharge station.
    */
   void EventRecharge(void) { charge_ = max_charge_; }
 
@@ -71,10 +71,7 @@ class RobotBattery {
 
   /**
    * @brief Calculate the new battery level based on the current
-   * linear/angular speed.
-   *
-   * @param linear_vel The current linear speed, in m/s.
-   * @param angular_vel The current angular speed, in rad/s.
+   * speed, which is calculating by dividing distance over time.
    *
    * @return The updated battery level.
    */

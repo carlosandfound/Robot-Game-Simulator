@@ -28,7 +28,7 @@ RobotMotionHandler::RobotMotionHandler() :
  ******************************************************************************/
 
 /*
- * @brief Translate 4 arrow keys to appropriate command. The angle is changed
+ * Translate 4 arrow keys to appropriate command. The angle is changed
  * by delta 10 and is never negative or larger than 360. The speed is
  * incremented by 1 at each press.
  */

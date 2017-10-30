@@ -106,31 +106,38 @@ void GraphicsArenaViewer::OnPauseBtnPressed() {
 }
 
 void GraphicsArenaViewer::OnMouseMove(int x, int y) {
-  std::cout << "Mouse moved to (" << x << ", " << y << ")" << std::endl;
+  /* std::cout << "Mouse moved to 
+     (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnLeftMouseDown(int x, int y) {
-  std::cout << "Left mouse button DOWN (" << x << ", " << y << ")" << std::endl;
+  /* std::cout << "Left mouse button DOWN 
+     (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnLeftMouseUp(int x, int y) {
-  std::cout << "Left mouse button UP (" << x << ", " << y << ")" << std::endl;
+  /* std::cout << "Left mouse button UP 
+     (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnRightMouseDown(int x, int y) {
-  std::cout << "Right mouse button DOWN (" << x << ", " << y << ")\n";
+  /* std::cout << "Right mouse button DOWN 
+     (" << x << ", " << y << ")\n"; */
 }
 
 void GraphicsArenaViewer::OnRightMouseUp(int x, int y) {
-  std::cout << "Right mouse button UP (" << x << ", " << y << ")" << std::endl;
+  /* std::cout << "Right mouse button UP 
+     (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnKeyDown(const char *c, int modifiers) {
-  std::cout << "Key DOWN (" << c << ") modifiers=" << modifiers << std::endl;
+  /* std::cout << "Key DOWN (" << c << ") modifiers=" 
+     << modifiers << std::endl; */
 }
 
 void GraphicsArenaViewer::OnKeyUp(const char *c, int modifiers) {
-  std::cout << "Key UP (" << c << ") modifiers=" << modifiers << std::endl;
+  /* std::cout << "Key UP (" << c << ") modifiers=" 
+     << modifiers << std::endl; */
 }
 
 /**
@@ -142,15 +149,15 @@ void GraphicsArenaViewer::OnSpecialKeyDown(int key, int scancode,
   int modifiers) {
   EventKeypress e(key);
   arena_->Accept(&e);
-  std::cout << "Special Key =" << key << " scancode=" << scancode
-            << " modifiers=" << modifiers << std::endl;
+  /* std::cout << "Special Key =" << key << " scancode=" << scancode
+     << " modifiers=" << modifiers << std::endl; */
 }
 
 void GraphicsArenaViewer::OnSpecialKeyUp(int key, int scancode, int modifiers) {
   EventKeypress e(key);
   arena_->Accept(&e);
-  std::cout << "Special Key =" << key << " scancode=" << scancode
-            << " modifiers=" << modifiers << std::endl;
+  /* std::cout << "Special Key =" << key << " scancode=" << scancode
+     << " modifiers=" << modifiers << std::endl; */
 }
 
 /*******************************************************************************

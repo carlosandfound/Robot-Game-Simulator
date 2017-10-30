@@ -47,7 +47,9 @@ class RobotMotionHandler {
   void Reset(void) {}
 
   /**
-   * @brief Command from user keypress via the viewer.
+   * @brief Command from user keypress via the viewer. The command is translated
+   * to the appropriate action where the robot can turn left/right or speed up
+   * or slow down
    *
    * @param cmd The command.
    */

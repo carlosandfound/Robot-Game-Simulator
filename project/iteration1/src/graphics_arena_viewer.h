@@ -43,8 +43,8 @@ NAMESPACE_BEGIN(csci3081);
  *  ```
  *
  *  While the window is open \ref UpdateSimulation() will be called repeatedly,
- *  once per frame.  Fill this in to update your simulation or perform any other
- *  processing that should happen over time as the simulation progresses.
+ *  once per frame. At each call of this method, it's checked whether or not
+ *  the game has been won or lost
  *
  *  Fill in the On*() methods as desired to respond to user input events.
  *

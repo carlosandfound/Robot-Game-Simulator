@@ -93,7 +93,7 @@ class Robot : public ArenaMobileEntity {
    * @brief  Pass along a collision event (from arena) to the battery.
    *
    * This method provides a framework in which the robot's battery can get
-   * information from the collision to deplete the battery accordingly.
+   * information from the collision to deplete the battery by 5.
    */
   void UpdateCharge(const EventCollision * const e);
 

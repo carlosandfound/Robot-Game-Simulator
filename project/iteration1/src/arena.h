@@ -125,7 +125,7 @@ class Arena {
 
   /**
    * @brief Determine if a particular entity is gone out of the boundaries of
-   * the simulation.
+   * the simulation or hit one of the walls. Update the heading angle accordingly
    *
    * @param ent The entity to check.
    * @param pointer to a collision event.

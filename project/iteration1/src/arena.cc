@@ -81,7 +81,8 @@ std::vector<Obstacle*> Arena::obstacles(void) {
 } /* robots() */
 
 void Arena::AdvanceTime(double dt) {
-  std::cout << "Advancing simulation time by " << dt << " timesteps\n";
+  /* std::cout << "Advancing simulation time by " 
+     << dt << " timesteps\n"; */
   for (size_t i = 0; i < 1; ++i) {
     UpdateEntitiesTimestep();
   } /* for(i..) */
@@ -89,9 +90,9 @@ void Arena::AdvanceTime(double dt) {
 
 void Arena::UpdateEntitiesTimestep(void) {
    /*
-    * If the number randmly generated is 5 then home base changes direction to
-    * a randomly generated angle between 0 and 360. Otherwise, home base
-    * continues on the same direction
+    * @brief If the number randmly generated is 5 then home base changes
+    * direction to a randomly generated angle between 0 and 360. Otherwise,
+    * home base continues on the same direction.
     */
 
     unsigned int seed = time(nullptr);
@@ -104,8 +105,8 @@ void Arena::UpdateEntitiesTimestep(void) {
     }
 
    /*
-    * First, update the position of all entities, according to their current
-    * velocities.
+    * First, update the position of all entities, according
+    * to their current velocities.
     */
 
   for (auto ent : entities_) {
@@ -186,9 +187,9 @@ void Arena::UpdateEntitiesTimestep(void) {
  */
 
 /*
- * limit working dimension such that the left wall is at an x-coordinate of 200
- * so that the mobile entities work within limited dimension where they
- * they don't overlap with gui simulation controls/buttons.
+ * @brief limit working dimension such that the left wall is at an
+ * x-coordinate of 200 so that the mobile entities work within limited
+ * dimension where they they don't overlap with gui simulation controls/buttons.
  */
 
 void Arena::CheckForEntityOutOfBounds(const ArenaMobileEntity * const ent,
