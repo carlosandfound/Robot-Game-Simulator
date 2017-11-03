@@ -106,37 +106,37 @@ void GraphicsArenaViewer::OnPauseBtnPressed() {
 }
 
 void GraphicsArenaViewer::OnMouseMove(int x, int y) {
-  /* std::cout << "Mouse moved to 
+  /* std::cout << "Mouse moved to
      (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnLeftMouseDown(int x, int y) {
-  /* std::cout << "Left mouse button DOWN 
+  /* std::cout << "Left mouse button DOWN
      (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnLeftMouseUp(int x, int y) {
-  /* std::cout << "Left mouse button UP 
+  /* std::cout << "Left mouse button UP
      (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnRightMouseDown(int x, int y) {
-  /* std::cout << "Right mouse button DOWN 
+  /* std::cout << "Right mouse button DOWN
      (" << x << ", " << y << ")\n"; */
 }
 
 void GraphicsArenaViewer::OnRightMouseUp(int x, int y) {
-  /* std::cout << "Right mouse button UP 
+  /* std::cout << "Right mouse button UP
      (" << x << ", " << y << ")" << std::endl; */
 }
 
 void GraphicsArenaViewer::OnKeyDown(const char *c, int modifiers) {
-  /* std::cout << "Key DOWN (" << c << ") modifiers=" 
+  /* std::cout << "Key DOWN (" << c << ") modifiers="
      << modifiers << std::endl; */
 }
 
 void GraphicsArenaViewer::OnKeyUp(const char *c, int modifiers) {
-  /* std::cout << "Key UP (" << c << ") modifiers=" 
+  /* std::cout << "Key UP (" << c << ") modifiers="
      << modifiers << std::endl; */
 }
 
@@ -169,6 +169,7 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
   nvgSave(ctx);
   nvgTranslate(ctx, robot->get_pos().x(), robot->get_pos().y());
   nvgRotate(ctx, robot->heading_angle());
+  //MULTIPLY ROBOT->HEADING_ANGLE() BY PI/180
 
   //  robot's circle
   nvgBeginPath(ctx);
