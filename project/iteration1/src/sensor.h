@@ -41,14 +41,14 @@ class Sensor {
    *
    * @return `true` if sensor is activated. `false` if sensor is deactivated.
    */
-  bool activated() const { return activated_; }
+  bool get_activated() const { return activated_; }
 
   /**
    * @brief Setter method for sensor status.
    *
    * @param value The new sensor activation status.
    */
-  void activated(bool value) { activated_ = value; }
+  void set_activated(bool value) { activated_ = value; }
 
   /**
    * @brief Reset the sensor to its newly constructed state.

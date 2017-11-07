@@ -56,14 +56,14 @@ class ArenaMobileEntity : public ArenaEntity {
    *
    * @return The current heading angle of the entity.
    */
-  virtual double heading_angle() const = 0;
+  virtual double get_heading_angle() const = 0;
 
   /**
    * @brief Setter method for the entity's heading angle.
    *
    * @param heading_angle The new heading angle of the entity.
    */
-  virtual void heading_angle(double heading_angle) = 0;
+  virtual void set_heading_angle(double heading_angle) = 0;
 
   /**
    * @brief Getter method for the entity's speed.
@@ -92,27 +92,7 @@ class ArenaMobileEntity : public ArenaEntity {
    * @return The minimum distance between 2 Arena entities before collision
    * occurs.
    */
-  double collision_delta() const { return collision_delta_; }
-
-  /**
-   * @brief Duplicate getter method for the entity's speed. Added to pass
-   * unit tests.
-   *
-   * @return The current speed of the entity.
-   *
-   * @todo remove at iteration 2, only keep get_speed
-   */
-  virtual double speed() const = 0;
-
-  /**
-   * @brief Duplicate setter method for the entity's speed. Added to pass
-   * unit tests.
-   *
-   * @param sp The new speed of the entity.
-   *
-   * @todo remove at iteration 2, only keep set_speed
-   */
-  virtual void speed(double sp) = 0;
+  double get_collision_delta() const { return collision_delta_; }
 
  private:
   double collision_delta_;
