@@ -25,8 +25,8 @@
  */
 struct Position {
  public:
-  Position(void) : x_(0), y_(0) {}
-  Position(double in_x, double in_y) : x_(in_x), y_(in_y) { }
+  Position(void) : x(0), y(0) {}
+  Position(double in_x, double in_y) : x(in_x), y(in_y) { }
 
   double x;
   double y;

@@ -20,15 +20,15 @@ private:
 
 public:
   void set_size(double t);
-  double get_size(void);
+  double get_size();
   void set_color(std::string t);
-  std::string get_color(void);
+  std::string get_color();
   void set_x_pos(double t);
-  double get_x_pos(void);
+  double get_x_pos();
   void set_y_pos(double t);
-  double get_y_pos(void);
+  double get_y_pos();
   void set_velocity(double t);
-  double get_velocity(void);
+  double get_velocity();
   
 };
 

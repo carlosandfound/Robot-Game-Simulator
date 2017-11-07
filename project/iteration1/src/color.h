@@ -4,12 +4,13 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_COLOR_H_
-#define PROJECT_ITERATION1_SRC_COLOR_H_
+#ifndef SRC_COLOR_H_
+#define SRC_COLOR_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#include <nanogui/common.h>
 #include "src/common.h"
 
 /*******************************************************************************
@@ -18,22 +19,49 @@
 NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
- * Class Definitions
+ * Struct Definitions
  ******************************************************************************/
 /**
- * @brief A simple representation of a position of an entity within the arena.
+ * @brief Struct representing a color.
+ *
+ * Internally uses RGBA values to represent the color.
  */
 struct Color {
- public:
-  Color(void) : r(0), g(0), b(0), a(255) {}
-  Color(int in_r, int in_g, int in_b, int in_a)
-    : r(in_r), g(in_g), b(in_b), a(in_a) { }
-  int r;
-  int g;
-  int b;
-  int a;
+  /**
+   * @brief Default constructor.
+   *
+   * Initialize RGBA all to 0.
+   */
+  Color() : r(0), g(0), b(0), a(0) {}
+
+  /**
+   * @brief Constructor for Color.
+   *
+   * @param r_in The R component of the color.
+   * @param g_in The G component of the color.
+   * @param b_in The B component of the color.
+   * @param a_in The A component of the color.
+   */
+  Color(unsigned char r_in,
+        unsigned char g_in,
+        unsigned char b_in,
+        unsigned char a_in) : r(r_in), g(g_in), b(b_in), a(a_in) {}
+
+  /**
+   * @brief Convert this Color to nanogui::Color.
+   *
+   * @return The equivalent nanogui::Color.
+   */
+  nanogui::Color toNanoColor() {
+    return {r, g, b, a};
+  }
+
+  unsigned char r;
+  unsigned char g;
+  unsigned char b;
+  unsigned char a;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_COLOR_H_ */
+#endif  // SRC_COLOR_H_

@@ -4,16 +4,15 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_OBSTACLE_H_
-#define PROJECT_ITERATION1_SRC_OBSTACLE_H_
+#ifndef SRC_OBSTACLE_H_
+#define SRC_OBSTACLE_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
 #include <string>
 #include "src/arena_immobile_entity.h"
-#include "src/color.h"
-
+#include "src/position.h"
 
 /*******************************************************************************
  * Namespaces
@@ -23,12 +22,30 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
-class Obstacle: public ArenaImmobileEntity {
+/**
+ * @brief Class representing an immobile obstacle within the Arena.
+ *
+ * Since obstacles are immobile, the Obstacle class is very simple.
+ */
+class Obstacle : public ArenaImmobileEntity {
  public:
-  Obstacle(double radius, const Position& pos,
-                   const Color& color);
+  /**
+   * @brief Constructor.
+   *
+   * @param radius The radius of the Obstacle.
+   * @param pos The permanent position of the Obstacle.
+   * @param color The color of the Obstacle.
+   */
+  Obstacle(double radius, const Position &pos,
+           const Color &color);
 
-  std::string get_name(void) const override {
+  /**
+   * @brief Get the name of the Obstacle for visualization purposes, and to
+   * aid in debugging.
+   *
+   * @return Name of the Obstacle.
+   */
+  std::string get_name() const override {
     return "Obstacle" + std::to_string(id_);
   }
 
@@ -40,4 +57,4 @@ class Obstacle: public ArenaImmobileEntity {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_OBSTACLE_H_ */
+#endif  // SRC_OBSTACLE_H_

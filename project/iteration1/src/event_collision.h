@@ -4,13 +4,13 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_
-#define PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_
+#ifndef SRC_EVENT_COLLISION_H_
+#define SRC_EVENT_COLLISION_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include <stdlib.h>
+#include <cstdlib>
 #include "src/event_base_class.h"
 #include "src/position.h"
 
@@ -23,35 +23,76 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief A collision event class, which is created after a
- * \ref MobileArenaEntity gets within a specified distance of another entity in
- * the arena, OR when an entity that was previously within the collision delta
- * of other entity outside of that threshold.
+ * @brief A collision event class, which is used after a ArenaMobileEntity
+ * gets within a specified distance of another entity in the Arena.
  */
 class EventCollision : public EventBaseClass {
  public:
-  EventCollision(void);
-  void EmitMessage(void) override;
+  /**
+   * @brief Default constructor.
+   */
+  EventCollision();
 
   /**
-   * @brief If \c TRUE, then this instance represents an active collision
-   * event. If \c FALSE, then it represents a previous collision event that has
+   * @brief Each event, upon its firing/processing, should emit a message to
+   * the user on `stdout` saying what happened, in order to
+   * aid debugging.
+   *
+   * Reports the point of contact (on the perimeter of the ArenaMobileEntity)
+   * and the angle of contact (relative to the ArenaMobileEntity).
+   */
+  void EmitMessage() const override;
+
+  /**
+   * @brief Getter method for collision status.
+   *
+   * @return `true` when this instance represents an active collision
+   * event. `false` when it represents a previous collision event that has
    * been resolved.
    */
-  bool collided(void) const { return collided_; }
+  bool collided() const { return collided_; }
+
+  /**
+   * @brief Setter method for collision status.
+   *
+   * @param c The new collision status.
+   */
   void collided(bool c) { collided_ = c; }
 
   /**
-   * @brief The point in the arena at which the entities have collided/touched.
+   * @brief Getter method for the point of contact.
+   *
+   * @return The point in the Arena at which the entities have collided/touched.
    */
-  Position point_of_contact(void) const { return point_of_contact_; }
+  Position point_of_contact() const { return point_of_contact_; }
+
+  /**
+   * @brief Setter method for the point of contact.
+   *
+   * @param p The point in the Arena at which the entities have collided.
+   *
+   * Should only be used by the class handling collision detection (that is,
+   * Arena).
+   */
   void point_of_contact(Position p) { point_of_contact_ = p; }
 
   /**
-   * @brief The angle, in degrees, as specified on the unit circle, that the
-   * collision occurred at. Needed to calculate the outgoing/bounceback angle.
+   * @brief Getter method for the angle of contact.
+   *
+   * @return The angle, in degrees, as specified on the unit circle, that the
+   * collision occurred at. Needed to calculate the bounce angle.
    */
-  double angle_of_contact(void) const { return angle_of_contact_; }
+  double angle_of_contact() const { return angle_of_contact_; }
+
+  /**
+   * @brief Setter method for the angle of contact.
+   *
+   * @param aoc The angle, in degrees, as specified on the unit circle, that the
+   * collision occurred at. Needed to calculate the bounce angle.
+   *
+   * Should only be used by the class handling collision detection (that is,
+   * Arena).
+   */
   void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
  private:
@@ -62,4 +103,4 @@ class EventCollision : public EventBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_COLLISION_H_ */
+#endif /* SRC_EVENT_COLLISION_H_ */

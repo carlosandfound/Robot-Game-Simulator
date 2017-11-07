@@ -7,17 +7,10 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "src/graphics_arena_viewer.h"
-#include <iostream>
-#include <string>
 #include <vector>
-
-#include "src/robot.h"
-#include "src/home_base.h"
-#include "src/obstacle.h"
-#include "src/event_keypress.h"
-#include "src/arena.h"
+#include "src/graphics_arena_viewer.h"
 #include "src/arena_params.h"
+#include <iostream>
 
 /*******************************************************************************
  * Namespaces
@@ -25,25 +18,101 @@
 NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
+ * Constants
+ ******************************************************************************/
+// constants for adding the extra game stats menu to the GUI
+const int GUI_MENU_WIDTH = 180;
+const int GUI_MENU_GAP = 10;
+
+/*******************************************************************************
  * Constructors/Destructor
  ******************************************************************************/
 GraphicsArenaViewer::GraphicsArenaViewer(
-  const struct arena_params* const params)
-    : csci3081::GraphicsApp(params->x_dim, params->y_dim, "Robot Simulation"),
-      arena_(new Arena(params)),
-      paused_(false),
-      pause_btn_(nullptr),
-      last_dt(-1) {
-  savedParams = params;
-  nanogui::FormHelper *gui = new nanogui::FormHelper(this);
-  nanogui::ref<nanogui::Window> window = gui->addWindow(Eigen::Vector2i(10, 10),
-                                                       "Simulation Controls");
-  gui->addButton("Restart",
-    std::bind(&GraphicsArenaViewer::OnRestartBtnPressed, this));
-  pause_btn_ = gui->addButton("Pause",
-    std::bind(&GraphicsArenaViewer::OnPauseBtnPressed, this));
+    const struct arena_params *const params) :
+    csci3081::GraphicsApp(
+        params->x_dim + GUI_MENU_WIDTH + GUI_MENU_GAP * 2,
+        params->y_dim,
+        "Robot Simulation"),
+    arena_(new Arena(params)),
+    paused_(false),
+    pause_btn_(nullptr),
+    last_dt(0) {
+  auto *gui = new nanogui::FormHelper(this);
+  nanogui::ref<nanogui::Window> window =
+      gui->addWindow(
+          Eigen::Vector2i(params->x_dim + GUI_MENU_GAP, 10),
+          "Menu");
 
-  last_dt = 0;
+  gui->addGroup("Simulation Control");
+  gui->addButton("Restart",
+                 std::bind(&GraphicsArenaViewer::OnRestartBtnPressed, this));
+  pause_btn_ = gui->addButton("Pause",
+                              std::bind(&GraphicsArenaViewer::OnPauseBtnPressed,
+                                        this));
+
+  gui->addGroup("Game Stats");
+  win_ = new nanogui::IntBox<int>(window);
+  lose_ = new nanogui::IntBox<int>(window);
+  win_->setFixedWidth(50);
+  lose_->setFixedWidth(50);
+  win_->setEditable(false);
+  lose_->setEditable(false);
+  win_->setAlignment(nanogui::TextBox::Alignment::Center);
+  lose_->setAlignment(nanogui::TextBox::Alignment::Center);
+  gui->addWidget("Win", win_);
+  gui->addWidget("Lose", lose_);
+
+  gui->addGroup("Entity Stats");
+  //robot_battery_ = new nanogui::ProgressBar(window);
+  //robot_battery_->setFixedWidth(50);
+  //robot_battery_->setValue(1);
+  //gui->addWidget("Robot Battery", robot_battery_);
+  robot_pos_x_ = new nanogui::IntBox<int>(window);
+  robot_pos_y_ = new nanogui::IntBox<int>(window);
+  robot_speed_ = new nanogui::IntBox<int>(window);
+  robot_angle_ = new nanogui::IntBox<int>(window);
+  robot_battery_text_ = new nanogui::IntBox<int>(window);
+  home_pos_x_ = new nanogui::IntBox<int>(window);
+  home_pos_y_ = new nanogui::IntBox<int>(window);
+  home_speed_ = new nanogui::IntBox<int>(window);
+  home_angle_ = new nanogui::IntBox<int>(window);
+  robot_pos_x_->setFixedWidth(50);
+  robot_pos_y_->setFixedWidth(50);
+  robot_speed_->setFixedWidth(50);
+  robot_angle_->setFixedWidth(50);
+  robot_battery_text_->setFixedWidth(50);
+  home_pos_x_->setFixedWidth(50);
+  home_pos_y_->setFixedWidth(50);
+  home_speed_->setFixedWidth(50);
+  home_angle_->setFixedWidth(50);
+  robot_pos_x_->setEditable(false);
+  robot_pos_y_->setEditable(false);
+  robot_speed_->setEditable(false);
+  robot_angle_->setEditable(false);
+  robot_battery_text_->setEditable(false);
+  home_pos_x_->setEditable(false);
+  home_pos_y_->setEditable(false);
+  home_speed_->setEditable(false);
+  home_angle_->setEditable(false);
+  robot_pos_x_->setAlignment(nanogui::TextBox::Alignment::Center);
+  robot_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
+  robot_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
+  robot_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
+  robot_battery_text_->setAlignment(nanogui::TextBox::Alignment::Center);
+  home_pos_x_->setAlignment(nanogui::TextBox::Alignment::Center);
+  home_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
+  home_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
+  home_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
+  gui->addWidget("Robot.x", robot_pos_x_);
+  gui->addWidget("Robot.y", robot_pos_y_);
+  gui->addWidget("Robot.speed", robot_speed_);
+  gui->addWidget("Robot.angle", robot_angle_);
+  gui->addWidget("Robot.battery", robot_battery_text_);
+  gui->addWidget("HomeBase.x", home_pos_x_);
+  gui->addWidget("HomeBase.y", home_pos_y_);
+  gui->addWidget("HomeBase.speed", home_speed_);
+  gui->addWidget("HomeBase.angle", home_angle_);
+
   performLayout();
 }
 
@@ -51,49 +120,52 @@ GraphicsArenaViewer::GraphicsArenaViewer(
  * Member Functions
  ******************************************************************************/
 
-//  This is the primary driver for state change in the arena.
-//  It will be called at each iteration of nanogui::mainloop()
-
-/**
- * At each iteration, check whether the battery of the robot is empty to
- * determine whether or not game is lost.
- * It's also checked if robot has hit home base to determine whether ot not the
- * user has won the game.
- * If either case occurs, print the message in place of the pause button,
- * pause the game, and let the user decide whether or not to restart the game.
- */
+// This is the primary driver for state change in the arena.
+// It will be called at each iteration of nanogui::mainloop()
 void GraphicsArenaViewer::UpdateSimulation(double dt) {
-  if (arena_ -> isEmpty()) {
-    pause_btn_ -> setCaption("You Lost!");
-    paused_ = true;
-  } else if (arena_ -> hitHome()) {
-    pause_btn_ -> setCaption("You Won!");
-    paused_ = true;
-  }
   if (!paused_) {
-    if ((last_dt + dt) > .05) {
-      arena_->AdvanceTime(dt+last_dt);
-      last_dt = 0;
-    } else {
+    if ((last_dt + dt) <= .05) {
       last_dt += dt;
+      return;
     }
+
+    last_dt = 0;
+    arena_->AdvanceTime(dt);
+    win_->setValue(arena_->win());
+    lose_->setValue(arena_->lose());
+    // use IntBox and static_cast for these stats
+    // because double values take up too much space on the GUI
+    robot_pos_x_->setValue(
+        static_cast<int>(arena_->robot()->get_pos().x));
+    robot_pos_y_->setValue(
+        static_cast<int>(arena_->robot()->get_pos().y));
+    robot_speed_->setValue(
+        static_cast<int>(arena_->robot()->get_speed()));
+    robot_angle_->setValue(
+        static_cast<int>(arena_->robot()->heading_angle()));
+        std::cout << arena_->robot()->battery_level() << '\n';
+    robot_battery_text_->setValue(
+        static_cast<int>(arena_->robot()->battery_level()));
+    home_pos_x_->setValue(
+        static_cast<int>(arena_->home_base()->get_pos().x));
+    home_pos_y_->setValue(
+        static_cast<int>(arena_->home_base()->get_pos().y));
+    home_speed_->setValue(
+        static_cast<int>(arena_->home_base()->get_speed()));
+    home_angle_->setValue(
+        static_cast<int>(arena_->home_base()->heading_angle()));
+    //robot_battery_->setValue(
+      //  static_cast<float>(
+        //    arena_->robot()->battery_level() /
+          //      arena_->robot()->max_battery_level()));
   }
 }
 
 /*******************************************************************************
  * Handlers for User Keyboard and Mouse Events
  ******************************************************************************/
-/**
- * When game is restarted, the game is paused so the user decides when to
- * start playing the game. The game is restarted by deleting the old arena and
- * creating a new one that has all the saved parameters from the previous
- * arena
- */
 void GraphicsArenaViewer::OnRestartBtnPressed() {
-  paused_ = true;
-  pause_btn_->setCaption("Play");
-  delete arena_;
-  Arena * newArena = new Arena(savedParams);
+  arena_->Reset();
 }
 
 void GraphicsArenaViewer::OnPauseBtnPressed() {
@@ -105,138 +177,128 @@ void GraphicsArenaViewer::OnPauseBtnPressed() {
   }
 }
 
-void GraphicsArenaViewer::OnMouseMove(int x, int y) {
-  /* std::cout << "Mouse moved to
-     (" << x << ", " << y << ")" << std::endl; */
+void GraphicsArenaViewer::OnMouseMove(__unused int x, __unused int y) {
 }
 
-void GraphicsArenaViewer::OnLeftMouseDown(int x, int y) {
-  /* std::cout << "Left mouse button DOWN
-     (" << x << ", " << y << ")" << std::endl; */
+void GraphicsArenaViewer::OnLeftMouseDown(__unused int x, __unused int y) {
 }
 
-void GraphicsArenaViewer::OnLeftMouseUp(int x, int y) {
-  /* std::cout << "Left mouse button UP
-     (" << x << ", " << y << ")" << std::endl; */
+void GraphicsArenaViewer::OnLeftMouseUp(__unused int x, __unused int y) {
 }
 
-void GraphicsArenaViewer::OnRightMouseDown(int x, int y) {
-  /* std::cout << "Right mouse button DOWN
-     (" << x << ", " << y << ")\n"; */
+void GraphicsArenaViewer::OnRightMouseDown(__unused int x, __unused int y) {
 }
 
-void GraphicsArenaViewer::OnRightMouseUp(int x, int y) {
-  /* std::cout << "Right mouse button UP
-     (" << x << ", " << y << ")" << std::endl; */
+void GraphicsArenaViewer::OnRightMouseUp(__unused int x, __unused int y) {
 }
 
-void GraphicsArenaViewer::OnKeyDown(const char *c, int modifiers) {
-  /* std::cout << "Key DOWN (" << c << ") modifiers="
-     << modifiers << std::endl; */
+void GraphicsArenaViewer::OnKeyDown(__unused const char *c,
+                                    __unused int modifiers) {
 }
 
-void GraphicsArenaViewer::OnKeyUp(const char *c, int modifiers) {
-  /* std::cout << "Key UP (" << c << ") modifiers="
-     << modifiers << std::endl; */
+void GraphicsArenaViewer::OnKeyUp(__unused const char *c,
+                                  __unused int modifiers) {
 }
 
-/**
- * @brief each time an arrow key is pressed, the keypress is translated to the
- * appropriate command for the robot motion handler
- */
-
-void GraphicsArenaViewer::OnSpecialKeyDown(int key, int scancode,
-  int modifiers) {
+void GraphicsArenaViewer::OnSpecialKeyDown(int key,
+                                           __unused int scancode,
+                                           __unused int modifiers) {
   EventKeypress e(key);
   arena_->Accept(&e);
-  /* std::cout << "Special Key =" << key << " scancode=" << scancode
-     << " modifiers=" << modifiers << std::endl; */
 }
 
-void GraphicsArenaViewer::OnSpecialKeyUp(int key, int scancode, int modifiers) {
-  EventKeypress e(key);
-  arena_->Accept(&e);
-  /* std::cout << "Special Key =" << key << " scancode=" << scancode
-     << " modifiers=" << modifiers << std::endl; */
+void GraphicsArenaViewer::OnSpecialKeyUp(__unused int key,
+                                         __unused int scancode,
+                                         __unused int modifiers) {
 }
 
 /*******************************************************************************
  * Drawing of Entities in Arena
  ******************************************************************************/
-void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot* const robot) {
-  //  translate and rotate all graphics calls that follow so that they are
-  //  centered, at the position and heading for this robot
+void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot *const robot) {
+  // translate and rotate all graphics calls that follow so that they are
+  // centered, at the position and heading of this robot
   nvgSave(ctx);
-  nvgTranslate(ctx, robot->get_pos().x(), robot->get_pos().y());
-  nvgRotate(ctx, robot->heading_angle());
-  //MULTIPLY ROBOT->HEADING_ANGLE() BY PI/180
+  nvgTranslate(ctx,
+               static_cast<float>(robot->get_pos().x),
+               static_cast<float>(robot->get_pos().y));
+  nvgRotate(ctx,
+            static_cast<float>(robot->heading_angle() * M_PI / 180.0));
 
-  //  robot's circle
+  // robot's circle
   nvgBeginPath(ctx);
-  nvgCircle(ctx, 0.0, 0.0, robot->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(robot->get_color().r),
-                            static_cast<int>(robot->get_color().g),
-                            static_cast<int>(robot->get_color().b),
-                            255));
+  nvgCircle(ctx, 0.0, 0.0, static_cast<float>(robot->radius()));
+  nvgFillColor(ctx,
+               nvgRGBA(robot->get_color().r, robot->get_color().g,
+                       robot->get_color().b, robot->get_color().a));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
 
   // robot id text label
   nvgSave(ctx);
-  nvgRotate(ctx, M_PI / 2.0);
+  nvgRotate(ctx, static_cast<float>(M_PI / 2.0));
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, 0.0, 5.0, robot->get_name().c_str(), NULL);
-  nvgText(ctx, 0.0, 20.0, robot->get_battery_level().c_str(), NULL);
+  nvgText(ctx, 0.0, 10.0, robot->get_name().c_str(), nullptr);
   nvgRestore(ctx);
-
   nvgRestore(ctx);
 }
 
 void GraphicsArenaViewer::DrawObstacle(NVGcontext *ctx,
-                                       const Obstacle* const obstacle) {
+                                       const Obstacle *const obstacle) {
   nvgBeginPath(ctx);
-  nvgCircle(ctx, obstacle->get_pos().x(), obstacle->get_pos().y(),
-            obstacle->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(obstacle->get_color().r),
-                            static_cast<int>(obstacle->get_color().g),
-                            static_cast<int>(obstacle->get_color().b),
-                            255));
+  nvgCircle(ctx,
+            static_cast<float>(obstacle->get_pos().x),
+            static_cast<float>(obstacle->get_pos().y),
+            static_cast<float>(obstacle->radius()));
+  nvgFillColor(ctx,
+               nvgRGBA(obstacle->get_color().r, obstacle->get_color().g,
+                       obstacle->get_color().b, obstacle->get_color().a));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
 
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, obstacle->get_pos().x(), obstacle->get_pos().y(),
-          obstacle->get_name().c_str(), NULL);
+  nvgText(ctx,
+          static_cast<float>(obstacle->get_pos().x),
+          static_cast<float>(obstacle->get_pos().y),
+          obstacle->get_name().c_str(), nullptr);
 }
 
+/**
+ * @todo: rotate HomeBase too?
+ */
 void GraphicsArenaViewer::DrawHomeBase(NVGcontext *ctx,
-                               const HomeBase* const home) {
+                                       const HomeBase *const home) {
   nvgBeginPath(ctx);
-  nvgCircle(ctx, home->get_pos().x(), home->get_pos().y(), home->radius());
-  nvgFillColor(ctx, nvgRGBA(static_cast<int>(home->get_color().r),
-                            static_cast<int>(home->get_color().g),
-                            static_cast<int>(home->get_color().b),
-                            255));
+  nvgCircle(ctx,
+            static_cast<float>(home->get_pos().x),
+            static_cast<float>(home->get_pos().y),
+            static_cast<float>(home->radius()));
+  nvgFillColor(ctx,
+               nvgRGBA(home->get_color().r, home->get_color().g,
+                       home->get_color().b, home->get_color().a));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
 
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, home->get_pos().x(), home->get_pos().y(),
-          home->get_name().c_str(), NULL);
+  nvgText(ctx,
+          static_cast<float>(home->get_pos().x),
+          static_cast<float>(home->get_pos().y),
+          home->get_name().c_str(),
+          nullptr);
 }
 
 void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
-  //  initialize text rendering settings
+  // initialize text rendering settings
   nvgFontSize(ctx, 18.0f);
   nvgFontFace(ctx, "sans-bold");
   nvgTextAlign(ctx, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
 
-  std::vector<Obstacle*> obstacles = arena_->obstacles();
-  for (size_t i = 0; i < obstacles.size(); i++) {
-    DrawObstacle(ctx, obstacles[i]);
+  std::vector<Obstacle *> obstacles = arena_->obstacles();
+  for (auto &obstacle : obstacles) {
+    DrawObstacle(ctx, obstacle);
   } /* for(i..) */
 
   DrawRobot(ctx, arena_->robot());
