@@ -8,8 +8,6 @@
  * Includes
  ******************************************************************************/
 #include "src/obstacle.h"
-#include "src/color.h"
-
 
 /*******************************************************************************
  * Namespaces
@@ -24,8 +22,8 @@ uint Obstacle::next_id_ = 0;
 /*******************************************************************************
  * Constructors/Destructor
  ******************************************************************************/
-Obstacle::Obstacle(double radius, const Position& pos,
-                                   const Color& color) :
+Obstacle::Obstacle(double radius, const Position &pos,
+                   const Color &color) :
     ArenaImmobileEntity(radius, pos, color),
     id_(-1) {
   id_ = next_id_++;

@@ -4,13 +4,13 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_RECHARGE_H_
-#define PROJECT_ITERATION1_SRC_EVENT_RECHARGE_H_
+#ifndef SRC_EVENT_RECHARGE_H_
+#define SRC_EVENT_RECHARGE_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include <stdio.h>
+#include <cstdio>
 #include "src/event_base_class.h"
 
 /*******************************************************************************
@@ -22,16 +22,26 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief An event representing an encounter (really a collision) that a robot
- * has with a \ref RechargeStation.
+ * @brief An event representing an encounter (really a collision) that a Robot
+ * has with a RechargeStation.
  */
 class EventRecharge : public EventBaseClass {
  public:
-  EventRecharge(void) {}
+  /**
+   * @brief Default constructor.
+   */
+  EventRecharge() = default;
 
-  void EmitMessage(void) override { printf("Robot Battery recharged!\n"); }
+  /**
+   * @brief Each event, upon its firing/processing, should emit a message to
+   * the user on `stdout` saying what happened, in order to
+   * aid debugging.
+   *
+   * Simply reports that the Robot's battery is recharged.
+   */
+  void EmitMessage() const override { printf("Robot Battery recharged!\n"); }
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_RECHARGE_H_ */
+#endif  // SRC_EVENT_RECHARGE_H_

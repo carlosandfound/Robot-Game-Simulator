@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Namespaces
  ******************************************************************************/
-// NAMESPACE_BEGIN(csci3081);
+ NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
  * Class Definitions
@@ -23,27 +23,16 @@
 /**
  * @brief A simple representation of a position of an entity within the arena.
  */
-class Position {
+struct Position {
  public:
-  Position(void) : x_(0), y_(0) {}
-  Position(int in_x, int in_y) : x_(in_x), y_(in_y) { }
+  Position(void) : x(0), y(0) {}
+  Position(double in_x, double in_y) : x(in_x), y(in_y) { }
 
-  int x(void) const { return x_; }
-  int y(void) const { return y_; }
-  void x(double x) { x_ = x; }
-  void y(double y) { y_ = y; }
-
-  Position& operator=(const Position& other) {
-    this->x_ = other.x_;
-    this->y_ = other.y_;
-    return *this;
-  }
-
- private:
-  int x_;
-  int y_;
+  
+  double x;
+  double y;
 };
 
-//  NAMESPACE_END(csci3081);
+NAMESPACE_END(csci3081);
 
 #endif  //  PROJECT_ITERATION1_SRC_POSITION_H_

@@ -1,5 +1,5 @@
 /**
- * @file actuator_cmd_event.cc
+ * @file event_command.cc
  *
  * @copyright 2017 3081 Staff, All rights reserved.
  */
@@ -8,7 +8,6 @@
  * Includes
  ******************************************************************************/
 #include "src/event_command.h"
-#include "src/robot.h"
 
 /*******************************************************************************
  * Namespaces

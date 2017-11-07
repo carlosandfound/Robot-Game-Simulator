@@ -4,17 +4,18 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_HOME_BASE_H_
-#define PROJECT_ITERATION1_SRC_HOME_BASE_H_
+#ifndef SRC_HOME_BASE_H_
+#define SRC_HOME_BASE_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-
 #include <string>
 #include "src/home_base_params.h"
 #include "src/arena_mobile_entity.h"
-#include "src/robot.h"
+#include "src/robot_motion_handler.h"
+#include "src/robot_motion_behavior.h"
+#include "src/sensor_touch.h"
 
 /*******************************************************************************
  * Namespaces
@@ -25,18 +26,96 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief The goal the the robot is trying to drive to within the arena.
+ * @brief Class representing a mobile home base within the Arena.
  *
- * HomeBase now inherits from robot to become a mobile entity.
+ * HomeBase is the goal of the game. Once the Robot of the player has touched
+ * the HomeBase, the player has won and the Arena is reset.
+ *
+ * HomeBase have the capability of updating their own position when asked, and
+ * also track their own velocity and heading. They have a touch sensor for
+ * responding to collision events which is activated/deactivated on collision
+ * events.
+ *
+ * HomeBase differs from Robot mainly in that 1) it does not have a battery
+ * (so it can keep moving forever) AND 2) it does not take keypress commands
+ * from the player.
  */
-
-class HomeBase: public Robot {
+class HomeBase : public ArenaMobileEntity {
  public:
-  explicit HomeBase(const struct robot_params* const params) :
-    Robot(params) {}
-  std::string get_name(void) const override { return "Home Base"; }
+  /**
+   * @brief Constructor.
+   *
+   * @param params A home_base_params passed down from main.cc for the
+   * initialization of the HomeBase.
+   */
+  explicit HomeBase(const struct home_base_params *const params);
+
+  /**
+   * @brief Reset the HomeBase using the initialization parameters received
+   * by the constructor.
+   */
+  void Reset() override;
+
+  /**
+   * @brief Update the HomeBase's position and velocity after the specified
+   * duration has passed.
+   *
+   * @param dt The # of timesteps that have elapsed since the last update.
+   */
+  void TimestepUpdate(uint dt) override;
+
+  /**
+   * @brief Getter method for the HomeBase's heading angle.
+   *
+   * @return The current heading angle of the HomeBase.
+   */
+  double get_heading_angle() const override {
+    return motion_handler_.get_heading_angle();
+  }
+
+  /**
+   * @brief Setter method for the HomeBase's heading angle.
+   *
+   * @param ha The new heading angle of the HomeBase.
+   */
+  void set_heading_angle(double ha) override { motion_handler_.set_heading_angle(ha); }
+
+  /**
+   * @brief Getter method for the HomeBase's speed.
+   *
+   * @return The current speed of the HomeBase.
+   */
+  double get_speed() const override { return motion_handler_.get_speed(); }
+
+  /**
+   * @brief Setter method for the HomeBase's speed.
+   *
+   * @param speed The new speed of the HomeBase.
+   */
+  void set_speed(double speed) override { motion_handler_.set_speed(speed); }
+
+  /**
+   * @brief Accept a EventCollision and update the HomeBase appropriately.
+   *
+   * @param e The collision event.
+   */
+  void Accept(const EventCollision *const e) override;
+
+  /**
+   * @brief Get the name of the HomeBase for visualization purposes, and to
+   * aid in debugging.
+   *
+   * @return Name of the HomeBase.
+   */
+  std::string get_name() const override { return "Home Base"; }
+
+ private:
+  Position initial_pos_;  // initial position of the Robot, used by Reset()
+  RobotMotionHandler motion_handler_;
+  RobotMotionBehavior motion_behavior_;
+  SensorTouch sensor_touch_;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_HOME_BASE_H_ */
+#endif  // SRC_HOME_BASE_H_
