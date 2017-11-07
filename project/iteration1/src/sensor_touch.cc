@@ -29,17 +29,17 @@ SensorTouch::SensorTouch() :
 
 void SensorTouch::Accept(const EventCollision *const e) {
   // Determine if the sensor is activated or deactivated.
-  if (e->collided()) {
-    activated(true);
-    point_of_contact_ = e->point_of_contact();
-    angle_of_contact_ = e->angle_of_contact();
+  if (e->get_collided()) {
+    set_activated(true);
+    point_of_contact_ = e->get_point_of_contact();
+    angle_of_contact_ = e->get_angle_of_contact();
   } else {
-    activated(false);
+    set_activated(false);
   }
 }
 
 void SensorTouch::Reset() {
-  activated(false);
+  set_activated(false);
 } /* reset() */
 
 NAMESPACE_END(csci3081);
