@@ -103,22 +103,22 @@ class Robot : public ArenaMobileEntity {
    *
    * @return The current battery level of the Robot.
    */
-  double battery_level() { return battery_.level(); }
+  double get_battery_level() { return battery_.get_level(); }
 
   /**
    * @brief Getter method for the Robot's max battery level.
    *
    * @return The max battery level of the Robot.
    */
-  double max_battery_level() { return battery_.max_level(); }
+  double get_max_battery_level() { return battery_.get_max_level(); }
 
   /**
    * @brief Getter method for the Robot's heading angle.
    *
    * @return The current heading angle of the Robot.
    */
-  double heading_angle() const override {
-    return motion_handler_.heading_angle();
+  double get_heading_angle() const override {
+    return motion_handler_.get_heading_angle();
   }
 
   /**
@@ -126,21 +126,21 @@ class Robot : public ArenaMobileEntity {
    *
    * @param ha The new heading angle of the Robot.
    */
-  void heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
+  void set_heading_angle(double ha) override { motion_handler_.set_heading_angle(ha); }
 
   /**
    * @brief Getter method for the Robot's speed.
    *
    * @return The current speed of the Robot.
    */
-  double get_speed() const override { return motion_handler_.speed(); }
+  double get_speed() const override { return motion_handler_.get_speed(); }
 
   /**
    * @brief Setter method for the Robot's speed.
    *
    * @param sp The new speed of the Robot.
    */
-  void set_speed(double sp) override { motion_handler_.speed(sp); }
+  void set_speed(double sp) override { motion_handler_.set_speed(sp); }
 
   /**
    * @brief Get the name of the Robot for visualization purposes, and to
@@ -151,26 +151,6 @@ class Robot : public ArenaMobileEntity {
   std::string get_name() const override {
     return "Robot" + std::to_string(id_);
   }
-
-  /**
-   * @brief Duplicate getter method for the Robot's speed. Added to pass
-   * unit tests.
-   *
-   * @return The current speed of the Robot.
-   *
-   * @todo remove at iteration 2, only keep get_speed
-   */
-  double speed() const override { return motion_handler_.speed(); }
-
-  /**
-   * @brief Duplicate setter method for the Robot's speed. Added to pass
-   * unit tests.
-   *
-   * @param sp The new speed of the Robot.
-   *
-   * @todo remove at iteration 2, only keep set_speed
-   */
-  void speed(double sp) override { motion_handler_.speed(sp); }
 
  private:
   static unsigned int next_id_;

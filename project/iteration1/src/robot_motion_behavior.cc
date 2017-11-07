@@ -26,9 +26,9 @@ void RobotMotionBehavior::UpdatePosition(ArenaMobileEntity *const ent,
 
   // Movement is always along the heading_angle (i.e. the hypotenuse)
   double new_x = new_pos.x +
-      cos(ent->heading_angle() * M_PI / 180.0) * ent->get_speed() * dt;
+      cos(ent->get_heading_angle() * M_PI / 180.0) * ent->get_speed() * dt;
   double new_y = new_pos.y +
-      sin(ent->heading_angle() * M_PI / 180.0) * ent->get_speed() * dt;
+      sin(ent->get_heading_angle() * M_PI / 180.0) * ent->get_speed() * dt;
 
   new_pos.x = new_x;
   new_pos.y = new_y;

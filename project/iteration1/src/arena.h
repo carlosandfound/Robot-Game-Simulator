@@ -86,14 +86,14 @@ class Arena {
    *
    * @return # of robots in Arena.
    */
-  unsigned int n_robots() const { return n_robots_; }
+  unsigned int get_n_robots() const { return n_robots_; }
 
   /**
    * @brief Get # of obstacles in Arena.
    *
    * @return # of obstacles in Arena.
    */
-  unsigned int n_obstacles() const { return n_obstacles_; }
+  unsigned int get_n_obstacles() const { return n_obstacles_; }
 
   /**
    * @brief Get a list of all obstacles (Obstacle) (i.e. non-mobile entities in
@@ -101,14 +101,14 @@ class Arena {
    *
    * @return Pointers to obstacles in a vector.
    */
-  std::vector<class Obstacle *> obstacles();
+  std::vector<class Obstacle *> get_obstacles();
 
   /**
    * @brief Get a list of all mobile entities (ArenaMobileEntity) in Arena.
    *
    * @return Pointers to mobile entities in a vector.
    */
-  std::vector<class ArenaMobileEntity *> mobile_entities()
+  std::vector<class ArenaMobileEntity *> get_mobile_entities()
   { return mobile_entities_; }
 
   /**
@@ -116,21 +116,21 @@ class Arena {
    *
    * @return A pointer to the Robot.
    */
-  class Robot *robot() const { return robot_; }
+  class Robot *get_robot() const { return robot_; }
 
   /**
    * @brief Get the HomeBase (there's only 1) in Arena.
    *
    * @return A pointer to the HomeBase.
    */
-  class HomeBase *home_base() const { return home_base_; }
+  class HomeBase *get_home_base() const { return home_base_; }
 
   /**
    * @brief Get the RechargeStation (there's only 1) in Arena.
    *
    * @return A pointer to the RechargeStation.
    */
-  class RechargeStation *recharge_station() const { return recharge_station_; }
+  class RechargeStation *get_recharge_station() const { return recharge_station_; }
 
   /**
    * @brief Win stats.
@@ -138,7 +138,7 @@ class Arena {
    * @return The number of times the player has won (i.e. touched the HomeBase
    * with his/her Robot).
    */
-  int win() const { return win_; }
+  int get_win() const { return win_; }
 
   /**
    * @brief Lose stats.
@@ -146,7 +146,7 @@ class Arena {
    * @return The number of times the player has lost (i.e. Robot's battery
    * gets completely depleted).
    */
-  int lose() const { return lose_; }
+  int get_lose() const { return lose_; }
 
  private:
   /**

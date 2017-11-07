@@ -201,7 +201,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    *
    * @return The underlying Arena.
    */
-  Arena *arena() const { return arena_; }
+  Arena *get_arena() const { return arena_; }
 
  private:
   /**

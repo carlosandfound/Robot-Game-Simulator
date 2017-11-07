@@ -55,8 +55,8 @@ void RobotMotionHandler::AcceptCommand(enum event_commands cmd) {
 } /* accept_command() */
 
 void RobotMotionHandler::UpdateVelocity(SensorTouch st) {
-  if (st.activated()) {
-    heading_angle_ = -st.angle_of_contact();
+  if (st.get_activated()) {
+    heading_angle_ = -st.get_angle_of_contact();
     speed_ *= 0.9;  // decrease speed 10% if collided
     st.Reset();
   }
