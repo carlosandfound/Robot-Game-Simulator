@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_ROBOT_H_
-#define PROJECT_ITERATION1_SRC_ROBOT_H_
+#ifndef SRC_ROBOT_H_
+#define SRC_ROBOT_H_
 
 /*******************************************************************************
  * Includes
@@ -18,6 +18,7 @@
 #include "src/arena_mobile_entity.h"
 #include "src/event_recharge.h"
 #include "src/event_collision.h"
+#include "src/position.h"
 #include "src/event_command.h"
 
 /*******************************************************************************
@@ -36,25 +37,34 @@ NAMESPACE_BEGIN(csci3081);
  * responding to collision events which is activated/deactivated on collision
  * events.
  *
+ * Robots can take command from the player through keypress. They also have
+ * batteries that will get depleted as they move or collide with other
+ * entities.
  */
 class Robot : public ArenaMobileEntity {
  public:
-  explicit Robot(const struct robot_params* const params);
-
   /**
-   * @brief Reset the robot's battery to full after an encounter with the
-   * recharge station.
+   * @brief Constructor.
+   *
+   * @param params A robot_params passed down from main.cc for the
+   * initialization of the Robot.
    */
-  void ResetBattery(void);
+  explicit Robot(const struct robot_params *const params);
 
   /**
-   * @brief Reset the robot to a newly constructed state (needed for reset
-   * button to work in arena GUI).
+   * @brief Reset the Robot's battery to full after an encounter with the
+   * RechargeStation.
    */
-  void Reset(void) override;
+  void ResetBattery();
 
   /**
-   * @brief Update the robot's position and velocity after the specified
+   * @brief Reset the Robot to a newly constructed state (needed for reset
+   * button to work in GUI).
+   */
+  void Reset() override;
+
+  /**
+   * @brief Update the Robot's position and velocity after the specified
    * duration has passed.
    *
    * @param dt The # of timesteps that have elapsed since the last update.
@@ -68,60 +78,99 @@ class Robot : public ArenaMobileEntity {
    *
    * @param e The recharge event.
    */
-
-  void Accept(const EventRecharge * const e);
+  void Accept(__unused const EventRecharge *const e);
 
   /**
-   * @brief  Pass along a collision event (from arena) to the touch sensor.
+   * @brief Pass along a collision event (from Arena) to the touch sensor.
    *
    * This method provides a framework in which sensors can get different types
-   * of information from different sources. The robot's heading will be updated
+   * of information from different sources. The Robot's heading will be updated
    * to move it away from the incident angle at the point of contact.
    *
    * @param e The collision event.
    */
-  void Accept(const EventCollision * const e) override;
+  void Accept(const EventCollision *const e) override;
 
   /**
-   * @brief Handle user input commands to change the heading or speed.
+   * @brief Handle user input commands to change the Robot's heading or speed.
    *
-   * @param cmd The command to process.
+   * @param e The command to process.
    */
-  void Accept(const EventCommand * const e);
+  void Accept(const EventCommand *const e);
 
   /**
-   * @brief  Pass along a collision event (from arena) to the battery.
+   * @brief Getter method for the Robot's battery level.
    *
-   * This method provides a framework in which the robot's battery can get
-   * information from the collision to deplete the battery by 5.
+   * @return The current battery level of the Robot.
    */
-  void UpdateCharge(const EventCollision * const e);
+  double battery_level() { return battery_.level(); }
 
   /**
-   * @brief register obstacle collision and decrease speed by 1. If the speed
-   * is already 0, don't change it.
+   * @brief Getter method for the Robot's max battery level.
+   *
+   * @return The max battery level of the Robot.
    */
-  void UpdateVelocity(const EventCollision * const e);
+  double max_battery_level() { return battery_.max_level(); }
 
   /**
-   * @brief Get the current battery level of the robot.
+   * @brief Getter method for the Robot's heading angle.
+   *
+   * @return The current heading angle of the Robot.
    */
-  double battery_level(void) { return battery_.level(); }
-  void battery_level(double level) { battery_.set_level(level); }
-  double heading_angle(void) const override {
+  double heading_angle() const override {
     return motion_handler_.heading_angle();
   }
+
+  /**
+   * @brief Setter method for the Robot's heading angle.
+   *
+   * @param ha The new heading angle of the Robot.
+   */
   void heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
-  double speed(void) { return motion_handler_.speed(); }
-  void speed(double sp) { motion_handler_.speed(sp); }
-  double get_speed(void) const override { return motion_handler_.speed(); }
+
+  /**
+   * @brief Getter method for the Robot's speed.
+   *
+   * @return The current speed of the Robot.
+   */
+  double get_speed() const override { return motion_handler_.speed(); }
+
+  /**
+   * @brief Setter method for the Robot's speed.
+   *
+   * @param sp The new speed of the Robot.
+   */
   void set_speed(double sp) override { motion_handler_.speed(sp); }
-  std::string get_name(void) const override {
+
+  /**
+   * @brief Get the name of the Robot for visualization purposes, and to
+   * aid in debugging.
+   *
+   * @return Name of the Robot.
+   */
+  std::string get_name() const override {
     return "Robot" + std::to_string(id_);
   }
-  std::string get_battery_level(void) const {
-    return "Battery: " + std::to_string(battery_.level());
-  }
+
+  /**
+   * @brief Duplicate getter method for the Robot's speed. Added to pass
+   * unit tests.
+   *
+   * @return The current speed of the Robot.
+   *
+   * @todo remove at iteration 2, only keep get_speed
+   */
+  double speed() const override { return motion_handler_.speed(); }
+
+  /**
+   * @brief Duplicate setter method for the Robot's speed. Added to pass
+   * unit tests.
+   *
+   * @param sp The new speed of the Robot.
+   *
+   * @todo remove at iteration 2, only keep set_speed
+   */
+  void speed(double sp) override { motion_handler_.speed(sp); }
 
  private:
   static unsigned int next_id_;
@@ -129,12 +178,14 @@ class Robot : public ArenaMobileEntity {
   int id_;
   double heading_angle_;
   double angle_delta_;
+  double speed_delta_;
   RobotBattery battery_;
   RobotMotionHandler motion_handler_;
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
+  Position initial_pos_;  // initial position of the Robot, used by Reset()
 };
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_ROBOT_H_ */
+#endif  // SRC_ROBOT_H_

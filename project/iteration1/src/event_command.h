@@ -4,13 +4,13 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_
-#define PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_
+#ifndef SRC_EVENT_COMMAND_H_
+#define SRC_EVENT_COMMAND_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include <stdio.h>
+#include <cstdio>
 #include "src/event_base_class.h"
 #include "src/event_commands.h"
 
@@ -28,10 +28,31 @@ NAMESPACE_BEGIN(csci3081);
  */
 class EventCommand : public EventBaseClass {
  public:
+  /**
+   * @brief Constructor.
+   *
+   * @param cmd The command extracted from a EventKeypress.
+   */
   explicit EventCommand(enum event_commands cmd) : cmd_(cmd) {}
 
-  void EmitMessage(void) override { printf("Motion cmd %d received\n", cmd_); }
-  enum event_commands cmd(void) const { return cmd_; }
+  /**
+   * @brief Each event, upon its firing/processing, should emit a message to
+   * the user on `stdout` saying what happened, in order to
+   * aid debugging.
+   *
+   * Reports the command received.
+   */
+  void EmitMessage() const override {
+    printf("Motion cmd %d received\n",
+           cmd_);
+  }
+
+  /**
+   * @brief Getter method for the underlying command.
+   *
+   * @return The keypress command.
+   */
+  enum event_commands cmd() const { return cmd_; }
 
  private:
   enum event_commands cmd_;
@@ -39,4 +60,4 @@ class EventCommand : public EventBaseClass {
 
 NAMESPACE_END(csci3081);
 
-#endif /* PROJECT_ITERATION1_SRC_EVENT_COMMAND_H_ */
+#endif /* SRC_EVENT_COMMAND_H_ */

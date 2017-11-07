@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_
-#define PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_
+#ifndef SRC_GRAPHICS_ARENA_VIEWER_H_
+#define SRC_GRAPHICS_ARENA_VIEWER_H_
 
 /*******************************************************************************
  * Includes
@@ -23,14 +23,14 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- *  @brief An application that uses the cs3081 SimpleGraphics library to open up
+ *  @brief An application that uses the libSimpleGraphics library to open up
  *  a window that includes a few buttons for controlling the simulation and can
  *  be used to draw circles and other computer graphics.
  *
- *  After constructing a new RobotViewer, call Run() to start and run the
- *  application.  Run() will not return until the application window is closed.
- *  Make sure that you call cs3081::InitGraphics() before creating the
- *  RobotViewer app.  Example:
+ *  After constructing a new GraphicsArenaViewer, call Run to start and run the
+ *  application. Run will not return until the application window is closed.
+ *  Make sure that you call cs3081::InitGraphics before creating the
+ *  GraphicsArenaViewer app.  Example:
  *
  *  ```
  *  int main(int argc, char **argv) {
@@ -42,33 +42,51 @@ NAMESPACE_BEGIN(csci3081);
  *  }
  *  ```
  *
- *  While the window is open \ref UpdateSimulation() will be called repeatedly,
- *  once per frame. At each call of this method, it's checked whether or not
- *  the game has been won or lost
+ *  While the window is open UpdateSimulation will be called repeatedly,
+ *  once per frame. Fill this in to update your simulation or perform any other
+ *  processing that should happen over time as the simulation progresses.
  *
- *  Fill in the On*() methods as desired to respond to user input events.
+ *  Fill in the `On*()` methods as desired to respond to user input events.
  *
- *  Fill in the Draw*() methods to draw graphics to the screen using
- *  either the nanovg library or raw OpenGL.
+ *  Fill in the `Draw*()` methods to draw graphics on the screen using
+ *  either the `nanovg` library or raw `OpenGL`.
  */
 class GraphicsArenaViewer : public GraphicsApp {
  public:
-  explicit GraphicsArenaViewer(const struct arena_params* const params);
-  virtual ~GraphicsArenaViewer(void) { delete arena_; }
-
-  void display();
   /**
-   * @brief Informs the arena of the new time, so that it can update.
+   * @brief Constructor.
+   *
+   * @param params A arena_params passed down from main.cc for the
+   * initialization of the Arena and the entities therein.
+   */
+  explicit GraphicsArenaViewer(const struct arena_params *const params);
+
+  /**
+   * @brief Destructor.
+   *
+   * `delete` the contained Arena.
+   */
+  ~GraphicsArenaViewer() override { delete arena_; }
+
+  /**
+   * @brief Informs the Arena of the new time, so that it can update.
+   *
+   * @param dt The new timestep.
    */
   void UpdateSimulation(double dt) override;
 
   /**
    * @brief Handle the user pressing the restart button on the GUI.
+   *
+   * This will reset the Arena, which will in turn reset its entities.
    */
   void OnRestartBtnPressed();
 
   /**
    * @brief Handle the user pressing the pause button on the GUI.
+   *
+   * This will freeze the graphics--no update, until the pause button is
+   * pressed again.
    */
   void OnPauseBtnPressed();
 
@@ -81,7 +99,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] x X position of the cursor.
    * @param[in] y Y position of the cursor.
    */
-  void OnMouseMove(int x, int y) override;
+  void OnMouseMove(__unused int x, __unused int y) override;
 
   /**
    * @brief Called each time the left mouse button is clicked.
@@ -91,7 +109,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] x The X position of the click.
    * @param[in] y The Y position of the click.
    */
-  void OnLeftMouseDown(int x, int y) override;
+  void OnLeftMouseDown(__unused int x, __unused int y) override;
 
   /**
    * @brief Called each time the left mouse button is released.
@@ -101,7 +119,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] x The X position of the release.
    * @param[in] y The Y position of the release.
    */
-  void OnLeftMouseUp(int x, int y) override;
+  void OnLeftMouseUp(__unused int x, __unused int y) override;
 
   /**
    * @brief Called each time the right mouse button is clicked.
@@ -112,7 +130,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] y The Y position of the click.
    */
 
-  void OnRightMouseDown(int x, int y) override;
+  void OnRightMouseDown(__unused int x, __unused int y) override;
 
   /**
    * @brief Called each time the right mouse button is released.
@@ -122,7 +140,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] x The X position of the release.
    * @param[in] y The Y position of the release.
    */
-  void OnRightMouseUp(int x, int y) override;
+  void OnRightMouseUp(__unused int x, __unused int y) override;
 
   /**
    * @brief Called each time a character key is pressed.
@@ -130,7 +148,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] c Character representing a key that was pressed.
    * @param[in] modifiers Any modifier keys that were also pressed.
    */
-  void OnKeyDown(const char *c, int modifiers) override;
+  void OnKeyDown(__unused const char *c, __unused int modifiers) override;
 
   /**
    * @brief Called each time a character key is released.
@@ -138,88 +156,119 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] c Character representing a key that was released.
    * @param[in] modifiers Any modifier keys that were held with the key.
    */
-  void OnKeyUp(const char *c, int modifiers) override;
+  void OnKeyUp(__unused const char *c, __unused int modifiers) override;
 
   /**
    * @brief Called each time a special (non-alphabetic) key is pressed.
    *
    * @param[in] key The key that was pressed.
    * @param[in] scancode The scancode corresponding to the key.
-   * @param[in] modifiers Any modifiers that were also pressed.
+   * @param[in] modifiers Any modifier keys that were also pressed.
    */
-  void OnSpecialKeyDown(int key, int scancode, int modifiers) override;
+  void OnSpecialKeyDown(int key,
+                        __unused int scancode,
+                        __unused int modifiers) override;
 
   /**
    * @brief Called each time a special (non-alphabetic) key is released.
    *
    * @param[in] key The key that was released.
    * @param[in] scancode The scancode corresponding to the key.
-   * @param[in] modifiers Any modifiers that were also pressed.
+   * @param[in] modifiers Any modifier keys that were also pressed.
    */
-  void OnSpecialKeyUp(int key, int scancode, int modifiers) override;
+  void OnSpecialKeyUp(__unused int key,
+                      __unused int scancode,
+                      __unused int modifiers) override;
 
   /**
-   * @brief Draw the arena with all robots, obstacles using nanogui.
+   * @brief Draw the Arena with all of its entities using `nanogui`.
    *
-   * This is the primary driver for drawing all entities in the arena.  It is
-   *  called at each iteration of \ref nanogui::mainloop().
+   * This is the primary driver for drawing all entities in the Arena. It is
+   * called at each iteration of `nanogui::mainloop()`.
    *
    * @param[in] ctx Context for nanogui.
    */
   void DrawUsingNanoVG(NVGcontext *ctx) override;
 
   /**
-   * @brief Draw using OpenGL. This callback had to be defined, but we are doing
-   * all drawing with nanovg in this application, so it is empty.
+   * @brief Draw using `OpenGL`. This method is unimplemented, as currently
+   * we are doing all drawing with `nanovg` in this application, so it is empty.
    */
-  void DrawUsingOpenGL(void) override {}
+  void DrawUsingOpenGL() override {}
 
-  Arena* arena(void) const { return arena_; }
+  /**
+   * @brief Getter method for the contained Arena.
+   *
+   * @return The underlying Arena.
+   */
+  Arena *arena() const { return arena_; }
 
  private:
   /**
-   * @brief Draw a robot using nanogui.
+   * @brief Draw a robot using `nanogui`.
    *
-   * This function requires an active nanovg drawing context (ctx), so it should
-   * probably only be called from with \ref DrawUsingNanoVG().
+   * This function requires an active `nanovg` drawing context (`ctx`), so it
+   * should probably only be called from with DrawUsingNanoVG.
    *
-   * @param[in] ctx The nanogui context.
-   * @param[in] robot The robot handle.
+   * @param[in] ctx The `nanovg` context.
+   * @param[in] robot The Robot handle.
    */
-  void DrawRobot(NVGcontext *ctx, const class Robot* const robot);
+  void DrawRobot(NVGcontext *ctx, const class Robot *const robot);
 
   /**
-   * @brief Draw an obstacle in the arena using nanogui.
+   * @brief Draw an Obstacle in the Arena using `nanogui`.
    *
-   * This function requires an active nanovg drawing context (ctx), so it should
-   * probably only be called from with \ref DrawUsingNanoVG().
+   * This function requires an active `nanovg` drawing context (`ctx`), so it
+   * should probably only be called from with DrawUsingNanoVG.
    *
-   * @param[in] ctx The nanogui context.
-   * @param[in] obstacle The obstacle handle.
+   * @param[in] ctx The `nanovg` context.
+   * @param[in] obstacle The Obstacle handle.
    */
-  void DrawObstacle(NVGcontext *ctx,
-                            const class Obstacle* const obstacle);
+  void DrawObstacle(NVGcontext *ctx, const class Obstacle *const obstacle);
 
   /**
-   * @brief Draw the home base using nanogui.
+   * @brief Draw the HomeBase using `nanogui`.
    *
-   * @param[in] ctx The nanogui context.
-   * @param[in] home The home base handle.
+   * This function requires an active `nanovg` drawing context (`ctx`), so it
+   * should probably only be called from with DrawUsingNanoVG.
+   *
+   * @param[in] ctx The `nanovg` context.
+   * @param[in] home The HomeBase handle.
    */
-  void DrawHomeBase(NVGcontext *ctx, const class HomeBase* const home);
+  void DrawHomeBase(NVGcontext *ctx, const class HomeBase *const home);
+
+  /**
+   * Under certain circumstance, the compiler requires that the assignment
+   * operator is not defined. This `deletes` the default assignment operator.
+   */
+  GraphicsArenaViewer &operator=(const GraphicsArenaViewer &other) = delete;
+
+  /**
+   * Under certain circumstance, the compiler requires that the copy
+   * constructor is not defined. This `deletes` the default copy constructor.
+   */
+  GraphicsArenaViewer(const GraphicsArenaViewer &other) = delete;
 
   Arena *arena_;
   bool paused_;
   nanogui::Button *pause_btn_;
-  const arena_params* savedParams = 0;
-
   double last_dt;
 
-  //  Satisfies compilers warning that the copy constructor should exist.
-  GraphicsArenaViewer& operator=(const GraphicsArenaViewer& other) = delete;
-  GraphicsArenaViewer(const GraphicsArenaViewer& other) = delete;
+  // text fields showing game/simulation stats
+  nanogui::IntBox<int> *win_;
+  nanogui::IntBox<int> *lose_;
+  nanogui::IntBox<int> *robot_pos_x_;
+  nanogui::IntBox<int> *robot_pos_y_;
+  nanogui::IntBox<int> *robot_speed_;
+  nanogui::IntBox<int> *robot_angle_;
+  nanogui::IntBox<int> *robot_battery_text_;
+  nanogui::IntBox<int> *home_pos_x_;
+  nanogui::IntBox<int> *home_pos_y_;
+  nanogui::IntBox<int> *home_speed_;
+  nanogui::IntBox<int> *home_angle_;
+  nanogui::ProgressBar *robot_battery_;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif  //  PROJECT_ITERATION1_SRC_GRAPHICS_ARENA_VIEWER_H_
+#endif  // SRC_GRAPHICS_ARENA_VIEWER_H_
