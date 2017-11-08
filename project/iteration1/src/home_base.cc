@@ -24,9 +24,9 @@ HomeBase::HomeBase(const struct home_base_params *const params) :
     motion_handler_(),
     motion_behavior_(),
     sensor_touch_() {
-  motion_handler_.set_heading_angle(270);
-  motion_handler_.set_speed(5);
-  motion_handler_.set_max_speed(10);
+  motion_handler_.heading_angle(270);
+  motion_handler_.speed(5);
+  motion_handler_.max_speed(10);
 }
 
 /*******************************************************************************
@@ -35,9 +35,9 @@ HomeBase::HomeBase(const struct home_base_params *const params) :
 void HomeBase::Reset() {
   set_pos(initial_pos_);
   motion_handler_.Reset();
-  motion_handler_.set_heading_angle(270);
-  motion_handler_.set_speed(5);
-  motion_handler_.set_max_speed(10);
+  motion_handler_.heading_angle(270);
+  motion_handler_.speed(5);
+  motion_handler_.max_speed(10);
   sensor_touch_.Reset();
 } /* Reset */
 
@@ -56,7 +56,7 @@ void HomeBase::TimestepUpdate(uint dt) {
   // for angle we can just use max_angle() directly because 360
   // degree = 0 degree
   if (random_num(0, 50 + 1) == 0) {
-    motion_handler_.set_heading_angle(random_num(0.0, motion_handler_.get_max_angle()));
+    motion_handler_.heading_angle(random_num(0.0, motion_handler_.max_angle()));
   }
 } /* TimestepUpdate */
 
