@@ -42,7 +42,7 @@ double RobotBattery::Deplete(Position old_pos, Position new_pos, double dt) {
 } /* deplete() */
 
 void RobotBattery::Accept(const EventCollision *const e) {
-  if (e->get_collided()) {
+  if (e->collided()) {
     charge_ -= (max_charge_ * kCOLLISION_DEPLETION);
   }
 }

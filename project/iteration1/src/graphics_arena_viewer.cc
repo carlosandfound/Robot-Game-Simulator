@@ -131,29 +131,29 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
 
     last_dt = 0;
     arena_->AdvanceTime(dt);
-    win_->setValue(arena_->get_win());
-    lose_->setValue(arena_->get_lose());
+    win_->setValue(arena_->win());
+    lose_->setValue(arena_->lose());
     // use IntBox and static_cast for these stats
     // because double values take up too much space on the GUI
     robot_pos_x_->setValue(
-        static_cast<int>(arena_->get_robot()->get_pos().x));
+        static_cast<int>(arena_->robot()->get_pos().x));
     robot_pos_y_->setValue(
-        static_cast<int>(arena_->get_robot()->get_pos().y));
+        static_cast<int>(arena_->robot()->get_pos().y));
     robot_speed_->setValue(
-        static_cast<int>(arena_->get_robot()->get_speed()));
+        static_cast<int>(arena_->robot()->get_speed()));
     robot_angle_->setValue(
-        static_cast<int>(arena_->get_robot()->get_heading_angle()));
-        std::cout << arena_->get_robot()->get_battery_level() << '\n';
+        static_cast<int>(arena_->robot()->get_heading_angle()));
+        std::cout << arena_->robot()->get_battery_level() << '\n';
     robot_battery_text_->setValue(
-        static_cast<int>(arena_->get_robot()->get_battery_level()));
+        static_cast<int>(arena_->robot()->get_battery_level()));
     home_pos_x_->setValue(
-        static_cast<int>(arena_->get_home_base()->get_pos().x));
+        static_cast<int>(arena_->home_base()->get_pos().x));
     home_pos_y_->setValue(
-        static_cast<int>(arena_->get_home_base()->get_pos().y));
+        static_cast<int>(arena_->home_base()->get_pos().y));
     home_speed_->setValue(
-        static_cast<int>(arena_->get_home_base()->get_speed()));
+        static_cast<int>(arena_->home_base()->get_speed()));
     home_angle_->setValue(
-        static_cast<int>(arena_->get_home_base()->get_heading_angle()));
+        static_cast<int>(arena_->home_base()->get_heading_angle()));
     //robot_battery_->setValue(
       //  static_cast<float>(
         //    arena_->robot()->battery_level() /
@@ -296,13 +296,13 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
   nvgFontFace(ctx, "sans-bold");
   nvgTextAlign(ctx, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
 
-  std::vector<Obstacle *> obstacles = arena_->get_obstacles();
+  std::vector<Obstacle *> obstacles = arena_->obstacles();
   for (auto &obstacle : obstacles) {
     DrawObstacle(ctx, obstacle);
   } /* for(i..) */
 
-  DrawRobot(ctx, arena_->get_robot());
-  DrawHomeBase(ctx, arena_->get_home_base());
+  DrawRobot(ctx, arena_->robot());
+  DrawHomeBase(ctx, arena_->home_base());
 }
 
 NAMESPACE_END(csci3081);
