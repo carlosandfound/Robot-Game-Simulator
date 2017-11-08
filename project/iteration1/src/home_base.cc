@@ -25,7 +25,7 @@ HomeBase::HomeBase(const struct home_base_params *const params) :
     motion_behavior_(),
     sensor_touch_() {
   motion_handler_.heading_angle(270);
-  motion_handler_.speed(5);
+  motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
 }
 
@@ -36,7 +36,7 @@ void HomeBase::Reset() {
   set_pos(initial_pos_);
   motion_handler_.Reset();
   motion_handler_.heading_angle(270);
-  motion_handler_.speed(5);
+  motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
 } /* Reset */
