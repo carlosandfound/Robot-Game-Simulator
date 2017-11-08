@@ -74,16 +74,16 @@ void Robot::Accept(const EventCollision *const e) {
 }
 
 void Robot::Accept(const EventCommand *const e) {
-  motion_handler_.AcceptCommand(e->get_cmd());
+  motion_handler_.AcceptCommand(e->cmd());
 } /* event_cmd() */
 
 void Robot::Reset() {
   set_pos(initial_pos_);
   battery_.Reset();
   motion_handler_.Reset();
-  motion_handler_.set_heading_angle(270);
-  motion_handler_.set_speed(5);
-  motion_handler_.set_max_speed(10);
+  motion_handler_.heading_angle(270);
+  motion_handler_.speed(5);
+  motion_handler_.max_speed(10);
   sensor_touch_.Reset();
 } /* Reset() */
 
