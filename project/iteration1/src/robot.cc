@@ -35,11 +35,11 @@ Robot::Robot(const struct robot_params *const params) :
     sensor_touch_(),
     initial_pos_(params->pos) {
   motion_handler_.set_speed(5);
-  motion_handler_.set_heading_angle(270);
-  motion_handler_.set_max_speed(params->max_speed);
-  motion_handler_.set_max_angle(360);
-  motion_handler_.set_speed_delta(params->speed_delta);
-  motion_handler_.set_angle_delta(params->angle_delta);
+  motion_handler_.heading_angle(270);
+  motion_handler_.max_speed(params->max_speed);
+  motion_handler_.max_angle(360);
+  motion_handler_.speed_delta(params->speed_delta);
+  motion_handler_.angle_delta(params->angle_delta);
   id_ = next_id_++;
 }
 
@@ -82,7 +82,7 @@ void Robot::Reset() {
   battery_.Reset();
   motion_handler_.Reset();
   motion_handler_.heading_angle(270);
-  motion_handler_.speed(5);
+  motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
 } /* Reset() */
