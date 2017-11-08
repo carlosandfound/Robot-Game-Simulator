@@ -133,14 +133,14 @@ class Robot : public ArenaMobileEntity {
    *
    * @return The current speed of the Robot.
    */
-  double get_speed() const override { return motion_handler_.speed(); }
+  double get_speed() const override { return motion_handler_.get_speed(); }
 
   /**
    * @brief Setter method for the Robot's speed.
    *
    * @param sp The new speed of the Robot.
    */
-  void set_speed(double sp) override { motion_handler_.speed(sp); }
+  void set_speed(double sp) override { motion_handler_.set_speed(sp); }
 
   /**
    * @brief Get the name of the Robot for visualization purposes, and to
