@@ -39,7 +39,7 @@ void SensorTouch::Accept(const EventCollision *const e) {
 }
 
 void SensorTouch::Reset() {
-  set_activated(false);
+  activated(false);
 } /* reset() */
 
 NAMESPACE_END(csci3081);
