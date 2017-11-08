@@ -67,7 +67,7 @@ class RobotBattery {
    *
    * @return The max battery level.
    */
-  double gmax_level() const { return max_charge_; }
+  double max_level() const { return max_charge_; }
 
   /**
    * @brief Initiate a recharge event by instantly restoring the battery
