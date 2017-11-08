@@ -297,8 +297,8 @@ void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
 
 void Arena::Accept(const EventKeypress *const e) {
   // don't handle unsupported keys
-  if (e->Cmd() != COM_UNKNOWN)
-    robot_->Accept(new EventCommand(e->Cmd()));
+  if (e->GetCmd() != COM_UNKNOWN)
+    robot_->Accept(new EventCommand(e->GetCmd()));
 } /* Accept */
 
 NAMESPACE_END(csci3081);
