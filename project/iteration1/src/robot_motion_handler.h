@@ -88,63 +88,63 @@ class RobotMotionHandler {
    *
    * @return The current heading angle.
    */
-  double get_heading_angle() const { return heading_angle_; }
+  double heading_angle() const { return heading_angle_; }
 
   /**
    * @brief Setter method for heading angle.
    *
    * @param ha The new heading angle.
    */
-  void set_heading_angle(double ha) { heading_angle_ = ha; }
+  void heading_angle(double ha) { heading_angle_ = ha; }
 
   /**
    * @brief Getter method for the maximum speed.
    *
    * @return The current maximum speed.
    */
-  double get_max_speed() const { return max_speed_; }
+  double max_speed() const { return max_speed_; }
 
   /**
    * @brief Setter method for the maximum speed.
    *
    * @param ms The new maximum speed.
    */
-  void set_max_speed(double ms) { max_speed_ = ms; }
+  void max_speed(double ms) { max_speed_ = ms; }
 
   /**
    * @brief Getter method for the maximum angle.
    *
    * @return The current maximum angle.
    */
-  double get_max_angle() const { return max_angle_; }
+  double max_angle() const { return max_angle_; }
 
   /**
    * @brief Setter method for the maximum angle.
    *
    * @param ma The new maximum angle.
    */
-  void set_max_angle(double ma) { max_angle_ = ma; }
+  void max_angle(double ma) { max_angle_ = ma; }
 
   /**
    * @brief Getter method for the speed delta.
    *
    * @return The current speed delta.
    */
-  double get_speed_delta() const { return speed_delta_; }
+  double speed_delta() const { return speed_delta_; }
 
   /**
    * @brief Setter method for the speed delta.
    *
    * @param sd The new speed delta.
    */
-  void set_speed_delta(double sd) { speed_delta_ = sd; }
+  void speed_delta(double sd) { speed_delta_ = sd; }
 
   /**
    * @brief Getter method for the angle delta.
    *
    * @return The current angle delta.
    */
-  double get_angle_delta() const { return angle_delta_; }
+  double angle_delta() const { return angle_delta_; }
 
   /**
    * @brief Setter method for the angle delta.
