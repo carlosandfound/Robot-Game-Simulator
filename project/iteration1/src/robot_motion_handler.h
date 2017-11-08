@@ -151,7 +151,7 @@ class RobotMotionHandler {
    *
    * @param ad The new angle delta.
    */
-  void set_angle_delta(double ad) { angle_delta_ = ad; }
+  void angle_delta(double ad) { angle_delta_ = ad; }
 
  private:
   double heading_angle_;
