@@ -103,14 +103,14 @@ class Robot : public ArenaMobileEntity {
    *
    * @return The current battery level of the Robot.
    */
-  double get_battery_level() { return battery_.get_level(); }
+  double get_battery_level() { return battery_.level(); }
 
   /**
    * @brief Getter method for the Robot's max battery level.
    *
    * @return The max battery level of the Robot.
    */
-  double get_max_battery_level() { return battery_.get_max_level(); }
+  double get_max_battery_level() { return battery_.max_level(); }
 
   /**
    * @brief Getter method for the Robot's heading angle.
@@ -118,7 +118,7 @@ class Robot : public ArenaMobileEntity {
    * @return The current heading angle of the Robot.
    */
   double get_heading_angle() const override {
-    return motion_handler_.get_heading_angle();
+    return motion_handler_.heading_angle();
   }
 
   /**
@@ -126,21 +126,21 @@ class Robot : public ArenaMobileEntity {
    *
    * @param ha The new heading angle of the Robot.
    */
-  void set_heading_angle(double ha) override { motion_handler_.set_heading_angle(ha); }
+  void set_heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
 
   /**
    * @brief Getter method for the Robot's speed.
    *
    * @return The current speed of the Robot.
    */
-  double get_speed() const override { return motion_handler_.get_speed(); }
+  double get_speed() const override { return motion_handler_.speed(); }
 
   /**
    * @brief Setter method for the Robot's speed.
    *
    * @param sp The new speed of the Robot.
    */
-  void set_speed(double sp) override { motion_handler_.set_speed(sp); }
+  void set_speed(double sp) override { motion_handler_.speed(sp); }
 
   /**
    * @brief Get the name of the Robot for visualization purposes, and to
