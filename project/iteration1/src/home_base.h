@@ -85,14 +85,14 @@ class HomeBase : public ArenaMobileEntity {
    *
    * @return The current speed of the HomeBase.
    */
-  double get_speed() const override { return motion_handler_.speed(); }
+  double get_speed() const override { return motion_handler_.get_speed(); }
 
   /**
    * @brief Setter method for the HomeBase's speed.
    *
    * @param speed The new speed of the HomeBase.
    */
-  void set_speed(double speed) override { motion_handler_.speed(speed); }
+  void set_speed(double speed) override { motion_handler_.set_speed(speed); }
 
   /**
    * @brief Accept a EventCollision and update the HomeBase appropriately.
