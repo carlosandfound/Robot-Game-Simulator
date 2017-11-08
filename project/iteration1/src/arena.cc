@@ -117,7 +117,7 @@ void Arena::UpdateEntitiesTimestep() {
   }
 
   for (uint i = 0; i < n_obstacles_; i++) {
-    CheckForEntityCollision(robot_, get_obstacles()[i], &ec,
+    CheckForEntityCollision(robot_, obstacles()[i], &ec,
                             robot_->get_collision_delta());
 
     if (ec.collided()) {
@@ -147,7 +147,7 @@ void Arena::UpdateEntitiesTimestep() {
         if (entities_[i] == ent) {
           continue;
         }
-        CheckForEntityCollision(ent, entities_[i], &ec, ent->collision_delta());
+        CheckForEntityCollision(ent, entities_[i], &ec, ent->get_collision_delta());
         if (ec.collided()) {
           ent->Accept(&ec);
 
