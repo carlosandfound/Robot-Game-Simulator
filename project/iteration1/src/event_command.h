@@ -52,7 +52,7 @@ class EventCommand : public EventBaseClass {
    *
    * @return The keypress command.
    */
-  enum event_commands get_cmd() const { return cmd_; }
+  enum event_commands cmd() const { return cmd_; }
 
  private:
   enum event_commands cmd_;
