@@ -55,7 +55,7 @@ class EventKeypress : public EventBaseClass {
    * Again, mappings found at http://www.glfw.org/docs/latest/group__keys
    * .html are used.
    */
-  enum event_commands get_Cmd() const { return keypress_to_cmd(key_); }
+  enum event_commands GetCmd() const { return keypress_to_cmd(key_); }
 
  private:
   /**

@@ -48,14 +48,14 @@ class SensorTouch : public Sensor {
    *
    * @return The latest point of contact.
    */
-  Position get_point_of_contact() { return point_of_contact_; }
+  Position point_of_contact() { return point_of_contact_; }
 
   /**
    * @brief Setter method for the point of contact.
    *
    * @param p The new point of contact.
    */
-  void set_point_of_contact(Position p) {
+  void point_of_contact(Position p) {
     point_of_contact_ = p;
   }
 
@@ -66,14 +66,14 @@ class SensorTouch : public Sensor {
    *
    * @return The latest angle of contact.
    */
-  double get_angle_of_contact() { return angle_of_contact_; }
+  double angle_of_contact() { return angle_of_contact_; }
 
   /**
    * @brief Setter method for the angle of contact.
    *
    * @param aoc The new angle of contact.
    */
-  void set_angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
+  void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
   /**
    * @brief Compute a new reading based on a collision event.

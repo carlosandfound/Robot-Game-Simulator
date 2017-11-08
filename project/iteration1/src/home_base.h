@@ -70,7 +70,7 @@ class HomeBase : public ArenaMobileEntity {
    * @return The current heading angle of the HomeBase.
    */
   double get_heading_angle() const override {
-    return motion_handler_.get_heading_angle();
+    return motion_handler_.heading_angle();
   }
 
   /**
@@ -78,7 +78,7 @@ class HomeBase : public ArenaMobileEntity {
    *
    * @param ha The new heading angle of the HomeBase.
    */
-  void set_heading_angle(double ha) override { motion_handler_.set_heading_angle(ha); }
+  void set_heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
 
   /**
    * @brief Getter method for the HomeBase's speed.

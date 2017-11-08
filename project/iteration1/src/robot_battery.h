@@ -60,14 +60,14 @@ class RobotBattery {
    *
    * @return The current battery level.
    */
-  double get_level() const { return charge_; }
+  double level() const { return charge_; }
 
   /**
    * @brief Getter method for the max battery level.
    *
    * @return The max battery level.
    */
-  double get_max_level() const { return max_charge_; }
+  double max_level() const { return max_charge_; }
 
   /**
    * @brief Initiate a recharge event by instantly restoring the battery

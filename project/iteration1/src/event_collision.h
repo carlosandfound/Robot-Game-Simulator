@@ -24,7 +24,8 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief A collision event class, which is used after a ArenaMobileEntity
- * gets within a specified distance of another entity in the Arena.
+ * 
+ s within a specified distance of another entity in the Arena.
  */
 class EventCollision : public EventBaseClass {
  public:
@@ -50,21 +51,21 @@ class EventCollision : public EventBaseClass {
    * event. `false` when it represents a previous collision event that has
    * been resolved.
    */
-  bool get_collided() const { return collided_; }
+  bool collided() const { return collided_; }
 
   /**
    * @brief Setter method for collision status.
    *
    * @param c The new collision status.
    */
-  void set_collided(bool c) { collided_ = c; }
+  void collided(bool c) { collided_ = c; }
 
   /**
    * @brief Getter method for the point of contact.
    *
    * @return The point in the Arena at which the entities have collided/touched.
    */
-  Position get_point_of_contact() const { return point_of_contact_; }
+  Position point_of_contact() const { return point_of_contact_; }
 
   /**
    * @brief Setter method for the point of contact.
@@ -74,7 +75,7 @@ class EventCollision : public EventBaseClass {
    * Should only be used by the class handling collision detection (that is,
    * Arena).
    */
-  void set_point_of_contact(Position p) { point_of_contact_ = p; }
+  void point_of_contact(Position p) { point_of_contact_ = p; }
 
   /**
    * @brief Getter method for the angle of contact.
@@ -82,7 +83,7 @@ class EventCollision : public EventBaseClass {
    * @return The angle, in degrees, as specified on the unit circle, that the
    * collision occurred at. Needed to calculate the bounce angle.
    */
-  double get_angle_of_contact() const { return angle_of_contact_; }
+  double angle_of_contact() const { return angle_of_contact_; }
 
   /**
    * @brief Setter method for the angle of contact.
@@ -93,7 +94,7 @@ class EventCollision : public EventBaseClass {
    * Should only be used by the class handling collision detection (that is,
    * Arena).
    */
-  void set_angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
+  void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
  private:
   bool collided_;
