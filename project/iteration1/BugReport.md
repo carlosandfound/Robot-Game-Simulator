@@ -9,8 +9,6 @@ angle of reflection could plugged in under UpdateVelocity() in RobotMotionHandle
 collision event is registered by the sensor. Moreover, then negative angles would be present in
 the simulation instead of always having the heading angle be from 0 to 360.
 
-
-
 One final thing that could have been improved is the limiting of the dimension in which robot
 operates in so that GUI is not in arena. As of right now, an invisible left wall is placed at an
 x-coordinate of 200 so that the arena entities don't interact with the GUI simulation controls.
