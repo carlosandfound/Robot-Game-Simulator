@@ -1,5 +1,5 @@
-#ifndef PROJECT_ITERATION1_SRC_MAINPAGE_H_
-#define PROJECT_ITERATION1_SRC_MAINPAGE_H_
+#ifndef PROJECT_ITERATION2_SRC_MAINPAGE_H_
+#define PROJECT_ITERATION2_SRC_MAINPAGE_H_
 
 /*! \mainpage CSCI3081 Robot Simulator Project
  *
@@ -50,7 +50,7 @@
  * necessary properties to deal with the events in the appropriate manner.
  *
  * The final major component of the project is the robot class because it’s the one being controlled by the user.
- * Composition on the robot is achieved by the robot accepting different arena events and sending those events to other 
+ * Composition on the robot is achieved by the robot accepting different arena events and sending those events to other
  * smaller component classes that it creates and cumulatively form the robot. The first of these smaller classes is
  * RobotBattery, which focuses on controlling the battery level of the robot. Another class is SensorTouch, which
  * inherits from a SensorBaseClass, which acts a sensor that registers collisions and angles of contact on the robot.
@@ -71,4 +71,4 @@
  *
  * etc...
  */
-#endif  // PROJECT_ITERATION1_SRC_MAINPAGE_H_
+#endif  // PROJECT_ITERATION2_SRC_MAINPAGE_H_

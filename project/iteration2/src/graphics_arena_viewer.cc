@@ -10,7 +10,6 @@
 #include <vector>
 #include "src/graphics_arena_viewer.h"
 #include "src/arena_params.h"
-#include <iostream>
 
 /*******************************************************************************
  * Namespaces
@@ -63,10 +62,10 @@ GraphicsArenaViewer::GraphicsArenaViewer(
   gui->addWidget("Lose", lose_);
 
   gui->addGroup("Entity Stats");
-  //robot_battery_ = new nanogui::ProgressBar(window);
-  //robot_battery_->setFixedWidth(50);
-  //robot_battery_->setValue(1);
-  //gui->addWidget("Robot Battery", robot_battery_);
+  // robot_battery_ = new nanogui::ProgressBar(window);
+  // robot_battery_->setFixedWidth(50);
+  // robot_battery_->setValue(1);
+  // gui->addWidget("Robot Battery", robot_battery_);
   robot_pos_x_ = new nanogui::IntBox<int>(window);
   robot_pos_y_ = new nanogui::IntBox<int>(window);
   robot_speed_ = new nanogui::IntBox<int>(window);
@@ -136,16 +135,15 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
     // use IntBox and static_cast for these stats
     // because double values take up too much space on the GUI
     robot_pos_x_->setValue(
-        static_cast<int>(arena_->robot()->get_pos().x));
+        static_cast<int>(arena_->player()->get_pos().x));
     robot_pos_y_->setValue(
-        static_cast<int>(arena_->robot()->get_pos().y));
+        static_cast<int>(arena_->player()->get_pos().y));
     robot_speed_->setValue(
-        static_cast<int>(arena_->robot()->get_speed()));
+        static_cast<int>(arena_->player()->get_speed()));
     robot_angle_->setValue(
-        static_cast<int>(arena_->robot()->get_heading_angle()));
-        std::cout << arena_->robot()->get_battery_level() << '\n';
+        static_cast<int>(arena_->player()->get_heading_angle()));
     robot_battery_text_->setValue(
-        static_cast<int>(arena_->robot()->get_battery_level()));
+        static_cast<int>(arena_->player()->get_battery_level()));
     home_pos_x_->setValue(
         static_cast<int>(arena_->home_base()->get_pos().x));
     home_pos_y_->setValue(
@@ -154,7 +152,7 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
         static_cast<int>(arena_->home_base()->get_speed()));
     home_angle_->setValue(
         static_cast<int>(arena_->home_base()->get_heading_angle()));
-    //robot_battery_->setValue(
+    // robot_battery_->setValue(
       //  static_cast<float>(
         //    arena_->robot()->battery_level() /
           //      arena_->robot()->max_battery_level()));
@@ -215,22 +213,22 @@ void GraphicsArenaViewer::OnSpecialKeyUp(__unused int key,
 /*******************************************************************************
  * Drawing of Entities in Arena
  ******************************************************************************/
-void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot *const robot) {
+void GraphicsArenaViewer::DrawPlayer(NVGcontext *ctx, const Player *const player) {
   // translate and rotate all graphics calls that follow so that they are
   // centered, at the position and heading of this robot
   nvgSave(ctx);
   nvgTranslate(ctx,
-               static_cast<float>(robot->get_pos().x),
-               static_cast<float>(robot->get_pos().y));
+               static_cast<float>(player->get_pos().x),
+               static_cast<float>(player->get_pos().y));
   nvgRotate(ctx,
-            static_cast<float>(robot->get_heading_angle() * M_PI / 180.0));
+            static_cast<float>(player->get_heading_angle() * M_PI / 180.0));
 
   // robot's circle
   nvgBeginPath(ctx);
-  nvgCircle(ctx, 0.0, 0.0, static_cast<float>(robot->radius()));
+  nvgCircle(ctx, 0.0, 0.0, static_cast<float>(player->radius()));
   nvgFillColor(ctx,
-               nvgRGBA(robot->get_color().r, robot->get_color().g,
-                       robot->get_color().b, robot->get_color().a));
+               nvgRGBA(player->get_color().r, player->get_color().g,
+                       player->get_color().b, player->get_color().a));
   nvgFill(ctx);
   nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
   nvgStroke(ctx);
@@ -239,7 +237,7 @@ void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx, const Robot *const robot) {
   nvgSave(ctx);
   nvgRotate(ctx, static_cast<float>(M_PI / 2.0));
   nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
-  nvgText(ctx, 0.0, 10.0, robot->get_name().c_str(), nullptr);
+  nvgText(ctx, 0.0, 10.0, player->get_name().c_str(), nullptr);
   nvgRestore(ctx);
   nvgRestore(ctx);
 }
@@ -301,7 +299,7 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
     DrawObstacle(ctx, obstacle);
   } /* for(i..) */
 
-  DrawRobot(ctx, arena_->robot());
+  DrawPlayer(ctx, arena_->player());
   DrawHomeBase(ctx, arena_->home_base());
 }
 

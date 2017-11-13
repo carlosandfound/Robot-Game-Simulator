@@ -1,16 +1,17 @@
 /**
- * @file home_base_params.h
+ * @file event_type.h
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
+ *
  */
 
-#ifndef PROJECT_ITERATION2_SRC_HOME_BASE_PARAMS_H_
-#define PROJECT_ITERATION2_SRC_HOME_BASE_PARAMS_H_
+#ifndef PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_
+#define PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "src/arena_mobile_entity_params.h"
+#include "src/common.h"
 
 /*******************************************************************************
  * Namespaces
@@ -18,18 +19,20 @@
 NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
- * Structure Definitions
+ * Type Definitions
  ******************************************************************************/
 /**
- * @brief Inherits from arena_mobile_entity_params to set various
- * properties of the HomeBase.
- *
- * Currently, it is the same as arena_mobile_entity_params.
+ * @brief The commands that describe the type of the entities: robot, superbot,
+ * player, homebase, recharge station, wall
  */
-struct home_base_params : public arena_mobile_entity_params {
-  home_base_params() : arena_mobile_entity_params() {}
+enum entity_type {
+  COM_KROBOT,
+  COM_KSUPERBOT,
+  COM_KPLAYER,
+  COM_KHOMEBASE,
+  COM_KRECHARGESTATION,
+  COM_KWALL
 };
-
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_HOME_BASE_PARAMS_H_
+#endif  // PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_

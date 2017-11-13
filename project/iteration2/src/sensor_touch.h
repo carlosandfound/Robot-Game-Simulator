@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_SENSOR_TOUCH_H_
-#define SRC_SENSOR_TOUCH_H_
+#ifndef PROJECT_ITERATION2_SRC_SENSOR_TOUCH_H_
+#define PROJECT_ITERATION2_SRC_SENSOR_TOUCH_H_
 
 /*******************************************************************************
  * Includes
@@ -40,6 +40,20 @@ class SensorTouch : public Sensor {
    * @brief Default constructor.
    */
   SensorTouch();
+
+  /**
+   * @brief Getter method for sensor status.
+   *
+   * @return 1 if sensor is activated. 0 if sensor is deactivated.
+   */
+  int activated() const { return activated_; }
+
+  /**
+   * @brief Setter method for sensor status.
+   *
+   * @param value The new sensor activation status.
+   */
+  void activated(int value) { activated_ = value; }
 
   /**
    * @brief Getter method for the point of contact.
@@ -91,8 +105,9 @@ class SensorTouch : public Sensor {
  private:
   Position point_of_contact_;
   double angle_of_contact_;
+  int activated_;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_SENSOR_TOUCH_H_
+#endif  // PROJECT_ITERATION2_SRC_SENSOR_TOUCH_H_

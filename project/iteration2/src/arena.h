@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_ARENA_H_
-#define SRC_ARENA_H_
+#ifndef PROJECT_ITERATION2_SRC_ARENA_H_
+#define PROJECT_ITERATION2_SRC_ARENA_H_
 
 /*******************************************************************************
  * Includes
@@ -16,6 +16,7 @@
 #include "src/event_keypress.h"
 #include "src/event_collision.h"
 #include "src/robot.h"
+#include "src/player.h"
 #include "src/home_base.h"
 #include "src/recharge_station.h"
 
@@ -110,6 +111,13 @@ class Arena {
    */
   std::vector<class ArenaMobileEntity *> mobile_entities()
   { return mobile_entities_; }
+
+  /**
+   * @brief Get the Player (there's only 1) in Arena.
+   *
+   * @return A pointer to the Player.
+   */
+  class Player *player() const { return player_; }
 
   /**
    * @brief Get the Robot (there's only 1) in Arena.
@@ -226,6 +234,7 @@ class Arena {
 
   // Entities populating the arena
   Robot *robot_;
+  Player *player_;
   RechargeStation *recharge_station_;
   HomeBase *home_base_;
   std::vector<class ArenaEntity *> entities_;
@@ -238,4 +247,4 @@ class Arena {
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_ARENA_H_
+#endif  // PROJECT_ITERATION2_SRC_ARENA_H_

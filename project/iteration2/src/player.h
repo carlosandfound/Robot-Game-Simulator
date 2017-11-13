@@ -1,11 +1,11 @@
 /**
- * @file robot.h
+ * @file player.h
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION2_SRC_ROBOT_H_
-#define PROJECT_ITERATION2_SRC_ROBOT_H_
+#ifndef PROJECT_ITERATION2_SRC_PLAYER_H_
+#define PROJECT_ITERATION2_SRC_PLAYER_H_
 
 /*******************************************************************************
  * Includes
@@ -30,41 +30,41 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief Class representing a mobile robot within the arena.
+ * @brief Class representing a mobile player within the arena.
  *
- * Robots have the capability of updating their own position when asked, and
+ * players have the capability of updating their own position when asked, and
  * also track their own velocity and heading. They have a touch sensor for
  * responding to collision events which is activated/deactivated on collision
  * events.
  *
- * Robots can take command from the player through keypress. They also have
+ * players can take command from the player through keypress. They also have
  * batteries that will get depleted as they move or collide with other
  * entities.
  */
-class Robot : public ArenaMobileEntity {
+class Player : public ArenaMobileEntity {
  public:
   /**
    * @brief Constructor.
    *
-   * @param params A robot_params passed down from main.cc for the
-   * initialization of the Robot.
+   * @param params A player_params passed down from main.cc for the
+   * initialization of the player.
    */
-  explicit Robot(const struct robot_params *const params);
+  explicit Player(const struct robot_params *const params);
 
   /**
-   * @brief Reset the Robot's battery to full after an encounter with the
+   * @brief Reset the player's battery to full after an encounter with the
    * RechargeStation.
    */
   void ResetBattery();
 
   /**
-   * @brief Reset the Robot to a newly constructed state (needed for reset
+   * @brief Reset the player to a newly constructed state (needed for reset
    * button to work in GUI).
    */
   void Reset() override;
 
   /**
-   * @brief Update the Robot's position and velocity after the specified
+   * @brief Update the player's position and velocity after the specified
    * duration has passed.
    *
    * @param dt The # of timesteps that have elapsed since the last update.
@@ -74,7 +74,7 @@ class Robot : public ArenaMobileEntity {
   /**
    * @brief Accept a recharge event.
    *
-   * This causes the robot's battery to become fully charged.
+   * This causes the player's battery to become fully charged.
    *
    * @param e The recharge event.
    */
@@ -84,7 +84,7 @@ class Robot : public ArenaMobileEntity {
    * @brief Pass along a collision event (from Arena) to the touch sensor.
    *
    * This method provides a framework in which sensors can get different types
-   * of information from different sources. The Robot's heading will be updated
+   * of information from different sources. The player's heading will be updated
    * to move it away from the incident angle at the point of contact.
    *
    * @param e The collision event.
@@ -92,66 +92,66 @@ class Robot : public ArenaMobileEntity {
   void Accept(const EventCollision *const e) override;
 
   /**
-   * @brief Handle user input commands to change the Robot's heading or speed.
+   * @brief Handle user input commands to change the player's heading or speed.
    *
    * @param e The command to process.
    */
   void Accept(const EventCommand *const e);
 
   /**
-   * @brief Getter method for the Robot's battery level.
+   * @brief Getter method for the player's battery level.
    *
-   * @return The current battery level of the Robot.
+   * @return The current battery level of the player.
    */
   double get_battery_level() { return battery_.level(); }
 
   /**
-   * @brief Getter method for the Robot's max battery level.
+   * @brief Getter method for the player's max battery level.
    *
-   * @return The max battery level of the Robot.
+   * @return The max battery level of the player.
    */
   double get_max_battery_level() { return battery_.max_level(); }
 
   /**
-   * @brief Getter method for the Robot's heading angle.
+   * @brief Getter method for the player's heading angle.
    *
-   * @return The current heading angle of the Robot.
+   * @return The current heading angle of the player.
    */
   double get_heading_angle() const override {
     return motion_handler_.heading_angle();
   }
 
   /**
-   * @brief Setter method for the Robot's heading angle.
+   * @brief Setter method for the player's heading angle.
    *
-   * @param ha The new heading angle of the Robot.
+   * @param ha The new heading angle of the player.
    */
   void set_heading_angle(double ha) override {
     motion_handler_.heading_angle(ha);
   }
 
   /**
-   * @brief Getter method for the Robot's speed.
+   * @brief Getter method for the player's speed.
    *
-   * @return The current speed of the Robot.
+   * @return The current speed of the player.
    */
   double get_speed() const override { return motion_handler_.get_speed(); }
 
   /**
-   * @brief Setter method for the Robot's speed.
+   * @brief Setter method for the player's speed.
    *
-   * @param sp The new speed of the Robot.
+   * @param sp The new speed of the player.
    */
   void set_speed(double sp) override { motion_handler_.set_speed(sp); }
 
   /**
-   * @brief Get the name of the Robot for visualization purposes, and to
+   * @brief Get the name of the player for visualization purposes, and to
    * aid in debugging.
    *
-   * @return Name of the Robot.
+   * @return Name of the player.
    */
   std::string get_name() const override {
-    return "Robot" + std::to_string(id_);
+    return "player" + std::to_string(id_);
   }
 
  private:
@@ -165,9 +165,9 @@ class Robot : public ArenaMobileEntity {
   RobotMotionHandler motion_handler_;
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
-  Position initial_pos_;  // initial position of the Robot, used by Reset()
+  Position initial_pos_;  // initial position of the player, used by Reset()
 };
 
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_ROBOT_H_
+#endif  // PROJECT_ITERATION2_SRC_PLAYER_H_

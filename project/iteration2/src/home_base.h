@@ -4,8 +4,8 @@
  * @copyright 2017 3081 Staff, All rights reserved.
  */
 
-#ifndef SRC_HOME_BASE_H_
-#define SRC_HOME_BASE_H_
+#ifndef PROJECT_ITERATION2_SRC_HOME_BASE_H_
+#define PROJECT_ITERATION2_SRC_HOME_BASE_H_
 
 /*******************************************************************************
  * Includes
@@ -78,7 +78,9 @@ class HomeBase : public ArenaMobileEntity {
    *
    * @param ha The new heading angle of the HomeBase.
    */
-  void set_heading_angle(double ha) override { motion_handler_.heading_angle(ha); }
+  void set_heading_angle(double ha) override {
+    motion_handler_.heading_angle(ha);
+  }
 
   /**
    * @brief Getter method for the HomeBase's speed.
@@ -118,4 +120,4 @@ class HomeBase : public ArenaMobileEntity {
 
 NAMESPACE_END(csci3081);
 
-#endif  // SRC_HOME_BASE_H_
+#endif  // PROJECT_ITERATION2_SRC_HOME_BASE_H_

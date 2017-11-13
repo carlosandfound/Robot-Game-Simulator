@@ -25,7 +25,7 @@ Arena::Arena(const struct arena_params *const params) :
     y_dim_(params->y_dim),
     n_robots_(1),
     n_obstacles_(static_cast<unsigned int>(params->n_obstacles)),
-    robot_(new Robot(&params->robot)),
+    player_(new Player(&params->robot)),
     recharge_station_(new RechargeStation(params->recharge_station.radius,
                                           params->recharge_station.pos,
                                           params->recharge_station.color)),
@@ -34,8 +34,8 @@ Arena::Arena(const struct arena_params *const params) :
     mobile_entities_(),
     win_(0),
     lose_(0) {
-  entities_.push_back(robot_);
-  mobile_entities_.push_back(robot_);
+  entities_.push_back(player_);
+  mobile_entities_.push_back(player_);
 
   entities_.push_back(recharge_station_);
 
@@ -95,7 +95,7 @@ void Arena::UpdateEntitiesTimestep() {
   /*
    * Next, check if the robot has run out of battery
    */
-  if (robot_->get_battery_level() <= 0) {
+  if (player_->get_battery_level() <= 0) {
     Reset();
     lose_ += 1;
   }
@@ -109,23 +109,24 @@ void Arena::UpdateEntitiesTimestep() {
 
   EventCollision ec;
 
-  CheckForEntityCollision(robot_, home_base_, &ec, robot_->get_collision_delta());
+  CheckForEntityCollision(player_, home_base_, &ec,
+    player_->get_collision_delta());
   if (ec.collided()) {
-    robot_->Accept(&ec);
+    player_->Accept(&ec);
     win_ += 1;
     Reset();
   }
 
   for (uint i = 0; i < n_obstacles_; i++) {
-    CheckForEntityCollision(robot_, obstacles()[i], &ec,
-                            robot_->get_collision_delta());
+    CheckForEntityCollision(player_, obstacles()[i], &ec,
+                            player_->get_collision_delta());
 
     if (ec.collided()) {
-      robot_->Accept(&ec);
+      player_->Accept(&ec);
 
       if (obstacles()[i] == recharge_station_) {
         EventRecharge er;
-        robot_->Accept(&er);
+        player_->Accept(&er);
       }
     }
   }
@@ -147,13 +148,14 @@ void Arena::UpdateEntitiesTimestep() {
         if (entities_[i] == ent) {
           continue;
         }
-        CheckForEntityCollision(ent, entities_[i], &ec, ent->get_collision_delta());
+        CheckForEntityCollision(ent, entities_[i], &ec,
+          ent->get_collision_delta());
         if (ec.collided()) {
           ent->Accept(&ec);
 
-          if ((ent == robot_) && (entities_[i] == recharge_station_)) {
+          if ((ent == player_) && (entities_[i] == recharge_station_)) {
             EventRecharge er;
-            robot_->Accept(&er);
+            player_->Accept(&er);
           }
 
           break;
@@ -298,7 +300,7 @@ void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
 void Arena::Accept(const EventKeypress *const e) {
   // don't handle unsupported keys
   if (e->GetCmd() != COM_UNKNOWN)
-    robot_->Accept(new EventCommand(e->GetCmd()));
+    player_->Accept(new EventCommand(e->GetCmd()));
 } /* Accept */
 
 NAMESPACE_END(csci3081);
