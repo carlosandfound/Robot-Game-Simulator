@@ -32,7 +32,7 @@ class MotionHandler {
   /**
    * @brief Default constructor.
    */
-  //MotionHandler();
+  // MotionHandler();
 
   virtual ~MotionHandler() = default;
 
@@ -136,7 +136,6 @@ class MotionHandler {
    * @param ad The new angle delta.
    */
   virtual void angle_delta(double ad) = 0;
-
 };
 
 NAMESPACE_END(csci3081);

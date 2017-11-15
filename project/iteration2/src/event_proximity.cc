@@ -1,13 +1,13 @@
 /**
- * @file sensor_touch.cc
+ * @file event_collision.cc
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "src/sensor_touch.h"
+#include "src/event_proximity.h"
 
 /*******************************************************************************
  * Namespaces
@@ -15,34 +15,20 @@
 NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
- * Constructors/Destructor
+ * Constructor
  ******************************************************************************/
-SensorTouch::SensorTouch() :
-    Sensor(),
-    activated_(0),
-    point_of_contact_(0, 0),
-    angle_of_contact_(0) {
+EventProximity::EventProximity() :
+    detected_(false),
+    point_of_detection_(0, 0),
+    angle_of_detection_(0) {
 }
 
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
-
-void SensorTouch::Accept(const EventCollision *const e) {
-  // Determine if the sensor is activated or deactivated.
-  if (e->collided()) {
-    activated(1);
-    point_of_contact_ = e->point_of_contact();
-    angle_of_contact_ = e->angle_of_contact();
-  } else {
-    activated(0);
-  }
-}
-
-void SensorTouch::Reset() {
-  activated(0);
-  point_of_contact(Position(0, 0));
-  angle_of_contact(0);
-} /* reset() */
+void EventProximity::EmitMessage() const {
+  printf("Detection event at point %f %f. Angle %f",
+         point_of_detection_.x, point_of_detection_.y, angle_of_detection_);
+} /* EmitMessage() */
 
 NAMESPACE_END(csci3081);

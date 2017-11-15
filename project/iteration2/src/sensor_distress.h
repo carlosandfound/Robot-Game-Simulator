@@ -11,7 +11,9 @@
  * Includes
  ******************************************************************************/
 #include "src/common.h"
+#include "src/event_distress_call.h"
 #include "src/sensor.h"
+#include "src/robot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -31,23 +33,46 @@ NAMESPACE_BEGIN(csci3081);
 class SensorDistress : public Sensor {
  public:
   /**
-   * @brief Default constructor.
+   * @brief constructor with sensor's robot user and field of view (fov) as
+   * parameters.
    */
-  SensorDistress();
+  //  SensorDistress();
+  SensorDistress(const Robot * robot, double range):
+    robot_(robot),
+    range_(range) {
+    }
 
   /**
-   * @brief method to sense a distress call from the robot when at a defined
-   * range
+   * @brief Compute a new reading based on a distress event.
    *
-   * Should only be activated when the distress signal is sensed within the
+   * Accept a distress event and changes the distress status based on the
+   * position of the robot emitting the distress signal relative to the
+   * field of view of the sensor.
+   */
+  void Accept(const EventDistressCall *const e);
+
+
+  /**
+   * @brief method that outputs the distress call status of the sensor.
+   *
+   * Should only output 1 when the distress signal is sensed within the
    * given range.
    *
    * @return 1 for a sensed call and 0 Otherwise
    */
-  int is_sensed(class ArenaEntity *const ent);
+  int output() { return status_; }
+
+  /**
+   * @brief method that returns the range/fov of the distress sensor
+   */
+  int get_range() { return range_; }
+
+  void Reset() override;
 
  private:
-  int sensed_call = 0;
+  const Robot * robot_;
+  double range_;
+  int status_ = 0;
 };
 
 NAMESPACE_END(csci3081);

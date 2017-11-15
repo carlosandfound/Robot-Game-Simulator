@@ -213,7 +213,8 @@ void GraphicsArenaViewer::OnSpecialKeyUp(__unused int key,
 /*******************************************************************************
  * Drawing of Entities in Arena
  ******************************************************************************/
-void GraphicsArenaViewer::DrawPlayer(NVGcontext *ctx, const Player *const player) {
+void GraphicsArenaViewer::DrawPlayer(NVGcontext *ctx,
+  const Player *const player) {
   // translate and rotate all graphics calls that follow so that they are
   // centered, at the position and heading of this robot
   nvgSave(ctx);

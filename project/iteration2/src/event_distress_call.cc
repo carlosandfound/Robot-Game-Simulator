@@ -1,13 +1,13 @@
 /**
- * @file sensor_touch.cc
+ * @file event_distress_call.cc
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "src/sensor_touch.h"
+#include "src/event_distress_call.h"
 
 /*******************************************************************************
  * Namespaces
@@ -15,34 +15,19 @@
 NAMESPACE_BEGIN(csci3081);
 
 /*******************************************************************************
- * Constructors/Destructor
+ * Constructor
  ******************************************************************************/
-SensorTouch::SensorTouch() :
-    Sensor(),
-    activated_(0),
-    point_of_contact_(0, 0),
-    angle_of_contact_(0) {
+EventDistressCall::EventDistressCall() :
+    status_(false),
+    point_of_distress_(0, 0) {
 }
 
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
-
-void SensorTouch::Accept(const EventCollision *const e) {
-  // Determine if the sensor is activated or deactivated.
-  if (e->collided()) {
-    activated(1);
-    point_of_contact_ = e->point_of_contact();
-    angle_of_contact_ = e->angle_of_contact();
-  } else {
-    activated(0);
-  }
-}
-
-void SensorTouch::Reset() {
-  activated(0);
-  point_of_contact(Position(0, 0));
-  angle_of_contact(0);
-} /* reset() */
+void EventDistressCall::EmitMessage() const {
+  printf("Distress call event at point %f %f.",
+         point_of_distress_.x, point_of_distress_.y);
+} /* EmitMessage() */
 
 NAMESPACE_END(csci3081);

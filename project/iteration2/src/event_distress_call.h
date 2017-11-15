@@ -45,22 +45,39 @@ class EventDistressCall : public EventBaseClass {
     /**
      * @brief Getter method for distress call status.
      *
-     * @return `true` when this instance represents a distress call.
-     * `false` when it represents a previous distress call that was solved.
+     * @return true when this instance represents a distress call.
+     * false when it represents a previous distress call that was solved.
      */
-    bool get_distress_status() const { return distress_; }
+    bool get_distress_status() const { return status_; }
 
     /**
      * @brief Setter method for distress call status.
      *
      * @param d The new distress status.
      */
-    void set_distress_status(bool d) { detected_ = d; }
+    bool set_distress_status(bool d) { status_ = d; }
+
+    /**
+     * @brief Getter method for the point of distress call.
+     *
+     * @return The point in the Arena at which the distress signal has been
+     * registered
+     */
+    Position point_of_distress() const { return point_of_distress_; }
+
+    /**
+     * @brief Setter method for the point of distress call.
+     *
+     * @param p The point in the Arena at which the distress call occurs
+     *
+     * Should only be used by the class handling the proximity detection
+     (that is, Arena).
+     */
+    void point_of_distress(Position p) { point_of_distress_ = p; }
 
  private:
-    bool distress_;
+    bool status_;
     Position point_of_distress_;
-    double angle_of_distress_;
 };
 
 NAMESPACE_END(csci3081);

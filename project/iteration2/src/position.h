@@ -31,6 +31,10 @@ struct Position {
 
   double x;
   double y;
+
+  bool operator== (const Position& a) const {
+    return ((this->x == a.x) && (this->y == a.y));
+  }
 };
 
 NAMESPACE_END(csci3081);
