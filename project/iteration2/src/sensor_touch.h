@@ -41,52 +41,11 @@ class SensorTouch : public Sensor {
    */
   SensorTouch();
 
-  /**
-   * @brief Getter method for sensor status.
-   *
-   * @return 1 if sensor is activated. 0 if sensor is deactivated.
-   */
-  int activated() const { return activated_; }
 
-  /**
-   * @brief Setter method for sensor status.
-   *
-   * @param value The new sensor activation status.
-   */
-  void activated(int value) { activated_ = value; }
-
-  /**
-   * @brief Getter method for the point of contact.
-   *
-   * Should only be called when the sensor is activated.
-   *
-   * @return The latest point of contact.
-   */
   Position point_of_contact() { return point_of_contact_; }
+  void point_of_contact(Position p) { point_of_contact_ = p; }
 
-  /**
-   * @brief Setter method for the point of contact.
-   *
-   * @param p The new point of contact.
-   */
-  void point_of_contact(Position p) {
-    point_of_contact_ = p;
-  }
-
-  /**
-   * @brief Getter method for the angle of contact.
-   *
-   * Should only be called when the sensor is activated.
-   *
-   * @return The latest angle of contact.
-   */
   double angle_of_contact() { return angle_of_contact_; }
-
-  /**
-   * @brief Setter method for the angle of contact.
-   *
-   * @param aoc The new angle of contact.
-   */
   void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
   /**

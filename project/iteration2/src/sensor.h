@@ -32,7 +32,7 @@ class Sensor {
   /**
    * @brief Constructor. Creates a deactivated sensor.
    */
-  Sensor() : activated_(false) {}
+  Sensor() : activated_(0) {}
 
   /**
    * @brief Default destructor.
@@ -44,14 +44,14 @@ class Sensor {
    *
    * @return `true` if sensor is activated. `false` if sensor is deactivated.
    */
-  bool activated() const { return activated_; }
+  int activated() const { return activated_; }
 
   /**
    * @brief Setter method for sensor status.
    *
    * @param value The new sensor activation status.
    */
-  void activated(bool value) { activated_ = value; }
+  int activated(int value) { activated_ = value; }
 
   /**
    * @brief Accept a recharge event.
@@ -84,7 +84,7 @@ class Sensor {
   virtual void Reset() = 0;
 
  private:
-  bool activated_;
+  int activated_;
 };
 
 NAMESPACE_END(csci3081);

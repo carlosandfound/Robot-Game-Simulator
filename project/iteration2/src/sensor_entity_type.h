@@ -38,7 +38,8 @@ class SensorEntityType : public Sensor {
   //  SensorEntityType();
   SensorEntityType(const Robot * robot, double range):
     robot_(robot),
-    range_(range) {}
+    range_(range),
+    activated_(0) {}
 
   /**
    * @brief Compute a new reading based on a enit type emit event.
@@ -55,11 +56,8 @@ class SensorEntityType : public Sensor {
    * Can only sense the entity when it's within the defined range. The
    * direction of the signal can't be determined.
    */
-  enum entity_type get_entity_type () const { return type_; }
+  enum entity_type output () const { return type_; }
 
-  /**
-   * @brief method that returns the range/fov of the distress sensor
-   */
   int get_range() { return range_; }
 
   void Reset() override;
@@ -68,6 +66,7 @@ class SensorEntityType : public Sensor {
   const Robot * robot_;
   double range_;
   enum entity_type type_ = NONE;
+  int activated_;
 };
 
 NAMESPACE_END(csci3081);

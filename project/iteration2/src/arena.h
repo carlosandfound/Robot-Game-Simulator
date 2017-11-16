@@ -124,7 +124,37 @@ class Arena {
    *
    * @return A pointer to the Robot.
    */
-  class Robot *robot() const { return robot_; }
+  class Robot *robot1() const { return robot1_; }
+
+  /**
+   * @brief Get the Robot (there's only 1) in Arena.
+   *
+   * @return A pointer to the Robot.
+   */
+  class Robot *robot2() const { return robot2_; }
+
+  /**
+   * @brief Get the Robot (there's only 1) in Arena.
+   *
+   * @return A pointer to the Robot.
+   */
+  class Robot *robot3() const { return robot3_; }
+
+  /**
+   * @brief Get the Robot (there's only 1) in Arena.
+   *
+   * @return A pointer to the Robot.
+   */
+  class Robot *robot4() const { return robot4_; }
+
+  /**
+   * @brief Get the Robot (there's only 1) in Arena.
+   *
+   * @return A pointer to the Robot.
+   */
+  class Robot *robot5() const { return robot5_; }
+
+
 
   /**
    * @brief Get the HomeBase (there's only 1) in Arena.
@@ -233,7 +263,11 @@ class Arena {
   unsigned int n_obstacles_;
 
   // Entities populating the arena
-  Robot *robot_;
+  Robot *robot1_;
+  Robot *robot2_;
+  Robot *robot3_;
+  Robot *robot4_;
+  Robot *robot5_;
   Player *player_;
   RechargeStation *recharge_station_;
   HomeBase *home_base_;

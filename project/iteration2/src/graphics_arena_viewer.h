@@ -205,6 +205,18 @@ class GraphicsArenaViewer : public GraphicsApp {
 
  private:
   /**
+   * @brief Draw a player using `nanogui`.
+   *
+   * This function requires an active `nanovg` drawing context (`ctx`), so it
+   * should probably only be called from with DrawUsingNanoVG.
+   *
+   * @param[in] ctx The `nanovg` context.
+   * @param[in] player The Player handle.
+   */
+  void DrawPlayer(NVGcontext *ctx, const class Player *const player);
+
+
+  /**
    * @brief Draw a robot using `nanogui`.
    *
    * This function requires an active `nanovg` drawing context (`ctx`), so it
@@ -213,7 +225,7 @@ class GraphicsArenaViewer : public GraphicsApp {
    * @param[in] ctx The `nanovg` context.
    * @param[in] robot The Robot handle.
    */
-  void DrawPlayer(NVGcontext *ctx, const class Player *const player);
+  void DrawRobot(NVGcontext *ctx, const class Robot *const robot);
 
   /**
    * @brief Draw an Obstacle in the Arena using `nanogui`.

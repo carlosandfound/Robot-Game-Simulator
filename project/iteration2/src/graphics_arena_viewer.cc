@@ -102,11 +102,11 @@ GraphicsArenaViewer::GraphicsArenaViewer(
   home_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
-  gui->addWidget("Robot.x", robot_pos_x_);
-  gui->addWidget("Robot.y", robot_pos_y_);
-  gui->addWidget("Robot.speed", robot_speed_);
-  gui->addWidget("Robot.angle", robot_angle_);
-  gui->addWidget("Robot.battery", robot_battery_text_);
+  gui->addWidget("Player.x", robot_pos_x_);
+  gui->addWidget("Player.y", robot_pos_y_);
+  gui->addWidget("Player.speed", robot_speed_);
+  gui->addWidget("Player.angle", robot_angle_);
+  gui->addWidget("Player.battery", robot_battery_text_);
   gui->addWidget("HomeBase.x", home_pos_x_);
   gui->addWidget("HomeBase.y", home_pos_y_);
   gui->addWidget("HomeBase.speed", home_speed_);
@@ -243,6 +243,36 @@ void GraphicsArenaViewer::DrawPlayer(NVGcontext *ctx,
   nvgRestore(ctx);
 }
 
+void GraphicsArenaViewer::DrawRobot(NVGcontext *ctx,
+  const Robot *const robot) {
+  // translate and rotate all graphics calls that follow so that they are
+  // centered, at the position and heading of this robot
+  nvgSave(ctx);
+  nvgTranslate(ctx,
+               static_cast<float>(robot->get_pos().x),
+               static_cast<float>(robot->get_pos().y));
+  nvgRotate(ctx,
+            static_cast<float>(robot->get_heading_angle() * M_PI / 180.0));
+
+  // robot's circle
+  nvgBeginPath(ctx);
+  nvgCircle(ctx, 0.0, 0.0, static_cast<float>(robot->radius()));
+  nvgFillColor(ctx,
+               nvgRGBA(robot->get_color().r, robot->get_color().g,
+                       robot->get_color().b, robot->get_color().a));
+  nvgFill(ctx);
+  nvgStrokeColor(ctx, nvgRGBA(0, 0, 0, 255));
+  nvgStroke(ctx);
+
+  // robot id text label
+  nvgSave(ctx);
+  nvgRotate(ctx, static_cast<float>(M_PI / 2.0));
+  nvgFillColor(ctx, nvgRGBA(0, 0, 0, 255));
+  nvgText(ctx, 0.0, 10.0, robot->get_name().c_str(), nullptr);
+  nvgRestore(ctx);
+  nvgRestore(ctx);
+}
+
 void GraphicsArenaViewer::DrawObstacle(NVGcontext *ctx,
                                        const Obstacle *const obstacle) {
   nvgBeginPath(ctx);
@@ -302,6 +332,11 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
 
   DrawPlayer(ctx, arena_->player());
   DrawHomeBase(ctx, arena_->home_base());
+  DrawRobot(ctx, arena_->robot1());
+  DrawRobot(ctx, arena_->robot2());
+  DrawRobot(ctx, arena_->robot3());
+  DrawRobot(ctx, arena_->robot4());
+  DrawRobot(ctx, arena_->robot5());
 }
 
 NAMESPACE_END(csci3081);

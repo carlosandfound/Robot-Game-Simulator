@@ -33,11 +33,12 @@ bool SensorProximity::in_range(double sensor_lower, double sensor_upper,
   }
 
 void SensorProximity::Reset() {
-  robot_ = nullptr;
   range_ = 0;
+  fov_ = 0;
   distance_ = -1;
   point_of_detection(Position(0, 0));
   angle_of_detection(0);
+  activated(0);
 } /* reset() */
 
 NAMESPACE_END(csci3081);

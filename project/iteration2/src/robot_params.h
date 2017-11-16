@@ -27,12 +27,12 @@ NAMESPACE_BEGIN(csci3081);
 struct robot_params : public arena_mobile_entity_params {
   robot_params() :
       arena_mobile_entity_params(),
-      battery_max_charge(),
-      angle_delta(),
-      speed_delta(),
-      max_speed() {}
+      battery_max_charge(100),
+      angle_delta(10),
+      speed_delta(1),
+      max_speed(10) {}
 
-  double battery_max_charge;
+  double battery_max_charge ;
   uint angle_delta;
   double speed_delta;
   double max_speed;

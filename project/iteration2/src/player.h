@@ -151,7 +151,7 @@ class Player : public ArenaMobileEntity {
    * @return Name of the player.
    */
   std::string get_name() const override {
-    return "player" + std::to_string(id_);
+    return "Player" + std::to_string(id_);
   }
 
  private:

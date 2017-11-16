@@ -39,8 +39,7 @@ class SensorDistress : public Sensor {
   //  SensorDistress();
   SensorDistress(const Robot * robot, double range):
     robot_(robot),
-    range_(range) {
-    }
+    range_(range) {}
 
   /**
    * @brief Compute a new reading based on a distress event.
@@ -62,9 +61,6 @@ class SensorDistress : public Sensor {
    */
   int output() { return status_; }
 
-  /**
-   * @brief method that returns the range/fov of the distress sensor
-   */
   int get_range() { return range_; }
 
   void Reset() override;

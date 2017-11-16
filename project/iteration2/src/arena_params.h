@@ -44,6 +44,7 @@ struct arena_params {
         y_dim() {}
 
   struct robot_params robot;
+  struct robot_params robots[MAX_OBSTACLES];
   struct arena_entity_params recharge_station;
   struct home_base_params home_base;
   struct arena_entity_params obstacles[MAX_OBSTACLES];

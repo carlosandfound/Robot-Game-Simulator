@@ -29,7 +29,7 @@ NAMESPACE_BEGIN(csci3081);
  */
 struct arena_mobile_entity_params : public arena_entity_params {
   arena_mobile_entity_params() : arena_entity_params(),
-                                 collision_delta() {}
+                                 collision_delta(1) {}
   /**
    * @brief Minimum distance between entities that qualifies as a collision.
    */

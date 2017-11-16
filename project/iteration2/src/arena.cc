@@ -23,9 +23,14 @@ NAMESPACE_BEGIN(csci3081);
 Arena::Arena(const struct arena_params *const params) :
     x_dim_(params->x_dim),
     y_dim_(params->y_dim),
-    n_robots_(1),
+    n_robots_(5),
     n_obstacles_(static_cast<unsigned int>(params->n_obstacles)),
     player_(new Player(&params->robot)),
+    robot1_(new Robot(&params->robots[0])),
+    robot2_(new Robot(&params->robots[1])),
+    robot3_(new Robot(&params->robots[2])),
+    robot4_(new Robot(&params->robots[3])),
+    robot5_(new Robot(&params->robots[4])),
     recharge_station_(new RechargeStation(params->recharge_station.radius,
                                           params->recharge_station.pos,
                                           params->recharge_station.color)),
@@ -36,6 +41,17 @@ Arena::Arena(const struct arena_params *const params) :
     lose_(0) {
   entities_.push_back(player_);
   mobile_entities_.push_back(player_);
+
+  entities_.push_back(robot1_);
+  mobile_entities_.push_back(robot1_);
+  entities_.push_back(robot2_);
+  mobile_entities_.push_back(robot2_);
+  entities_.push_back(robot3_);
+  mobile_entities_.push_back(robot3_);
+  entities_.push_back(robot4_);
+  mobile_entities_.push_back(robot4_);
+  entities_.push_back(robot5_);
+  mobile_entities_.push_back(robot5_);
 
   entities_.push_back(recharge_station_);
 

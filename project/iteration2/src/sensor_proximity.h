@@ -26,7 +26,7 @@ NAMESPACE_BEGIN(csci3081);
  /**
   * @brief Class representing a proximity sensor.
   *
-  * proximity sensors have a range and field of view where it can sense onjects.
+  * Proximity sensors have a range and field of view where it can sense onjects.
   * A single cone emanating from the center of the robot, split in two,
   * signifies the two fields of view for the two sensors. The range and field
   * of view, expressed as an angle, are attributes of the sensor. Sensor output
@@ -41,12 +41,14 @@ class SensorProximity : public Sensor {
      * parameters.
      */
     //  SensorProximity();
-    SensorProximity(const Robot * robot, double range):
+    SensorProximity(const Robot * robot, double range, double fov):
     robot_(robot),
     range_(range),
+    fov_(fov),
+    distance_(-1),
     point_of_detection_(0, 0),
-    angle_of_detection_(0) {
-    }
+    angle_of_detection_(0),
+    activated_(0) {}
 
     /**
      * @brief Compute a new reading based on a proximity event.
@@ -73,50 +75,18 @@ class SensorProximity : public Sensor {
     bool in_range(double sensor_lower, double sensor_upper,
       double sensed_lower, double sensed_upper);
 
-    /**
-     * @brief return the distance from the robot to the entity being sensed.
-     *
-     * @return If no robot is sensed by sensor, output is -1.
-     */
     double get_distance() { return distance_; }
 
-    /**
-     * @brief method that returns the range/fov of the proximity sensor
-     */
     int get_range() { return range_; }
+    int set_range(double r) { range_ = r; }
 
-    /**
-     * @brief Getter method for the point of detection.
-     *
-     * Should only be called when the sensor is activated.
-     *
-     * @return The latest point of detection.
-     */
+    int get_fov() { return fov_; }
+    int set_fov(double f) { fov_ = f; }
+
     Position point_of_detection() { return point_of_detection_; }
+    void point_of_detection(Position p) { point_of_detection_ = p; }
 
-    /**
-     * @brief Setter method for the point of detection.
-     *
-     * @param p The new point of detection.
-     */
-    void point_of_detection(Position p) {
-      point_of_detection_ = p;
-    }
-
-    /**
-     * @brief Getter method for the angle of detection.
-     *
-     * Should only be called when the sensor is activated.
-     *
-     * @return The latest angle of detection.
-     */
     double angle_of_detection() { return angle_of_detection_; }
-
-    /**
-     * @brief Setter method for the angle of detection.
-     *
-     * @param aoc The new angle of detection.
-     */
     void angle_of_detection(double aoc) { angle_of_detection_ = aoc; }
 
     void Reset() override;
@@ -124,9 +94,11 @@ class SensorProximity : public Sensor {
  private:
     const Robot * robot_;
     double range_;
-    double distance_ = -1;
+    double fov_;
+    double distance_;
     Position point_of_detection_;
     double angle_of_detection_;
+    int activated_;
 };
 
 NAMESPACE_END(csci3081);

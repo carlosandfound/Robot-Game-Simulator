@@ -25,6 +25,7 @@ void SensorEntityType::Accept(const EventTypeEmit *const e) {
 void SensorEntityType::Reset() {
   range_ = 0;
   activated(0);
+  type_ = NONE;
 } /* reset() */
 
 NAMESPACE_END(csci3081);

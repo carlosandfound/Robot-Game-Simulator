@@ -31,7 +31,8 @@ NAMESPACE_BEGIN(csci3081);
  * arena_mobile_entity_params.
  */
 struct arena_entity_params {
-  arena_entity_params() : radius(), pos(), color() {}
+  arena_entity_params() : radius(20.0), pos(Position(0,0)),
+  color(Color(0, 200, 0, 200)) {}
   double radius;
   Position pos;
   Color color;
