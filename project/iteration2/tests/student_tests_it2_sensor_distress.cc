@@ -14,13 +14,17 @@ TEST(SensorDistress, Sanity) {
   EXPECT_EQ(1, 1);
 }
 
-TEST(SensorDistress, Test1) {
+TEST(SensorDistress, Initialization) {
+  csci3081::robot_params params; //default values handeled in robot_params.h
+  csci3081::Robot r1 = csci3081::Robot(&params);
+  csci3081::SensorDistress sd(&r1, 45);
+
+  EXPECT_EQ(sd.get_range(), 45);
+  EXPECT_EQ(sd.output(), 0);
+}
+
+TEST(SensorDistress, Accept_and_Ouput) {
   csci3081::robot_params params;
-  params.pos = csci3081::Position(0, 0);
-  params.angle_delta = 15;
-  params.battery_max_charge = 100.;
-  params.collision_delta = 0.1;
-  params.radius = 5.0;
   csci3081::Robot r1 = csci3081::Robot(&params);
   csci3081::SensorDistress sd(&r1, 45);
 
