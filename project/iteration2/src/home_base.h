@@ -13,7 +13,7 @@
 #include <string>
 #include "src/home_base_params.h"
 #include "src/arena_mobile_entity.h"
-#include "src/robot_motion_handler.h"
+#include "src/motion_handler_home_base.h"
 #include "src/robot_motion_behavior.h"
 #include "src/sensor_touch.h"
 
@@ -113,7 +113,7 @@ class HomeBase : public ArenaMobileEntity {
 
  private:
   Position initial_pos_;  // initial position of the Robot, used by Reset()
-  RobotMotionHandler motion_handler_;
+  MotionHandlerHomeBase motion_handler_;
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
 };

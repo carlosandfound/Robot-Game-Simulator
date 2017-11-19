@@ -39,9 +39,9 @@ Arena::Arena(const struct arena_params *const params) :
     mobile_entities_(),
     win_(0),
     lose_(0) {
+  saved_params = params;
   entities_.push_back(player_);
   mobile_entities_.push_back(player_);
-
   entities_.push_back(robot1_);
   mobile_entities_.push_back(robot1_);
   entities_.push_back(robot2_);
@@ -143,6 +143,12 @@ void Arena::UpdateEntitiesTimestep() {
       if (obstacles()[i] == recharge_station_) {
         EventRecharge er;
         player_->Accept(&er);
+        //robot_params r;
+        //r.pos = saved_params->robot.pos;
+        //superbot_ = new Superbot(&r);
+        //entities_.push_back(superbot_);
+        //mobile_entities_.push_back(superbot_);
+        //superbot_present(true);
       }
     }
   }

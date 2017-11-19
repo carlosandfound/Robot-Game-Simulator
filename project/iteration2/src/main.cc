@@ -35,7 +35,7 @@ int main(int, char **) {
         rparams.collision_delta = 1;
         rparams.radius = 20.0;
         rparams.pos = csci3081::Position(0, 0);
-        rparams.color = csci3081::Color(0, 200, 0, 200); // bright green
+        rparams.color = csci3081::Color(200, 100, 0, 0); // orange
   */
 
 
@@ -45,18 +45,23 @@ int main(int, char **) {
 
   csci3081::robot_params rparams1;
   rparams1.pos = csci3081::Position(100, 600);
+  rparams1.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams2;
   rparams2.pos = csci3081::Position(100, 100);
+  rparams2.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams3;
   rparams3.pos = csci3081::Position(600, 100);
+  rparams3.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams4;
   rparams4.pos = csci3081::Position(900, 600);
+  rparams4.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams5;
   rparams5.pos = csci3081::Position(900, 100);
+  rparams5.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::arena_params aparams;
 
@@ -79,7 +84,7 @@ int main(int, char **) {
   aparams.home_base.radius = 20.0;
   aparams.home_base.collision_delta = 1;
   aparams.home_base.pos = {400, 400};
-  aparams.home_base.color = csci3081::Color(255, 0, 0, 255);
+  aparams.home_base.color = csci3081::Color(255, 0, 0, 255);  // red
 
   aparams.obstacles[0].radius = 10.0;
   aparams.obstacles[0].pos = {300, 600};

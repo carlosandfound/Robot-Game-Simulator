@@ -1,7 +1,7 @@
 /**
  * @file robot.h
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
 #ifndef PROJECT_ITERATION2_SRC_ROBOT_H_
@@ -11,8 +11,11 @@
  * Includes
  ******************************************************************************/
 #include <string>
-#include "src/robot_motion_handler.h"
+#include "src/motion_handler_robot.h"
 #include "src/robot_motion_behavior.h"
+#include "src/sensor_entity_type.h"
+#include "src/sensor_distress.h"
+#include "src/sensor_proximity.h"
 #include "src/sensor_touch.h"
 #include "src/robot_battery.h"
 #include "src/arena_mobile_entity.h"
@@ -35,7 +38,8 @@ NAMESPACE_BEGIN(csci3081);
  * Robots have the capability of updating their own position when asked, and
  * also track their own velocity and heading. They have a touch sensor for
  * responding to collision events which is activated/deactivated on collision
- * events.
+ * events. Robots have 2 left/right proximity sensors, a distress call sensor,
+ * an entity type sensor, and a touch sensor.
  *
  * Robots can take command from the player through keypress. They also have
  * batteries that will get depleted as they move or collide with other
@@ -96,7 +100,7 @@ class Robot : public ArenaMobileEntity {
    *
    * @param e The command to process.
    */
-  void Accept(const EventCommand *const e);
+  // void Accept(const EventCommand *const e);
 
   /**
    * @brief Getter method for the Robot's battery level.
@@ -145,6 +149,32 @@ class Robot : public ArenaMobileEntity {
   void set_speed(double sp) override { motion_handler_.set_speed(sp); }
 
   /**
+   * @brief getter method for robot's entity type sensor
+   */
+  class SensorEntityType *get_entity_type_sensor_() {
+    return entity_type_sensor_;
+  }
+
+  /**
+   * @brief getter method for robot's distress sensor
+   */
+  class SensorDistress *get_distress_sensor() { return distress_sensor_; }
+
+  /**
+   * @brief getter method for robot's left proximity sensor
+   */
+  class SensorProximity *get_left_proximity_sensor() {
+    return left_proximity_sensor_;
+  }
+
+  /**
+   * @brief getter method for robot's right proximity sensor
+   */
+  class SensorProximity *get_right_proximity_sensor() {
+    return right_proximity_sensor_;
+  }
+
+  /**
    * @brief Get the name of the Robot for visualization purposes, and to
    * aid in debugging.
    *
@@ -162,9 +192,13 @@ class Robot : public ArenaMobileEntity {
   double angle_delta_;
   double speed_delta_;
   RobotBattery battery_;
-  RobotMotionHandler motion_handler_;
+  MotionHandlerRobot motion_handler_;
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
+  SensorEntityType * entity_type_sensor_;
+  SensorDistress * distress_sensor_;
+  SensorProximity * left_proximity_sensor_;
+  SensorProximity * right_proximity_sensor_;
   Position initial_pos_;  // initial position of the Robot, used by Reset()
 };
 
