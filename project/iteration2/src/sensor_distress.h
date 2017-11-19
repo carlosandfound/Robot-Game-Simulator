@@ -13,7 +13,6 @@
 #include "src/common.h"
 #include "src/event_distress_call.h"
 #include "src/sensor.h"
-#include "src/robot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -37,8 +36,7 @@ class SensorDistress : public Sensor {
    * parameters.
    */
   //  SensorDistress();
-  SensorDistress(const Robot * robot, double range):
-    robot_(robot),
+  SensorDistress(double range):
     range_(range) {}
 
   /**
@@ -66,7 +64,6 @@ class SensorDistress : public Sensor {
   void Reset() override;
 
  private:
-  const Robot * robot_;
   double range_;
   int status_ = 0;
 };

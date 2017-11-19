@@ -1,7 +1,7 @@
 /**
  * @file robot.cc
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
 /*******************************************************************************
@@ -33,7 +33,11 @@ Robot::Robot(const struct robot_params *const params) :
     motion_handler_(),
     motion_behavior_(),
     sensor_touch_(),
-    initial_pos_(params->pos) {
+    initial_pos_(params->pos),
+    entity_type_sensor_(new SensorEntityType(50)),
+    distress_sensor_(new SensorDistress(50)),
+    left_proximity_sensor_(new SensorProximity(50,45)),
+    right_proximity_sensor_(new SensorProximity(50,45)) {
   motion_handler_.set_speed(5);
   motion_handler_.heading_angle(270);
   motion_handler_.max_speed(params->max_speed);
@@ -73,9 +77,12 @@ void Robot::Accept(const EventCollision *const e) {
   battery_.Accept(e);
 }
 
+/*
 void Robot::Accept(const EventCommand *const e) {
   motion_handler_.AcceptCommand(e->cmd());
-} /* event_cmd() */
+} // event_cmd()
+*/
+
 
 void Robot::Reset() {
   set_pos(initial_pos_);

@@ -19,6 +19,7 @@
 #include "src/player.h"
 #include "src/home_base.h"
 #include "src/recharge_station.h"
+#include "src/superbot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -154,6 +155,8 @@ class Arena {
    */
   class Robot *robot5() const { return robot5_; }
 
+  class Superbot *superbot() const { return superbot_;}
+
 
 
   /**
@@ -185,6 +188,13 @@ class Arena {
    * gets completely depleted).
    */
   int lose() const { return lose_; }
+
+  /**
+   * @brief check whether or not a superbot has just been created in arena
+   */
+  bool superbot_present() const { return superbot_exist_; }
+
+  void superbot_present(bool s) { superbot_exist_ = s; }
 
  private:
   /**
@@ -268,6 +278,7 @@ class Arena {
   Robot *robot3_;
   Robot *robot4_;
   Robot *robot5_;
+  Superbot *superbot_;
   Player *player_;
   RechargeStation *recharge_station_;
   HomeBase *home_base_;
@@ -277,6 +288,8 @@ class Arena {
   // win/lose stats
   int win_;
   int lose_;
+  bool superbot_exist_ = false;
+  const arena_params* saved_params = 0;
 };
 
 NAMESPACE_END(csci3081);

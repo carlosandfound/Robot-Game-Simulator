@@ -31,7 +31,7 @@ GraphicsArenaViewer::GraphicsArenaViewer(
     csci3081::GraphicsApp(
         params->x_dim + GUI_MENU_WIDTH + GUI_MENU_GAP * 2,
         params->y_dim,
-        "Robot Simulation"),
+        "Player Simulation"),
     arena_(new Arena(params)),
     paused_(false),
     pause_btn_(nullptr),
@@ -62,51 +62,51 @@ GraphicsArenaViewer::GraphicsArenaViewer(
   gui->addWidget("Lose", lose_);
 
   gui->addGroup("Entity Stats");
-  // robot_battery_ = new nanogui::ProgressBar(window);
-  // robot_battery_->setFixedWidth(50);
-  // robot_battery_->setValue(1);
-  // gui->addWidget("Robot Battery", robot_battery_);
-  robot_pos_x_ = new nanogui::IntBox<int>(window);
-  robot_pos_y_ = new nanogui::IntBox<int>(window);
-  robot_speed_ = new nanogui::IntBox<int>(window);
-  robot_angle_ = new nanogui::IntBox<int>(window);
-  robot_battery_text_ = new nanogui::IntBox<int>(window);
+  // player_battery_ = new nanogui::ProgressBar(window);
+  // player_battery_->setFixedWidth(50);
+  // player_battery_->setValue(1);
+  // gui->addWidget("Robot Battery", player_battery_);
+  player_pos_x_ = new nanogui::IntBox<int>(window);
+  player_pos_y_ = new nanogui::IntBox<int>(window);
+  player_speed_ = new nanogui::IntBox<int>(window);
+  player_angle_ = new nanogui::IntBox<int>(window);
+  player_battery_text_ = new nanogui::IntBox<int>(window);
   home_pos_x_ = new nanogui::IntBox<int>(window);
   home_pos_y_ = new nanogui::IntBox<int>(window);
   home_speed_ = new nanogui::IntBox<int>(window);
   home_angle_ = new nanogui::IntBox<int>(window);
-  robot_pos_x_->setFixedWidth(50);
-  robot_pos_y_->setFixedWidth(50);
-  robot_speed_->setFixedWidth(50);
-  robot_angle_->setFixedWidth(50);
-  robot_battery_text_->setFixedWidth(50);
+  player_pos_x_->setFixedWidth(50);
+  player_pos_y_->setFixedWidth(50);
+  player_speed_->setFixedWidth(50);
+  player_angle_->setFixedWidth(50);
+  player_battery_text_->setFixedWidth(50);
   home_pos_x_->setFixedWidth(50);
   home_pos_y_->setFixedWidth(50);
   home_speed_->setFixedWidth(50);
   home_angle_->setFixedWidth(50);
-  robot_pos_x_->setEditable(false);
-  robot_pos_y_->setEditable(false);
-  robot_speed_->setEditable(false);
-  robot_angle_->setEditable(false);
-  robot_battery_text_->setEditable(false);
+  player_pos_x_->setEditable(false);
+  player_pos_y_->setEditable(false);
+  player_speed_->setEditable(false);
+  player_angle_->setEditable(false);
+  player_battery_text_->setEditable(false);
   home_pos_x_->setEditable(false);
   home_pos_y_->setEditable(false);
   home_speed_->setEditable(false);
   home_angle_->setEditable(false);
-  robot_pos_x_->setAlignment(nanogui::TextBox::Alignment::Center);
-  robot_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
-  robot_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
-  robot_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
-  robot_battery_text_->setAlignment(nanogui::TextBox::Alignment::Center);
+  player_pos_x_->setAlignment(nanogui::TextBox::Alignment::Center);
+  player_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
+  player_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
+  player_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
+  player_battery_text_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_pos_x_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_pos_y_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_speed_->setAlignment(nanogui::TextBox::Alignment::Center);
   home_angle_->setAlignment(nanogui::TextBox::Alignment::Center);
-  gui->addWidget("Player.x", robot_pos_x_);
-  gui->addWidget("Player.y", robot_pos_y_);
-  gui->addWidget("Player.speed", robot_speed_);
-  gui->addWidget("Player.angle", robot_angle_);
-  gui->addWidget("Player.battery", robot_battery_text_);
+  gui->addWidget("Player.x", player_pos_x_);
+  gui->addWidget("Player.y", player_pos_y_);
+  gui->addWidget("Player.speed", player_speed_);
+  gui->addWidget("Player.angle", player_angle_);
+  gui->addWidget("Player.battery", player_battery_text_);
   gui->addWidget("HomeBase.x", home_pos_x_);
   gui->addWidget("HomeBase.y", home_pos_y_);
   gui->addWidget("HomeBase.speed", home_speed_);
@@ -134,15 +134,15 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
     lose_->setValue(arena_->lose());
     // use IntBox and static_cast for these stats
     // because double values take up too much space on the GUI
-    robot_pos_x_->setValue(
+    player_pos_x_->setValue(
         static_cast<int>(arena_->player()->get_pos().x));
-    robot_pos_y_->setValue(
+    player_pos_y_->setValue(
         static_cast<int>(arena_->player()->get_pos().y));
-    robot_speed_->setValue(
+    player_speed_->setValue(
         static_cast<int>(arena_->player()->get_speed()));
-    robot_angle_->setValue(
+    player_angle_->setValue(
         static_cast<int>(arena_->player()->get_heading_angle()));
-    robot_battery_text_->setValue(
+    player_battery_text_->setValue(
         static_cast<int>(arena_->player()->get_battery_level()));
     home_pos_x_->setValue(
         static_cast<int>(arena_->home_base()->get_pos().x));
@@ -152,7 +152,7 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
         static_cast<int>(arena_->home_base()->get_speed()));
     home_angle_->setValue(
         static_cast<int>(arena_->home_base()->get_heading_angle()));
-    // robot_battery_->setValue(
+    // player_battery_->setValue(
       //  static_cast<float>(
         //    arena_->robot()->battery_level() /
           //      arena_->robot()->max_battery_level()));
@@ -337,6 +337,11 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
   DrawRobot(ctx, arena_->robot3());
   DrawRobot(ctx, arena_->robot4());
   DrawRobot(ctx, arena_->robot5());
+
+  if (arena_ -> superbot_present() == true) {
+    DrawRobot(ctx, arena_-> superbot());
+    arena_->superbot_present(false);
+  }
 }
 
 NAMESPACE_END(csci3081);
