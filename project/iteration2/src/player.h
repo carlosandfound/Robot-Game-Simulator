@@ -11,7 +11,7 @@
  * Includes
  ******************************************************************************/
 #include <string>
-#include "src/robot_motion_handler.h"
+#include "src/motion_handler_player.h"
 #include "src/robot_motion_behavior.h"
 #include "src/sensor_touch.h"
 #include "src/robot_battery.h"
@@ -162,7 +162,7 @@ class Player : public ArenaMobileEntity {
   double angle_delta_;
   double speed_delta_;
   RobotBattery battery_;
-  RobotMotionHandler motion_handler_;
+  MotionHandlerPlayer motion_handler_;
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
   Position initial_pos_;  // initial position of the player, used by Reset()

@@ -11,9 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "src/common.h"
-#include "src/sensor.h"
 #include "src/event_proximity.h"
-#include "src/robot.h"
+#include "src/sensor.h"
 
 /*******************************************************************************
  * Namespaces
@@ -41,8 +40,7 @@ class SensorProximity : public Sensor {
      * parameters.
      */
     //  SensorProximity();
-    SensorProximity(const Robot * robot, double range, double fov):
-    robot_(robot),
+    SensorProximity(double range, double fov):
     range_(range),
     fov_(fov),
     distance_(-1),
@@ -92,7 +90,6 @@ class SensorProximity : public Sensor {
     void Reset() override;
 
  private:
-    const Robot * robot_;
     double range_;
     double fov_;
     double distance_;

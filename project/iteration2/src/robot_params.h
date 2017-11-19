@@ -32,7 +32,7 @@ struct robot_params : public arena_mobile_entity_params {
       speed_delta(1),
       max_speed(10) {}
 
-  double battery_max_charge ;
+  double battery_max_charge;
   uint angle_delta;
   double speed_delta;
   double max_speed;

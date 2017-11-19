@@ -13,7 +13,6 @@
 #include "src/common.h"
 #include "src/event_type_emit.h"
 #include "src/sensor.h"
-#include "src/robot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -36,8 +35,7 @@ class SensorEntityType : public Sensor {
    * parameters.
    */
   //  SensorEntityType();
-  SensorEntityType(const Robot * robot, double range):
-    robot_(robot),
+  SensorEntityType(double range):
     range_(range),
     activated_(0) {}
 
@@ -63,7 +61,6 @@ class SensorEntityType : public Sensor {
   void Reset() override;
 
  private:
-  const Robot * robot_;
   double range_;
   enum entity_type type_ = NONE;
   int activated_;

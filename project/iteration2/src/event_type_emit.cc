@@ -18,21 +18,21 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
- EventTypeEmit::EventTypeEmit() :
+EventTypeEmit::EventTypeEmit() :
      status_(false),
      point_of_entity_(0, 0) {
- }
+}
 
  /*******************************************************************************
   * Member Functions
   ******************************************************************************/
- void EventTypeEmit::EmitMessage() const {
-   printf("Entity type signal event at point %f %f.",
+void EventTypeEmit::EmitMessage() const {
+  printf("Entity type signal event at point %f %f.",
           point_of_entity_.x, point_of_entity_.y);
- } /* EmitMessage() */
+} /* EmitMessage() */
 
- enum entity_type EventTypeEmit::entity_id_to_type(int id) const {
-   switch (id) {
+enum entity_type EventTypeEmit::entity_id_to_type(int id) const {
+  switch (id) {
      case 0:return KROBOT;
      case 1:return KSUPERBOT;
      case 2:return KPLAYER;
@@ -40,7 +40,7 @@ NAMESPACE_BEGIN(csci3081);
      case 4:return KRECHARGESTATION;
      case 5:return KWALL;
      default:return NONE;
-   } /* switch() */
- }
+  } /* switch() */
+}
 
- NAMESPACE_END(csci3081);
+NAMESPACE_END(csci3081);

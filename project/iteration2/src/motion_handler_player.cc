@@ -1,13 +1,13 @@
 /**
- * @file robot_motion_handler.cc
+ * @file motion_handler_player.cc
  *
- * @copyright 2017 3081 Staff, All rights reserved.
+ * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "src/robot_motion_handler.h"
+#include "src/motion_handler_player.h"
 #include "src/motion_handler.h"
 
 /*******************************************************************************
@@ -18,7 +18,8 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Constructors/Destructor
  ******************************************************************************/
-RobotMotionHandler::RobotMotionHandler() :
+MotionHandlerPlayer::MotionHandlerPlayer() :
+    MotionHandler(),
     heading_angle_(0),
     speed_(0),
     max_speed_(100),
@@ -30,23 +31,31 @@ RobotMotionHandler::RobotMotionHandler() :
 /*******************************************************************************
  * Member Functions
  ******************************************************************************/
-void RobotMotionHandler::AcceptCommand(enum event_commands cmd) {
+void MotionHandlerPlayer::AcceptCommand(enum event_commands cmd) {
   switch (cmd) {
     case COM_TURN_LEFT:
-      heading_angle_ -= (angle_delta_);
-      if (heading_angle_ < 0) { heading_angle_ += max_angle_; }
+      heading_angle(heading_angle() - angle_delta());
+      if (heading_angle() < 0) {
+        heading_angle(heading_angle() + max_angle());
+      }
       break;
     case COM_TURN_RIGHT:
-      heading_angle_ += (angle_delta_);
-      if (heading_angle_ > max_angle_) { heading_angle_ -= max_angle_; }
+      heading_angle(heading_angle()+angle_delta());
+      if (heading_angle() > max_angle()) {
+        heading_angle(heading_angle() - max_angle());
+      }
       break;
     case COM_SPEED_UP:
-      speed_ += (speed_delta_);
-      if (speed_ > max_speed_) { speed_ = max_speed_; }
+      set_speed(get_speed()+speed_delta());
+      if (get_speed() > max_speed()) {
+        set_speed(max_speed());
+      }
       break;
     case COM_SLOW_DOWN:
-      speed_ -= (speed_delta_);
-      if (speed_ < 0) { speed_ = 0; }
+      set_speed(get_speed() - speed_delta());
+      if (get_speed() < 0) {
+        set_speed(0);
+      }
       break;
     default:
       std::cerr << "FATAL: bad actuator command" << std::endl;
@@ -55,10 +64,10 @@ void RobotMotionHandler::AcceptCommand(enum event_commands cmd) {
   } /* switch() */
 } /* accept_command() */
 
-void RobotMotionHandler::UpdateVelocity(SensorTouch st) {
+void MotionHandlerPlayer::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
-    heading_angle_ = -st.angle_of_contact();
-    speed_ *= 0.9;  // decrease speed 10% if collided
+    heading_angle(-st.angle_of_contact());
+    set_speed(get_speed() * 0.9);  // decrease speed 10% if collided
     st.Reset();
   }
 }
