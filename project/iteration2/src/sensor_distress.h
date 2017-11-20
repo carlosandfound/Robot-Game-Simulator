@@ -36,7 +36,7 @@ class SensorDistress : public Sensor {
    * parameters.
    */
   //  SensorDistress();
-  SensorDistress(double range):
+  explicit SensorDistress(double range):
     range_(range) {}
 
   /**

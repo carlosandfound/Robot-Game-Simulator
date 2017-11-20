@@ -37,6 +37,7 @@ Arena::Arena(const struct arena_params *const params) :
     home_base_(new HomeBase(&params->home_base)),
     entities_(),
     mobile_entities_(),
+    number_frozen_(0),
     win_(0),
     lose_(0) {
   saved_params = params;
@@ -75,6 +76,7 @@ Arena::~Arena() {
  * Member Functions
  ******************************************************************************/
 void Arena::Reset() {
+  number_frozen_ = 0;
   for (auto ent : entities_) {
     ent->Reset();
   } /* for(ent..) */
@@ -124,13 +126,44 @@ void Arena::UpdateEntitiesTimestep() {
    */
 
   EventCollision ec;
+  EventProximity ep;
+  EventDistressCall ed;
+  EventTypeEmit et;
+
+  /*
+  CheckForEntityProximity(robot1_, recharge_station_, &ep);
+  if (ep.detected()) {
+    std::cout << " ROBOT 1 " << '\n';
+    robot1_ -> Accept(&ep);
+  }
+  CheckForEntityProximity(robot2_, recharge_station_, &ep);
+  if (ep.detected()) {
+    std::cout << " ROBOT 2 " << '\n';
+    robot2_ -> Accept(&ep);
+  }
+  CheckForEntityProximity(robot3_, recharge_station_, &ep);
+  if (ep.detected()) {
+    std::cout << " ROBOT 3 " << '\n';
+    robot3_ -> Accept(&ep);
+  }
+  CheckForEntityProximity(robot4_, recharge_station_, &ep);
+  if (ep.detected()) {
+    std::cout << " ROBOT 4 " << '\n';
+    robot4_ -> Accept(&ep);
+  }
+  CheckForEntityProximity(robot5_, recharge_station_, &ep);
+  if (ep.detected()) {
+    std::cout << " ROBOT 5 " << '\n';
+    robot5_ -> Accept(&ep);
+  }
+  */
 
   CheckForEntityCollision(player_, home_base_, &ec,
     player_->get_collision_delta());
   if (ec.collided()) {
     player_->Accept(&ec);
-    win_ += 1;
-    Reset();
+    // win_ += 1;
+    // Reset();
   }
 
   for (uint i = 0; i < n_obstacles_; i++) {
@@ -143,12 +176,14 @@ void Arena::UpdateEntitiesTimestep() {
       if (obstacles()[i] == recharge_station_) {
         EventRecharge er;
         player_->Accept(&er);
-        //robot_params r;
-        //r.pos = saved_params->robot.pos;
-        //superbot_ = new Superbot(&r);
-        //entities_.push_back(superbot_);
-        //mobile_entities_.push_back(superbot_);
-        //superbot_present(true);
+        /*
+        robot_params r;
+        r.pos = saved_params->robot.pos;
+        superbot_ = new Superbot(&r);
+        entities_.push_back(superbot_);
+        mobile_entities_.push_back(superbot_);
+        superbot_present(true);
+        */
       }
     }
   }
@@ -170,17 +205,37 @@ void Arena::UpdateEntitiesTimestep() {
         if (entities_[i] == ent) {
           continue;
         }
-        CheckForEntityCollision(ent, entities_[i], &ec,
+        if (ent->get_entity_type_id() == 1) {
+            CheckForEntityProximity
+              (dynamic_cast<Robot *> (ent), entities_[i], &ep);
+            }
+        if (ep.detected()) {
+          dynamic_cast<Robot *> (ent) -> Accept(&ep);
+        } else {
+          CheckForEntityCollision(ent, entities_[i], &ec,
           ent->get_collision_delta());
-        if (ec.collided()) {
-          ent->Accept(&ec);
+          if (ec.collided()) {
+            if (ent->get_entity_type_id() == 0 &&
+              entities_[i]->get_entity_type_id() == 1) {
+                if (dynamic_cast<Robot *> (entities_[i])->get_distress_sensor()
+                  ->output() == 0) {
+                    ed.set_distress_status(true);
+                    dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
+                    number_frozen_++;
+                    if (number_frozen_ == 5) {
+                      win_++;
+                      Reset();
+                    }
+                  }
+                }
+            ent->Accept(&ec);
 
-          if ((ent == player_) && (entities_[i] == recharge_station_)) {
-            EventRecharge er;
-            player_->Accept(&er);
+            if ((ent == player_) && (entities_[i] == recharge_station_)) {
+              EventRecharge er;
+              player_->Accept(&er);
+            }
+            break;
           }
-
-          break;
         }
       } /* for(i..) */
     } /* else */
@@ -214,6 +269,122 @@ void Arena::CheckForEntityOutOfBounds(const ArenaMobileEntity *const ent,
     event->collided(false);
   }
 } /* entity_out_of_bounds() */
+
+void Arena::CheckForEntityProximity(const Robot *const sensing,
+                                    const ArenaEntity *const sensed,
+                                    EventProximity *const event) {
+  /* Note: this assumes circular entities */
+  double sensing_x = sensing->get_pos().x;
+  double sensing_y = sensing->get_pos().y;
+  double sensed_x = sensed->get_pos().x;
+  double sensed_y = sensed->get_pos().y;
+  double deltaX = sensed_x - sensing_x;
+  double deltaY = sensed_y - sensing_y;
+  double dist = std::sqrt(std::pow(deltaX, 2) + std::pow(deltaY, 2));
+  if (dist > (sensing->get_left_proximity_sensor()->
+    get_range() + sensed->radius())) {
+      event->detected(false);
+    } else {
+      // Populate the proximity event.
+      // detected is true
+      double triangle_theta = fabs(std::atan(sensed->radius()/dist)*(180/3.14));
+      double distance_theta = fabs(std::atan2(deltaY, deltaX)*(180/3.14));
+      double sensor_lower = sensing-> get_heading_angle() -
+        (static_cast<int> ((sensing->get_left_proximity_sensor()->
+            get_fov())/2));
+      double sensor_upper = sensing-> get_heading_angle() +
+        (static_cast<int> ((sensing->get_left_proximity_sensor()->
+            get_fov())/2));
+      double sensed_lower = distance_theta - triangle_theta;
+      double sensed_upper = distance_theta + triangle_theta;
+
+      if (sensing->get_left_proximity_sensor()->
+        in_range(sensor_lower, sensor_upper, sensed_lower, sensed_upper)) {
+          event->detected(true);
+
+          double angle = std::asin(std::abs(sensed_x - sensing_x) / dist);
+
+          if ((sensed_x - sensing_x) > 0) {
+            if ((sensed_y - sensing_y) > 0) {
+              // lower right
+              event->point_of_detection(
+                  {
+                      sensing_x + std::sin(angle) * sensing->radius(),
+                      sensing_y + std::cos(angle) * sensing->radius()
+                  });
+              angle = M_PI_2 - angle;
+            } else if ((sensed_y - sensing_y) < 0) {
+              // upper right
+              event->point_of_detection(
+                  {
+                      sensing_x + std::sin(angle) * sensing->radius(),
+                      sensing_y - std::cos(angle) * sensing->radius()
+                  });
+              angle += (3 * M_PI_2);
+            } else {  // if ((ent2_y - ent1_y) == 0)
+              // 0 or 360 deg
+              event->point_of_detection(
+                  {
+                      sensing_x + sensing->radius(),
+                      sensing_y
+                  });
+              angle = 0;
+            }
+          } else if ((sensed_x - sensing_x) < 0)  {
+            if ((sensed_y - sensing_y) > 0) {
+              // lower left
+              event->point_of_detection(
+                  {
+                      sensing_x - std::sin(angle) * sensing->radius(),
+                      sensing_y + std::cos(angle) * sensing->radius()
+                  });
+              angle += M_PI_2;
+            } else if ((sensed_y - sensing_y) < 0) {
+              // upper left
+              event->point_of_detection(
+                  {
+                      sensing_x - std::sin(angle) * sensing->radius(),
+                      sensing_y - std::cos(angle) * sensing->radius()
+                  });
+              angle = (M_PI_2 * 2) + (M_PI_2 - angle);
+            } else {  // if ((ent2_y - ent1_y) == 0)
+              // 180 deg
+              event->point_of_detection(
+                  {
+                      sensing_x - sensing->radius(),
+                      sensing_y
+                  });
+              angle = M_PI;
+            }
+          } else {  // if ((ent2_x - ent1_x) == 0)
+            if ((sensed_y - sensing_y) > 0) {
+              // 90 deg
+              event->point_of_detection(
+                  {
+                      sensing_x,
+                      sensing_y + sensing->radius()
+                  });
+              angle = M_PI_2;
+            } else if ((sensed_y - sensing_y) < 0) {
+              // 270 deg
+              event-> point_of_detection(
+                {
+                    sensing_x,
+                    sensing_y - sensing->radius()
+                });
+              angle = (3 * M_PI_2);
+            } else {  // if ((ent2_y - ent1_y) == 0)
+              // completely overlap, which is theoretically impossible...
+              std::cerr << sensing->get_name() <<
+              " is in complete overlap with " << sensed->get_name() << ".\n";
+              assert(false);
+            }
+          }
+
+          event->angle_of_detection((M_PI - angle) / M_PI * 180);
+        }
+      }
+    }
 
 void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
                                     const ArenaEntity *const ent2,

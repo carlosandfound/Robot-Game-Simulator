@@ -13,6 +13,8 @@
 #include "src/event_commands.h"
 #include "src/arena_mobile_entity.h"
 #include "src/sensor_touch.h"
+#include "src/sensor_proximity.h"
+#include "src/sensor_distress.h"
 
 /*******************************************************************************
  * Namespaces

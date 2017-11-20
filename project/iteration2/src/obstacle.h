@@ -49,6 +49,11 @@ class Obstacle : public ArenaImmobileEntity {
     return "Obstacle" + std::to_string(id_);
   }
 
+  /**
+   * @brief Getter method for an obstacle's entity type id, which is 4
+   */
+  int get_entity_type_id() const override { return 4; }
+
  private:
   static uint next_id_;
 
