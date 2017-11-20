@@ -19,11 +19,14 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 
 void SensorDistress::Accept(const EventDistressCall *const e) {
-  // Determine if the sensor is activated or deactivated.
+  if (e->get_distress_status()) {
+    status_ = 1;
+  } else {
+    status_ = 0;
+  }
 }
 
 void SensorDistress::Reset() {
-  range_ = 0;
   status_ = 0;
 } /* reset() */
 

@@ -87,6 +87,9 @@ class SensorProximity : public Sensor {
     double angle_of_detection() { return angle_of_detection_; }
     void angle_of_detection(double aoc) { angle_of_detection_ = aoc; }
 
+    int activated() const { return activated_; }
+    int activated(int value) { activated_ = value; }
+
     void Reset() override;
 
  private:

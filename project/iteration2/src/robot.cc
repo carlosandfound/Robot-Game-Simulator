@@ -35,9 +35,9 @@ Robot::Robot(const struct robot_params *const params) :
     sensor_touch_(),
     initial_pos_(params->pos),
     entity_type_sensor_(new SensorEntityType(50)),
-    distress_sensor_(new SensorDistress(50)),
-    left_proximity_sensor_(new SensorProximity(50,45)),
-    right_proximity_sensor_(new SensorProximity(50,45)) {
+    distress_sensor_(new SensorDistress(100)),
+    left_proximity_sensor_(new SensorProximity(100, 90)),
+    right_proximity_sensor_(new SensorProximity(100, 90)) {
   motion_handler_.set_speed(5);
   motion_handler_.heading_angle(270);
   motion_handler_.max_speed(params->max_speed);
@@ -56,6 +56,10 @@ void Robot::TimestepUpdate(uint dt) {
 
   // Update heading and speed as indicated by touch sensor
   motion_handler_.UpdateVelocity(sensor_touch_);
+  // Update heading and speed as indicated by touch sensor
+  motion_handler_.UpdateVelocity(left_proximity_sensor_);
+  // Update the speed as indicated by touch sensor
+  motion_handler_.UpdateVelocity(distress_sensor_);
   // Use velocity and position to update position
   motion_behavior_.UpdatePosition(this, dt);
 
@@ -77,6 +81,14 @@ void Robot::Accept(const EventCollision *const e) {
   battery_.Accept(e);
 }
 
+void Robot::Accept(const EventProximity *const e) {
+  left_proximity_sensor_->Accept(e);
+}
+
+void Robot::Accept(const EventDistressCall *const e) {
+  distress_sensor_->Accept(e);
+}
+
 /*
 void Robot::Accept(const EventCommand *const e) {
   motion_handler_.AcceptCommand(e->cmd());
@@ -92,6 +104,7 @@ void Robot::Reset() {
   motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
+  distress_sensor_->Reset();
 } /* Reset() */
 
 void Robot::ResetBattery() {

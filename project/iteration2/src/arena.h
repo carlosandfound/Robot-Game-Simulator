@@ -15,6 +15,9 @@
 #include <vector>
 #include "src/event_keypress.h"
 #include "src/event_collision.h"
+#include "src/event_proximity.h"
+#include "src/event_distress_call.h"
+#include "src/event_type_emit.h"
 #include "src/robot.h"
 #include "src/player.h"
 #include "src/home_base.h"
@@ -207,6 +210,21 @@ class Arena {
   bool any_entities_overlap(void);
 
   /**
+   * @brief Determine if entity is within range of proximity sensor of a robot have. If so, they bounce
+   * off of each other at angle of reflection to avoid contact.
+   *
+   * @param ent1 Robot with sensor.
+   * @param ent2 Entity being sensed.
+   * @param ec Pointer to a proximity event.
+   *
+   * This method does not return anything. All information related to the
+   * detected proximity is stored in the EventProximity parameter passed in.
+   */
+  void CheckForEntityProximity(const class Robot *const sensing,
+                               const class ArenaEntity *const sensed,
+                               EventProximity *const ep);
+
+  /**
    * @brief Determine if two entities have collided in the Arena. Collision is
    * defined as the distance between two entities being less than a run-time
    * parameter (specifically, collision_delta, which is set in main.cc).
@@ -288,6 +306,7 @@ class Arena {
   // win/lose stats
   int win_;
   int lose_;
+  int number_frozen_;
   bool superbot_exist_ = false;
   const arena_params* saved_params = 0;
 };

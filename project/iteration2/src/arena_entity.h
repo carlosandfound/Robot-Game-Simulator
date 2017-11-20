@@ -116,6 +116,8 @@ class ArenaEntity {
    */
   double radius() const { return radius_; }
 
+  virtual int get_entity_type_id() const = 0;
+
  private:
   double radius_;
   Position pos_;
