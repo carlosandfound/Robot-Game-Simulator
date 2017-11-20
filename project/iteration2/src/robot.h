@@ -21,6 +21,8 @@
 #include "src/arena_mobile_entity.h"
 #include "src/event_recharge.h"
 #include "src/event_collision.h"
+#include "src/event_proximity.h"
+#include "src/event_distress_call.h"
 #include "src/position.h"
 #include "src/event_command.h"
 
@@ -96,6 +98,28 @@ class Robot : public ArenaMobileEntity {
   void Accept(const EventCollision *const e) override;
 
   /**
+   * @brief Pass along a proximity event (from Arena) to the proximity sensor.
+   *
+   * This method provides a framework in which sensors can get different types
+   * of information from different sources. The Robot's heading will be updated
+   * to move it away from the incident angle at the point of detection.
+   *
+   * @param e The proximity event.
+   */
+  void Accept(const EventProximity *const e);
+
+  /**
+   * @brief Pass along a distress event (from Arena) to the distress sensor.
+   *
+   * This method provides a framework in which sensors can get different types
+   * of information from different sources. The Robot's will be frozen
+   * and emit a sensor distress signal.
+   *
+   * @param e The distress event.
+   */
+  void Accept(const EventDistressCall *const e);
+
+  /**
    * @brief Handle user input commands to change the Robot's heading or speed.
    *
    * @param e The command to process.
@@ -163,16 +187,21 @@ class Robot : public ArenaMobileEntity {
   /**
    * @brief getter method for robot's left proximity sensor
    */
-  class SensorProximity *get_left_proximity_sensor() {
+  class SensorProximity *get_left_proximity_sensor() const {
     return left_proximity_sensor_;
   }
 
   /**
    * @brief getter method for robot's right proximity sensor
    */
-  class SensorProximity *get_right_proximity_sensor() {
+  class SensorProximity *get_right_proximity_sensor() const {
     return right_proximity_sensor_;
   }
+
+  /**
+   * @brief Getter method for a robot's entity type id, which is 1
+   */
+  int get_entity_type_id() const override { return 1; }
 
   /**
    * @brief Get the name of the Robot for visualization purposes, and to

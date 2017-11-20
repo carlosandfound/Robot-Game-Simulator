@@ -34,8 +34,8 @@ class SensorEntityType : public Sensor {
    * @brief constructor with sensor's robot user and field of view (fov) as
    * parameters.
    */
-  //  SensorEntityType();
-  SensorEntityType(double range):
+  // SensorEntityType();
+  explicit SensorEntityType(double range):
     range_(range),
     activated_(0) {}
 
@@ -57,6 +57,9 @@ class SensorEntityType : public Sensor {
   enum entity_type output () const { return type_; }
 
   int get_range() { return range_; }
+
+  int activated() const { return activated_; }
+  int activated(int value) { activated_ = value; }
 
   void Reset() override;
 

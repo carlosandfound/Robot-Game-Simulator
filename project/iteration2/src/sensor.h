@@ -40,20 +40,6 @@ class Sensor {
   virtual ~Sensor() = default;
 
   /**
-   * @brief Getter method for sensor status.
-   *
-   * @return `true` if sensor is activated. `false` if sensor is deactivated.
-   */
-  int activated() const { return activated_; }
-
-  /**
-   * @brief Setter method for sensor status.
-   *
-   * @param value The new sensor activation status.
-   */
-  int activated(int value) { activated_ = value; }
-
-  /**
    * @brief Accept a recharge event.
    *
    * @param e The recharge event.

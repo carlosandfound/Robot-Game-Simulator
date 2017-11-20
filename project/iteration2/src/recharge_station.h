@@ -49,6 +49,11 @@ class RechargeStation : public Obstacle {
   std::string get_name() const override {
     return "Recharge Station";
   }
+
+  /**
+   * @brief Getter method for the recharge station's entity type id, which is 3
+   */
+  int get_entity_type_id() const override { return 3; }
 };
 
 NAMESPACE_END(csci3081);

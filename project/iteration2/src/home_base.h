@@ -111,6 +111,11 @@ class HomeBase : public ArenaMobileEntity {
    */
   std::string get_name() const override { return "Home Base"; }
 
+  /**
+   * @brief Getter method for home base's entity type id, which is 2
+   */
+  int get_entity_type_id() const override { return 2; }
+
  private:
   Position initial_pos_;  // initial position of the Robot, used by Reset()
   MotionHandlerHomeBase motion_handler_;

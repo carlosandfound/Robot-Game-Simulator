@@ -154,6 +154,11 @@ class Player : public ArenaMobileEntity {
     return "Player" + std::to_string(id_);
   }
 
+  /**
+   * @brief Getter method for the player's entity type id, which is 0
+   */
+  int get_entity_type_id() const override { return 0; }
+
  private:
   static unsigned int next_id_;
 
