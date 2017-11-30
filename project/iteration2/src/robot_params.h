@@ -36,6 +36,8 @@ struct robot_params : public arena_mobile_entity_params {
   uint angle_delta;
   double speed_delta;
   double max_speed;
+
+  const Color get_color() const {return arena_mobile_entity_params().get_color();}
 };
 
 NAMESPACE_END(csci3081);

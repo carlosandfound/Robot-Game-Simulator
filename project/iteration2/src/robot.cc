@@ -105,6 +105,7 @@ void Robot::Reset() {
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
   distress_sensor_->Reset();
+  set_color(Color(0, 200, 0, 200));
 } /* Reset() */
 
 void Robot::ResetBattery() {

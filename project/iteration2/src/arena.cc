@@ -162,7 +162,6 @@ void Arena::UpdateEntitiesTimestep() {
     player_->get_collision_delta());
   if (ec.collided()) {
     player_->Accept(&ec);
-    // win_ += 1;
     // Reset();
   }
 
@@ -176,14 +175,6 @@ void Arena::UpdateEntitiesTimestep() {
       if (obstacles()[i] == recharge_station_) {
         EventRecharge er;
         player_->Accept(&er);
-        /*
-        robot_params r;
-        r.pos = saved_params->robot.pos;
-        superbot_ = new Superbot(&r);
-        entities_.push_back(superbot_);
-        mobile_entities_.push_back(superbot_);
-        superbot_present(true);
-        */
       }
     }
   }
@@ -205,7 +196,8 @@ void Arena::UpdateEntitiesTimestep() {
         if (entities_[i] == ent) {
           continue;
         }
-        if (ent->get_entity_type_id() == 1) {
+        if ((ent->get_entity_type_id() == 1) &&
+            (entities_[i]->get_entity_type_id() != 2)) {
             CheckForEntityProximity
               (dynamic_cast<Robot *> (ent), entities_[i], &ep);
             }
@@ -227,7 +219,10 @@ void Arena::UpdateEntitiesTimestep() {
                       Reset();
                     }
                   }
-                }
+                } else if (ent->get_entity_type_id() == 1 &&
+                  entities_[i]->get_entity_type_id() == 2) {
+                    ent->set_color(Color(900, 300, 200, 900));
+                  }
             ent->Accept(&ec);
 
             if ((ent == player_) && (entities_[i] == recharge_station_)) {
@@ -299,7 +294,8 @@ void Arena::CheckForEntityProximity(const Robot *const sensing,
       double sensed_upper = distance_theta + triangle_theta;
 
       if (sensing->get_left_proximity_sensor()->
-        in_range(sensor_lower, sensor_upper, sensed_lower, sensed_upper)) {
+        in_range(std::abs(sensor_lower), std::abs(sensor_upper),
+        std::abs(sensed_lower), std::abs(sensed_upper))) {
           event->detected(true);
 
           double angle = std::asin(std::abs(sensed_x - sensing_x) / dist);

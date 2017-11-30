@@ -22,7 +22,6 @@
 #include "src/player.h"
 #include "src/home_base.h"
 #include "src/recharge_station.h"
-#include "src/superbot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -59,6 +58,11 @@ class Arena {
    * @brief Arena's destructor. `delete` all entities created.
    */
   ~Arena();
+
+  void HandleCollision(const ArenaEntity *const ent1,
+                       const ArenaEntity *const ent2,
+                       EventBaseClass *const event,
+                       double angle);
 
   /**
    * @brief Advance the simulation by the specified # of steps.
@@ -157,9 +161,6 @@ class Arena {
    * @return A pointer to the Robot.
    */
   class Robot *robot5() const { return robot5_; }
-
-  class Superbot *superbot() const { return superbot_;}
-
 
 
   /**
@@ -296,13 +297,11 @@ class Arena {
   Robot *robot3_;
   Robot *robot4_;
   Robot *robot5_;
-  Superbot *superbot_;
   Player *player_;
   RechargeStation *recharge_station_;
   HomeBase *home_base_;
   std::vector<class ArenaEntity *> entities_;
   std::vector<class ArenaMobileEntity *> mobile_entities_;
-
   // win/lose stats
   int win_;
   int lose_;

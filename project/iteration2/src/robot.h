@@ -213,6 +213,10 @@ class Robot : public ArenaMobileEntity {
     return "Robot" + std::to_string(id_);
   }
 
+  //bool is_superbot() const {return is_superbot;}
+
+  //void superbot_update(bool s) {is_superbot = s;}
+
  private:
   static unsigned int next_id_;
 
@@ -229,6 +233,7 @@ class Robot : public ArenaMobileEntity {
   SensorProximity * left_proximity_sensor_;
   SensorProximity * right_proximity_sensor_;
   Position initial_pos_;  // initial position of the Robot, used by Reset()
+  //bool is_superbot = false;
 };
 
 NAMESPACE_END(csci3081);

@@ -159,6 +159,10 @@ class Player : public ArenaMobileEntity {
    */
   int get_entity_type_id() const override { return 0; }
 
+  //bool is_superbot() const {return is_superbot;}
+
+  //void superbot_update(bool s) {is_superbot = s;}
+
  private:
   static unsigned int next_id_;
 
@@ -171,6 +175,8 @@ class Player : public ArenaMobileEntity {
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
   Position initial_pos_;  // initial position of the player, used by Reset()
+  const robot_params* saved_params = 0;
+  //bool is_superbot = false;
 };
 
 NAMESPACE_END(csci3081);

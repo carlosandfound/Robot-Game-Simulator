@@ -34,6 +34,7 @@ Player::Player(const struct robot_params *const params) :
     motion_behavior_(),
     sensor_touch_(),
     initial_pos_(params->pos) {
+  saved_params = params;
   motion_handler_.set_speed(5);
   motion_handler_.heading_angle(270);
   motion_handler_.max_speed(params->max_speed);
@@ -65,6 +66,9 @@ void Player::TimestepUpdate(uint dt) {
 } /* TimestepUpdate() */
 
 void Player::Accept(__unused const EventRecharge *const e) {
+  //std::cout << &saved_params->robot.color << '\n';
+  //saved_params.color = csci3081::Color(0, 200, 0, 200);
+  //std::cout << &saved_params->color << '\n';
   battery_.EventRecharge();
 }
 
@@ -85,6 +89,8 @@ void Player::Reset() {
   motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
+  set_color(Color(0, 0, 255, 255));
+  //is_superbot = false;
 } /* Reset() */
 
 void Player::ResetBattery() {
