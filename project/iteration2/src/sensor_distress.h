@@ -59,6 +59,8 @@ class SensorDistress : public Sensor {
    */
   int output() { return status_; }
 
+  void output(int s) {status_ = s;}
+
   int get_range() { return range_; }
 
   void Reset() override;

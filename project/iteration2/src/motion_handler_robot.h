@@ -43,9 +43,9 @@ class MotionHandlerRobot : public MotionHandler {
   */
   void UpdateVelocity(SensorTouch st) override;
 
-  void UpdateVelocity(SensorProximity * sp);
+  void UpdateVelocity(SensorProximity * sp, bool superbot);
 
-  void UpdateVelocity(SensorDistress * sd);
+  void UpdateVelocity(SensorDistress * sd, bool superbot);
 
   /**
    * @brief Getter method for speed.

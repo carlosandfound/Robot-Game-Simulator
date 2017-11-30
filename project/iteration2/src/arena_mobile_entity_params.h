@@ -34,8 +34,6 @@ struct arena_mobile_entity_params : public arena_entity_params {
    * @brief Minimum distance between entities that qualifies as a collision.
    */
   double collision_delta;
-  const Color get_color() const {return arena_entity_params().color;}
-
 };
 
 NAMESPACE_END(csci3081);

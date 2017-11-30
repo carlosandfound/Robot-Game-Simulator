@@ -337,11 +337,6 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
   DrawRobot(ctx, arena_->robot3());
   DrawRobot(ctx, arena_->robot4());
   DrawRobot(ctx, arena_->robot5());
-
-  //if (arena_ -> superbot_present() == true) {
-    //DrawRobot(ctx, arena_-> superbot());
-    //arena_->superbot_present(false);
-  //}
 }
 
 NAMESPACE_END(csci3081);

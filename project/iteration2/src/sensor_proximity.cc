@@ -37,19 +37,18 @@ double SensorProximity::sensor_reading(class ArenaEntity *const ent1,
 bool SensorProximity::in_range(double sensor_lower, double sensor_upper,
   double sensed_lower, double sensed_upper) {
     if (sensor_lower > sensor_upper) {
-      double a = (int)1.0%4;
       double distanceToCrossing = 360.0 - sensor_lower;
-      sensor_lower = (int)(sensor_lower+distanceToCrossing) % 360;
+      sensor_lower = static_cast<int>(sensor_lower+distanceToCrossing) % 360;
       sensor_upper = sensor_upper + distanceToCrossing;
-      sensed_lower = (int)(sensed_lower+distanceToCrossing) % 360;
-      sensed_upper = (int)(sensed_upper+distanceToCrossing) % 360;
+      sensed_lower = static_cast<int>(sensed_lower+distanceToCrossing) % 360;
+      sensed_upper = static_cast<int>(sensed_upper+distanceToCrossing) % 360;
     }
     if (sensed_lower > sensed_upper) {
       double distanceToCrossing = 360.0 - sensed_lower;
-      sensor_lower = (int)(sensor_lower+distanceToCrossing) % 360;
+      sensor_lower = static_cast<int>(sensor_lower+distanceToCrossing) % 360;
       sensor_upper = sensor_upper + distanceToCrossing;
-      sensed_lower = (int)(sensed_lower+distanceToCrossing) % 360;
-      sensed_upper = (int)(sensed_upper+distanceToCrossing) % 360;
+      sensed_lower = static_cast<int>(sensed_lower+distanceToCrossing) % 360;
+      sensed_upper = static_cast<int>(sensed_upper+distanceToCrossing) % 360;
     }
     if ((sensed_lower < sensor_lower) && (sensed_upper > sensor_upper)) {
       return true;

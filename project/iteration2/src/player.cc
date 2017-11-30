@@ -49,26 +49,16 @@ Player::Player(const struct robot_params *const params) :
  ******************************************************************************/
 void Player::TimestepUpdate(uint dt) {
   Position old_pos = get_pos();
-  // double old_heading_angle = heading_angle();
 
   // Update heading and speed as indicated by touch sensor
   motion_handler_.UpdateVelocity(sensor_touch_);
   // Use velocity and position to update position
   motion_behavior_.UpdatePosition(this, dt);
-
-  // double vel = std::sqrt(std::pow(get_pos().x() - old_pos.x(), 2) +
-  //     std::pow(get_pos().y() - old_pos.y(), 2)) / static_cast<double>(dt);
-  // double angular_vel = std::abs(heading_angle() - old_heading_angle) /
-  //     static_cast<double>(dt);
-  // battery_.Deplete(vel, angular_vel);
-
+  // deplete battery based on position
   battery_.Deplete(old_pos, get_pos(), static_cast<double>(dt));
 } /* TimestepUpdate() */
 
 void Player::Accept(__unused const EventRecharge *const e) {
-  //std::cout << &saved_params->robot.color << '\n';
-  //saved_params.color = csci3081::Color(0, 200, 0, 200);
-  //std::cout << &saved_params->color << '\n';
   battery_.EventRecharge();
 }
 
@@ -90,7 +80,8 @@ void Player::Reset() {
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
   set_color(Color(0, 0, 255, 255));
-  //is_superbot = false;
+  frozen_ = false;
+  time_frozen_ = 0;
 } /* Reset() */
 
 void Player::ResetBattery() {

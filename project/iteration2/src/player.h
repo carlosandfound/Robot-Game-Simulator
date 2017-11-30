@@ -159,12 +159,15 @@ class Player : public ArenaMobileEntity {
    */
   int get_entity_type_id() const override { return 0; }
 
-  //bool is_superbot() const {return is_superbot;}
-
-  //void superbot_update(bool s) {is_superbot = s;}
+  void time_frozen(int t) { time_frozen_ = t; }
+  int time_frozen() { return time_frozen_; }
+  void frozen(bool s) { frozen_ = s; }
+  bool frozen() { return frozen_; }
 
  private:
   static unsigned int next_id_;
+  int time_frozen_;
+  bool frozen_ = false;
 
   int id_;
   double heading_angle_;
@@ -176,7 +179,6 @@ class Player : public ArenaMobileEntity {
   SensorTouch sensor_touch_;
   Position initial_pos_;  // initial position of the player, used by Reset()
   const robot_params* saved_params = 0;
-  //bool is_superbot = false;
 };
 
 NAMESPACE_END(csci3081);

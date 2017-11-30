@@ -38,17 +38,28 @@ void MotionHandlerRobot::UpdateVelocity(SensorTouch st) {
   }
 }
 
-void MotionHandlerRobot::UpdateVelocity(SensorProximity * sp) {
-  if (sp->activated()) {
-    heading_angle(-sp->angle_of_detection());
-    sp->Reset();
+void MotionHandlerRobot::UpdateVelocity(SensorProximity * sp, bool superbot) {
+  if (superbot) {
+    sp->activated(false);
+  } else {
+    if (sp->activated()) {
+      heading_angle(-sp->angle_of_detection());
+      sp->Reset();
+    }
   }
 }
 
-void MotionHandlerRobot::UpdateVelocity(SensorDistress * sd) {
-  if (sd->output() == 1) {
-    set_speed(0);  // decrease speed 10% if collided
-    // sd->Reset();
+void MotionHandlerRobot::UpdateVelocity(SensorDistress * sd, bool superbot) {
+  if (superbot) {
+    sd->output(0);
+    set_speed(5);
+  } else {
+    if (sd->output() == 1) {
+      set_speed(0);  // decrease speed 10% if collided
+      // sd->Reset();
+    } else {
+      set_speed(5);
+    }
   }
 }
 

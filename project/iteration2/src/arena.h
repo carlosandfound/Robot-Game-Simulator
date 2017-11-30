@@ -306,6 +306,8 @@ class Arena {
   int win_;
   int lose_;
   int number_frozen_;
+  int number_superbots_;
+  int time_ = 0;
   bool superbot_exist_ = false;
   const arena_params* saved_params = 0;
 };
