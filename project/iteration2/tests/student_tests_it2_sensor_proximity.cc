@@ -55,7 +55,7 @@ TEST(SensorProximity, GettersandSetters) {
   EXPECT_EQ(sp.activated(), 0);
 }
 
-TEST(SensorProximity, sensor_reading_and_in_range) {
+TEST(SensorProximity, sensor_reading_and_In_Range) {
   csci3081::robot_params params;
   params.pos = csci3081::Position(0, 0);
   params.angle_delta = 15;
@@ -65,7 +65,7 @@ TEST(SensorProximity, sensor_reading_and_in_range) {
   csci3081::Robot r1 = csci3081::Robot(&params);
   csci3081::SensorProximity sp(&r1,0,0);
   EXPECT_EQ(sp.sensor_reading(&r1,&r1), 5);
-  EXPECT_EQ(sp.in_range(0,0,0,0),true);
+  EXPECT_EQ(sp.In_Range(0,0,0,0),true);
   EXPECT_EQ(sp.get_range(), 45);
   EXPECT_EQ(sp.get_distance(), 0);
   EXPECT_EQ(sp.activated(), 1);
@@ -79,7 +79,7 @@ TEST(SensorProximity, sensor_reading_and_in_range) {
   csci3081::Robot r2 = csci3081::Robot(&params2);
   csci3081::SensorProximity sp2(&r1,5,5);
   EXPECT_EQ(sp2.sensor_reading(&r1,&r2), 10);
-  EXPECT_EQ(sp2.in_range(5,10,0,10),true);
+  EXPECT_EQ(sp2.In_Range(5,10,0,10),true);
   EXPECT_EQ(sp2.get_range(), 5);
   EXPECT_EQ(sp2.get_distance(), 10);
   EXPECT_EQ(sp2.activated(), 1);
@@ -93,7 +93,7 @@ TEST(SensorProximity, sensor_reading_and_in_range) {
   csci3081::Robot r3 = csci3081::Robot(&params3);
   csci3081::SensorProximity sp3(&r1,10,10);
   EXPECT_EQ(sp3.sensor_reading(&r1,&r3), -1);
-  EXPECT_EQ(sp3.in_range(0,0,0,0),false);
+  EXPECT_EQ(sp3.In_Range(0,0,0,0),false);
   EXPECT_EQ(sp3.get_range(), 10);
   EXPECT_EQ(sp3.get_distance(), -1);
   EXPECT_EQ(sp3.activated(), 0);
