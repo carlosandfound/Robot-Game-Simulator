@@ -22,11 +22,8 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class managing an ArenaMobileEntity's speed and heading angle based
- * on collisions and (in the case of Player) user inputs.
- *
- * Currently, both wheels are always going at maximum speed, and
- * cannot be controlled independently.
+ * @brief Class managing the motion behavior of the Player in wake of a user
+ * input or collision event.
  */
 class MotionHandlerPlayer : public MotionHandler {
  public:
@@ -51,18 +48,12 @@ class MotionHandlerPlayer : public MotionHandler {
   void AcceptCommand(enum event_commands cmd);
 
   /**
-  * @brief Update the speed and the heading angle according to the sensor
+  * @brief Update the speed and the heading angle according to sensor touch's
   * readings.
   *
   * @param st A SensorTouch to be read.
   */
   void UpdateVelocity(SensorTouch st) override;
-
-  /**
-   * @brief Getter method for speed.
-   *
-   * @return The current speed.
-   */
 
  private:
   double heading_angle_;

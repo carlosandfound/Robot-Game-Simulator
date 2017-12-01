@@ -41,7 +41,6 @@ Arena::Arena(const struct arena_params *const params) :
     number_superbots_(0),
     win_(0),
     lose_(0) {
-  saved_params = params;
   entities_.push_back(player_);
   mobile_entities_.push_back(player_);
   entities_.push_back(robot1_);
@@ -84,6 +83,7 @@ void Arena::Reset() {
   } /* for(ent..) */
 } /* reset() */
 
+// push obstacles into appropriate vector
 std::vector<Obstacle *> Arena::obstacles() {
   std::vector<Obstacle *> res;
   for (auto ent : entities_) {
@@ -105,8 +105,6 @@ void Arena::AdvanceTime(double dt) {
 } /* AdvanceTime() */
 
 void Arena::UpdateEntitiesTimestep() {
-
-  std::cout << number_frozen_ << '\n';
   /*
    * First, update the position of all entities, according to their current
    * velocities.
@@ -116,15 +114,19 @@ void Arena::UpdateEntitiesTimestep() {
   } /* for(ent..) */
 
   /*
-   * Next, check if the robot has run out of battery
+   * Next, check if the player has run out of battery
    */
   if (player_->get_battery_level() <= 0) {
     Reset();
     time_ = 0;
   }
 
-  if ((player_->frozen()) && (player_->time_frozen() == time_)) {
-    player_->frozen(false);
+  /*
+   * Next, check if the player has been frozen (by superbot) for 100 iterations.
+   * If so, it can resume at the regular speed and accept input commands.
+   */
+  if ((player_->get_frozen()) && (player_->get_unfreeze_time() == time_)) {
+    player_->set_frozen(false);
     player_->set_speed(5);
   }
 
@@ -135,11 +137,13 @@ void Arena::UpdateEntitiesTimestep() {
    * properly processed.
    */
 
+  // Populate arena with each type of event
   EventCollision ec;
   EventProximity ep;
   EventDistressCall ed;
   EventTypeEmit et;
 
+  // check if player has collided with home base
   CheckForEntityCollision(player_, home_base_, &ec,
     player_->get_collision_delta());
   if (ec.collided()) {
@@ -147,6 +151,11 @@ void Arena::UpdateEntitiesTimestep() {
     // Reset();
   }
 
+  /*
+   * Check if player collides with any obstacles. If so, decrease its speed
+   * accordingly. However, if the obstacle is the recharge station, recharge
+   * the player's battery.
+   */
   for (uint i = 0; i < n_obstacles_; i++) {
     CheckForEntityCollision(player_, obstacles()[i], &ec,
                             player_->get_collision_delta());
@@ -163,10 +172,11 @@ void Arena::UpdateEntitiesTimestep() {
 
   /*
    * Finally, some pairs of entities may now be close enough to be considered
-   * colliding, send collision events as necessary.
+   * colliding or within proximity. In either case, the appropriate event(s)
+   * should be sent to the entity.
    *
    * When something collides with an immobile entity, the immobile entity does
-   * not move (duh), so no need to send it a collision event.
+   * not move, so no need to send it a collision event.
    */
   for (auto ent : mobile_entities_) {
     // Check if it is out of bounds. If so, use that as point of contact.
@@ -199,6 +209,8 @@ void Arena::UpdateEntitiesTimestep() {
         if ((ep.detected()) && !(dynamic_cast<Robot *> (ent)->is_superbot())) {
           dynamic_cast<Robot *> (ent) -> Accept(&ep);
       } else {
+          // check for collision event if proximity event hasn't occured or the
+          // entity colliding is a superbot.
           CheckForEntityCollision(ent, entities_[i], &ec,
           ent->get_collision_delta());
           if (ec.collided()) {
@@ -208,16 +220,20 @@ void Arena::UpdateEntitiesTimestep() {
                 // player collides with a superbot
                 // player freezes for 100 iterations
                 if ((dynamic_cast<Robot *> (entities_[i])->is_superbot()) &&
-                    (!player_->frozen())) {
-                      player_->frozen(true);
-                      player_->time_frozen(time_+100);
+                    (!player_->get_frozen())) {
+                      player_->set_frozen(true);
+                      player_->set_unfreeze_time(time_+100);
                       player_->set_speed(0);
                 }
-                // player collides with a robot whose distres sensor is off
+                // player collides with a robot whose distress sensor is off
                 // robot then freezes until another robot or superbot touches it
                 if (dynamic_cast<Robot *> (entities_[i])->get_distress_sensor()
                   ->output() == 0) {
                     if (!dynamic_cast<Robot *> (entities_[i])->is_superbot()) {
+                      /*
+                      update number of frozen robots accordingly without
+                      redundancies
+                      */
                       number_frozen_++;
                       if (number_frozen_ == 5) {
                         win_++;
@@ -225,6 +241,11 @@ void Arena::UpdateEntitiesTimestep() {
                         Reset();
                       }
                     }
+                    /*
+                    check that the distress status is actually correct because
+                    although a robot accepts the event distress, it doesn't
+                    apply to superbots because they're never frozen.
+                    */
                     ed.set_distress_status(true);
                     dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
                     bool new_status = dynamic_cast<Robot *> (entities_[i])->
@@ -254,8 +275,11 @@ void Arena::UpdateEntitiesTimestep() {
                       dynamic_cast<Robot *> (ent)->Accept(&ed);
                       dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
                       if ((dynamic_cast<Robot *> (ent)->get_speed() == 0) ||
-                      (dynamic_cast<Robot *> (entities_[i])->get_speed() == 0))
-                      {
+                      (dynamic_cast<Robot *>(entities_[i])->get_speed() == 0)) {
+                        /*
+                        if robot is unfrozen, update the count of robots
+                        frozen accordingly
+                        */
                         number_frozen_--;
                       }
                     }
@@ -306,6 +330,11 @@ void Arena::CheckForEntityProximity(const Robot *const sensing,
                                     const ArenaEntity *const sensed,
                                     EventProximity *const event) {
   /* Note: this assumes circular entities */
+  /*
+  this method is mostlu equivalent to the SensorReading() method under the
+  proximity.py file provided by Professor Larson that determine whether or not
+  an entity can be detected
+  */
   double sensing_x = sensing->get_pos().x;
   double sensing_y = sensing->get_pos().y;
   double sensed_x = sensed->get_pos().x;
@@ -330,9 +359,20 @@ void Arena::CheckForEntityProximity(const Robot *const sensing,
       double sensed_lower = distance_theta - triangle_theta;
       double sensed_upper = distance_theta + triangle_theta;
 
+      /*
+      call proximity sensor method that functionally equivalent to the InRange()
+      method in the proximity.py file provided by Professor Larson. This method
+      decides whether ot not the entity being sensed is within range of the
+      sensing robot's sensor
+      */
       if (sensing->get_left_proximity_sensor()->
-        in_range(std::abs(sensor_lower), std::abs(sensor_upper),
+        In_Range(std::abs(sensor_lower), std::abs(sensor_upper),
         std::abs(sensed_lower), std::abs(sensed_upper))) {
+          /*
+          an entity has been detected
+          bounce sensed entity at an angle of reflection from the signal
+          range of the sensing robot
+          */
           event->detected(true);
 
           double angle = std::asin(std::abs(sensed_x - sensing_x) / dist);
@@ -525,7 +565,8 @@ void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
 
 void Arena::Accept(const EventKeypress *const e) {
   // don't handle unsupported keys
-  if ((e->GetCmd() != COM_UNKNOWN) && (player_->frozen() == false))
+  // don't accept user input if player is frozen
+  if ((e->GetCmd() != COM_UNKNOWN) && (player_->get_frozen() == false))
     player_->Accept(new EventCommand(e->GetCmd()));
 } /* Accept */
 

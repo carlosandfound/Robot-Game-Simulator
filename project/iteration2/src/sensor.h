@@ -25,7 +25,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief Base class for sensors. Should be inherited by classes like
- * SensorTouch.
+ * SensorTouch, SensorDistress, SensorProximity, SensorEntityType
  */
 class Sensor {
  public:

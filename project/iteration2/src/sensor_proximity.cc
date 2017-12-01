@@ -29,12 +29,7 @@ void SensorProximity::Accept(const EventProximity *const e) {
   }
 }
 
-double SensorProximity::sensor_reading(class ArenaEntity *const ent1,
-  class ArenaEntity *const ent2) {
-    return -1;
-  }
-
-bool SensorProximity::in_range(double sensor_lower, double sensor_upper,
+bool SensorProximity::In_Range(double sensor_lower, double sensor_upper,
   double sensed_lower, double sensed_upper) {
     if (sensor_lower > sensor_upper) {
       double distanceToCrossing = 360.0 - sensor_lower;

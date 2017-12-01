@@ -23,7 +23,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief Class managing an ArenaMobileEntity's speed and heading angle based
- * on collisions and (in the case of HomeBase) user inputs.
+ * on collisions.
  *
  * Currently, both wheels are always going at maximum speed, and
  * cannot be controlled independently.
@@ -42,12 +42,6 @@ class MotionHandlerHomeBase : public MotionHandler {
   * @param st A SensorTouch to be read.
   */
   void UpdateVelocity(SensorTouch st) override;
-
-  /**
-   * @brief Getter method for speed.
-   *
-   * @return The current speed.
-   */
 
  private:
   double heading_angle_;

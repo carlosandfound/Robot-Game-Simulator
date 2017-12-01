@@ -25,17 +25,14 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief base class of for various tyes of entities in the environment.
+ * @brief base class of for various tyes of motion handlers that controlled
+ * the motion of mobile entities. The Robot, HomeBase and Player motion handlers
+ * all inherit from this base class.
  *
- * Currently, both wheels can't be controlled independently.
+ * As this is a base class, most of its methods are `virtual`.
  */
 class MotionHandler {
  public:
-  /**
-   * @brief Default constructor.
-   */
-  // MotionHandler();
-
   virtual ~MotionHandler() = default;
 
   /**
@@ -140,12 +137,12 @@ class MotionHandler {
   void angle_delta(double ad) { angle_delta_ = ad; }
 
  private:
-  double heading_angle_;
-  double speed_;
-  double max_speed_;
-  double max_angle_;
-  double speed_delta_;
-  double angle_delta_;
+  double heading_angle_ = 0;
+  double speed_ = 0;
+  double max_speed_ = 100;
+  double max_angle_ = 360;
+  double speed_delta_ = 30;
+  double angle_delta_ = 30;
 };
 
 NAMESPACE_END(csci3081);

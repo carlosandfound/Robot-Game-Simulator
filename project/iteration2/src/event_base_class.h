@@ -21,13 +21,9 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
-
- /*struct CollisionEntity {
-   ArenaEntity * a1;
-   ArenaEntity * a2;
- }*/
 /**
  * @brief The base event class from which all events should inherit from.
+ * As this is a base class, most of its methods are `virtual`
  */
 class EventBaseClass {
  public:
@@ -41,24 +37,12 @@ class EventBaseClass {
    */
   virtual ~EventBaseClass() = default;
 
-  /*
-  double angle_of_contact() const { return angle_of_contact_; }
-  Position point_of_contact() const { return point_of_contact_; }
-  void point_of_contact(Position p) { point_of_contact_ = p; }
-  void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
-  */
-
-
   /**
    * @brief Each event, upon its firing/processing, should emit a message to
    * the user on `stdout` saying what happened, in order to
    * aid debugging.
    */
   virtual void EmitMessage() const = 0;
-
- /*private:
-   Position point_of_contact_;
-  double angle_of_contact_;*/
 };
 
 NAMESPACE_END(csci3081);

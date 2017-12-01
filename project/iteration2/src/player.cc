@@ -34,7 +34,8 @@ Player::Player(const struct robot_params *const params) :
     motion_behavior_(),
     sensor_touch_(),
     initial_pos_(params->pos) {
-  saved_params = params;
+  set_frozen(false);
+  set_unfreeze_time(0);
   motion_handler_.set_speed(5);
   motion_handler_.heading_angle(270);
   motion_handler_.max_speed(params->max_speed);
@@ -62,12 +63,12 @@ void Player::Accept(__unused const EventRecharge *const e) {
   battery_.EventRecharge();
 }
 
-void Player::Accept(const EventCollision *const e) {
+void Player::Accept(__unused const EventCollision *const e) {
   sensor_touch_.Accept(e);
   battery_.Accept(e);
 }
 
-void Player::Accept(const EventCommand *const e) {
+void Player::Accept(__unused const EventCommand *const e) {
   motion_handler_.AcceptCommand(e->cmd());
 } /* event_cmd() */
 
@@ -81,7 +82,7 @@ void Player::Reset() {
   sensor_touch_.Reset();
   set_color(Color(0, 0, 255, 255));
   frozen_ = false;
-  time_frozen_ = 0;
+  unfreeze_time_ = 0;
 } /* Reset() */
 
 void Player::ResetBattery() {

@@ -29,7 +29,7 @@ SensorTouch::SensorTouch() :
  ******************************************************************************/
 
 void SensorTouch::Accept(const EventCollision *const e) {
-  // Determine if the sensor is activated or deactivated.
+  // Determine if the sensor needs to be activated or deactivated.
   if (e->collided()) {
     activated(1);
     point_of_contact_ = e->point_of_contact();

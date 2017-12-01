@@ -38,10 +38,9 @@ int main(int, char **) {
         rparams.color = csci3081::Color(200, 100, 0, 0); // orange
   */
 
-
   csci3081::robot_params rparams;
   rparams.pos = csci3081::Position(500, 500);
-  rparams.color = csci3081::Color(0, 0, 255, 255); /* blue */
+  rparams.color = csci3081::Color(0, 0, 255, 255);  // blue
 
   csci3081::robot_params rparams1;
   rparams1.pos = csci3081::Position(100, 600);

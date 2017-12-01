@@ -116,6 +116,9 @@ class ArenaEntity {
    */
   double radius() const { return radius_; }
 
+  /**
+   * @brief Getter method for an entity's type id.
+   */
   virtual int get_entity_type_id() const = 0;
 
  private:

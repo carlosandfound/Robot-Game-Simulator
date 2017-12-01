@@ -19,6 +19,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 
 void SensorDistress::Accept(const EventDistressCall *const e) {
+  // update status based on event reading
   if (e->get_distress_status()) {
     status_ = 1;
   } else {

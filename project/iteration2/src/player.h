@@ -89,14 +89,14 @@ class Player : public ArenaMobileEntity {
    *
    * @param e The collision event.
    */
-  void Accept(const EventCollision *const e) override;
+  void Accept(__unused const EventCollision *const e) override;
 
   /**
    * @brief Handle user input commands to change the player's heading or speed.
    *
    * @param e The command to process.
    */
-  void Accept(const EventCommand *const e);
+  void Accept(__unused const EventCommand *const e);
 
   /**
    * @brief Getter method for the player's battery level.
@@ -159,16 +159,30 @@ class Player : public ArenaMobileEntity {
    */
   int get_entity_type_id() const override { return 0; }
 
-  void time_frozen(int t) { time_frozen_ = t; }
-  int time_frozen() { return time_frozen_; }
-  void frozen(bool s) { frozen_ = s; }
-  bool frozen() { return frozen_; }
+  /**
+   * @brief Getter method for the time at which the player should be unfrozen
+   */
+  int get_unfreeze_time() const { return unfreeze_time_; }
+
+  /**
+   * @brief Setter method for the time at which the player should be unfrozen
+   */
+  void set_unfreeze_time(int t) { unfreeze_time_ = t; }
+
+  /**
+   * @brief Getter method for player's frozen status in arena
+   */
+  bool get_frozen() const { return frozen_; }
+
+  /**
+   * @brief Setter method for player's frozen status
+   */
+  void set_frozen(bool s) { frozen_ = s; }
 
  private:
   static unsigned int next_id_;
-  int time_frozen_;
+  int unfreeze_time_;
   bool frozen_ = false;
-
   int id_;
   double heading_angle_;
   double angle_delta_;
@@ -178,7 +192,6 @@ class Player : public ArenaMobileEntity {
   RobotMotionBehavior motion_behavior_;
   SensorTouch sensor_touch_;
   Position initial_pos_;  // initial position of the player, used by Reset()
-  const robot_params* saved_params = 0;
 };
 
 NAMESPACE_END(csci3081);

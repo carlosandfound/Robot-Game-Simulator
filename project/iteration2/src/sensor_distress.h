@@ -27,7 +27,8 @@ NAMESPACE_BEGIN(csci3081);
  *
  * The distress signal can be sensed when it is within a defined range, but the
  * direction of the signal can't be determined.Sensor output is 1 for a sensed
- * call and 0 for none.
+ * call and 0 for none. The distress signal will only be turned on for a frozen
+ * robot (i.e. not a superbot)
  */
 class SensorDistress : public Sensor {
  public:
@@ -35,7 +36,6 @@ class SensorDistress : public Sensor {
    * @brief constructor with sensor's robot user and field of view (fov) as
    * parameters.
    */
-  //  SensorDistress();
   explicit SensorDistress(double range):
     range_(range) {}
 
@@ -48,9 +48,8 @@ class SensorDistress : public Sensor {
    */
   void Accept(const EventDistressCall *const e);
 
-
   /**
-   * @brief method that outputs the distress call status of the sensor.
+   * @brief getter method that outputs the distress call status of the sensor.
    *
    * Should only output 1 when the distress signal is sensed within the
    * given range.
@@ -63,6 +62,9 @@ class SensorDistress : public Sensor {
 
   int get_range() { return range_; }
 
+  /**
+   * @brief Reset sensor to it's original state
+   */
   void Reset() override;
 
  private:
