@@ -43,8 +43,7 @@ class EventCommand : public EventBaseClass {
    * Reports the command received.
    */
   void EmitMessage() const override {
-    printf("Motion cmd %d received\n",
-           cmd_);
+    printf("Motion cmd %d received\n", cmd_);
   }
 
   /**

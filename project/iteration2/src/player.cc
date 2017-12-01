@@ -34,6 +34,8 @@ Player::Player(const struct robot_params *const params) :
     motion_behavior_(),
     sensor_touch_(),
     initial_pos_(params->pos) {
+  set_frozen(false);
+  set_unfreeze_time(0);
   motion_handler_.set_speed(5);
   motion_handler_.heading_angle(270);
   motion_handler_.max_speed(params->max_speed);
@@ -48,19 +50,12 @@ Player::Player(const struct robot_params *const params) :
  ******************************************************************************/
 void Player::TimestepUpdate(uint dt) {
   Position old_pos = get_pos();
-  // double old_heading_angle = heading_angle();
 
   // Update heading and speed as indicated by touch sensor
   motion_handler_.UpdateVelocity(sensor_touch_);
   // Use velocity and position to update position
   motion_behavior_.UpdatePosition(this, dt);
-
-  // double vel = std::sqrt(std::pow(get_pos().x() - old_pos.x(), 2) +
-  //     std::pow(get_pos().y() - old_pos.y(), 2)) / static_cast<double>(dt);
-  // double angular_vel = std::abs(heading_angle() - old_heading_angle) /
-  //     static_cast<double>(dt);
-  // battery_.Deplete(vel, angular_vel);
-
+  // deplete battery based on position
   battery_.Deplete(old_pos, get_pos(), static_cast<double>(dt));
 } /* TimestepUpdate() */
 
@@ -68,12 +63,12 @@ void Player::Accept(__unused const EventRecharge *const e) {
   battery_.EventRecharge();
 }
 
-void Player::Accept(const EventCollision *const e) {
+void Player::Accept(__unused const EventCollision *const e) {
   sensor_touch_.Accept(e);
   battery_.Accept(e);
 }
 
-void Player::Accept(const EventCommand *const e) {
+void Player::Accept(__unused const EventCommand *const e) {
   motion_handler_.AcceptCommand(e->cmd());
 } /* event_cmd() */
 
@@ -85,6 +80,9 @@ void Player::Reset() {
   motion_handler_.set_speed(5);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
+  set_color(Color(0, 0, 255, 255));
+  frozen_ = false;
+  unfreeze_time_ = 0;
 } /* Reset() */
 
 void Player::ResetBattery() {

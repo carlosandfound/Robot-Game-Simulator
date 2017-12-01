@@ -22,7 +22,7 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief An event representing an encounter (really a collision) that a Robot
+ * @brief An event representing an encounter (really a collision) that a Player
  * has with a RechargeStation.
  */
 class EventRecharge : public EventBaseClass {

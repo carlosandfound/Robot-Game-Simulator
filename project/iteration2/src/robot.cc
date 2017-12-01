@@ -52,22 +52,17 @@ Robot::Robot(const struct robot_params *const params) :
  ******************************************************************************/
 void Robot::TimestepUpdate(uint dt) {
   Position old_pos = get_pos();
+
   // double old_heading_angle = heading_angle();
 
   // Update heading and speed as indicated by touch sensor
   motion_handler_.UpdateVelocity(sensor_touch_);
   // Update heading and speed as indicated by touch sensor
-  motion_handler_.UpdateVelocity(left_proximity_sensor_);
+  motion_handler_.UpdateVelocity(left_proximity_sensor_, is_superbot_);
   // Update the speed as indicated by touch sensor
-  motion_handler_.UpdateVelocity(distress_sensor_);
+  motion_handler_.UpdateVelocity(distress_sensor_, is_superbot_);
   // Use velocity and position to update position
   motion_behavior_.UpdatePosition(this, dt);
-
-  // double vel = std::sqrt(std::pow(get_pos().x() - old_pos.x(), 2) +
-  //     std::pow(get_pos().y() - old_pos.y(), 2)) / static_cast<double>(dt);
-  // double angular_vel = std::abs(heading_angle() - old_heading_angle) /
-  //     static_cast<double>(dt);
-  // battery_.Deplete(vel, angular_vel);
 
   battery_.Deplete(old_pos, get_pos(), static_cast<double>(dt));
 } /* TimestepUpdate() */
@@ -89,22 +84,21 @@ void Robot::Accept(const EventDistressCall *const e) {
   distress_sensor_->Accept(e);
 }
 
-/*
-void Robot::Accept(const EventCommand *const e) {
-  motion_handler_.AcceptCommand(e->cmd());
-} // event_cmd()
-*/
-
+void Robot::Transform() {
+  is_superbot_ = true;
+}
 
 void Robot::Reset() {
   set_pos(initial_pos_);
   battery_.Reset();
   motion_handler_.Reset();
   motion_handler_.heading_angle(270);
-  motion_handler_.set_speed(5);
+  motion_handler_.set_speed(10);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
   distress_sensor_->Reset();
+  set_color(Color(0, 200, 0, 200));
+  is_superbot_ = false;
 } /* Reset() */
 
 void Robot::ResetBattery() {

@@ -23,7 +23,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief The commands that the Robot supports: speed up, slow down, turn left a
- * little bit, turn right a little bit. Doesn't get much simpler than that!
+ * little bit, turn right a little bit.
  */
 enum event_commands {
   COM_TURN_LEFT,

@@ -55,7 +55,7 @@ class EventDistressCall : public EventBaseClass {
      *
      * @param d The new distress status.
      */
-    bool set_distress_status(bool d) { status_ = d; }
+    void set_distress_status(bool d) { status_ = d; }
 
     /**
      * @brief Getter method for the point of distress call.
