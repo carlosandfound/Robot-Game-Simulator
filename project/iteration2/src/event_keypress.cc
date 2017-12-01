@@ -21,10 +21,6 @@ enum event_commands EventKeypress::keypress_to_cmd(int key) const {
  /**
   * Currently only handles UP/DOWN/LEFT/RIGHT arrow keys.
   * Other keys are converted to COM_UNKNOWN.
-  *
-  * @todo These values are likely not universal across all OS's.
-  * Write a wrapper for the various OS or see if nanogui has that
-  * functionality.
   */
   switch (key) {
     case 263:return COM_TURN_LEFT;

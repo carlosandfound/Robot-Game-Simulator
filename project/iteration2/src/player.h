@@ -89,14 +89,14 @@ class Player : public ArenaMobileEntity {
    *
    * @param e The collision event.
    */
-  void Accept(const EventCollision *const e) override;
+  void Accept(__unused const EventCollision *const e) override;
 
   /**
    * @brief Handle user input commands to change the player's heading or speed.
    *
    * @param e The command to process.
    */
-  void Accept(const EventCommand *const e);
+  void Accept(__unused const EventCommand *const e);
 
   /**
    * @brief Getter method for the player's battery level.
@@ -159,9 +159,30 @@ class Player : public ArenaMobileEntity {
    */
   int get_entity_type_id() const override { return 0; }
 
+  /**
+   * @brief Getter method for the time at which the player should be unfrozen
+   */
+  int get_unfreeze_time() const { return unfreeze_time_; }
+
+  /**
+   * @brief Setter method for the time at which the player should be unfrozen
+   */
+  void set_unfreeze_time(int t) { unfreeze_time_ = t; }
+
+  /**
+   * @brief Getter method for player's frozen status in arena
+   */
+  bool get_frozen() const { return frozen_; }
+
+  /**
+   * @brief Setter method for player's frozen status
+   */
+  void set_frozen(bool s) { frozen_ = s; }
+
  private:
   static unsigned int next_id_;
-
+  int unfreeze_time_;
+  bool frozen_ = false;
   int id_;
   double heading_angle_;
   double angle_delta_;

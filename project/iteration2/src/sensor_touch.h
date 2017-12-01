@@ -49,7 +49,7 @@ class SensorTouch : public Sensor {
   void angle_of_contact(double aoc) { angle_of_contact_ = aoc; }
 
   int activated() const { return activated_; }
-  int activated(int value) { activated_ = value; }
+  void activated(int value) { activated_ = value; }
 
   /**
    * @brief Compute a new reading based on a collision event.

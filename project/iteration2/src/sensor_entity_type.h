@@ -59,7 +59,7 @@ class SensorEntityType : public Sensor {
   int get_range() { return range_; }
 
   int activated() const { return activated_; }
-  int activated(int value) { activated_ = value; }
+  void activated(int value) { activated_ = value; }
 
   void Reset() override;
 

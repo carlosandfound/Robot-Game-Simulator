@@ -62,10 +62,6 @@ GraphicsArenaViewer::GraphicsArenaViewer(
   gui->addWidget("Lose", lose_);
 
   gui->addGroup("Entity Stats");
-  // player_battery_ = new nanogui::ProgressBar(window);
-  // player_battery_->setFixedWidth(50);
-  // player_battery_->setValue(1);
-  // gui->addWidget("Robot Battery", player_battery_);
   player_pos_x_ = new nanogui::IntBox<int>(window);
   player_pos_y_ = new nanogui::IntBox<int>(window);
   player_speed_ = new nanogui::IntBox<int>(window);
@@ -152,10 +148,6 @@ void GraphicsArenaViewer::UpdateSimulation(double dt) {
         static_cast<int>(arena_->home_base()->get_speed()));
     home_angle_->setValue(
         static_cast<int>(arena_->home_base()->get_heading_angle()));
-    // player_battery_->setValue(
-      //  static_cast<float>(
-        //    arena_->robot()->battery_level() /
-          //      arena_->robot()->max_battery_level()));
   }
 }
 
@@ -337,11 +329,6 @@ void GraphicsArenaViewer::DrawUsingNanoVG(NVGcontext *ctx) {
   DrawRobot(ctx, arena_->robot3());
   DrawRobot(ctx, arena_->robot4());
   DrawRobot(ctx, arena_->robot5());
-
-  if (arena_ -> superbot_present() == true) {
-    DrawRobot(ctx, arena_-> superbot());
-    arena_->superbot_present(false);
-  }
 }
 
 NAMESPACE_END(csci3081);

@@ -11,6 +11,7 @@
  * Includes
  ******************************************************************************/
 #include "src/common.h"
+#include "src/position.h"
 
 /*******************************************************************************
  * Namespaces
@@ -20,13 +21,9 @@ NAMESPACE_BEGIN(csci3081);
 /*******************************************************************************
  * Class Definitions
  ******************************************************************************/
-
- /*struct CollisionEntity {
-   ArenaEntity * a1;
-   ArenaEntity * a2;
- }*/
 /**
  * @brief The base event class from which all events should inherit from.
+ * As this is a base class, most of its methods are `virtual`
  */
 class EventBaseClass {
  public:

@@ -29,21 +29,24 @@ void SensorProximity::Accept(const EventProximity *const e) {
   }
 }
 
-double SensorProximity::sensor_reading(class ArenaEntity *const ent1,
-  class ArenaEntity *const ent2) {
-    return -1;
-  }
-
-bool SensorProximity::in_range(double sensor_lower, double sensor_upper,
+bool SensorProximity::In_Range(double sensor_lower, double sensor_upper,
   double sensed_lower, double sensed_upper) {
     if (sensor_lower > sensor_upper) {
-      double tmp = sensor_lower;
-      sensor_lower = sensor_upper;
-      sensor_upper = tmp;
+      double distanceToCrossing = 360.0 - sensor_lower;
+      sensor_lower = static_cast<int>(sensor_lower+distanceToCrossing) % 360;
+      sensor_upper = sensor_upper + distanceToCrossing;
+      sensed_lower = static_cast<int>(sensed_lower+distanceToCrossing) % 360;
+      sensed_upper = static_cast<int>(sensed_upper+distanceToCrossing) % 360;
     }
     if (sensed_lower > sensed_upper) {
-      sensor_lower = sensed_upper;
-      sensor_upper = sensed_lower;
+      double distanceToCrossing = 360.0 - sensed_lower;
+      sensor_lower = static_cast<int>(sensor_lower+distanceToCrossing) % 360;
+      sensor_upper = sensor_upper + distanceToCrossing;
+      sensed_lower = static_cast<int>(sensed_lower+distanceToCrossing) % 360;
+      sensed_upper = static_cast<int>(sensed_upper+distanceToCrossing) % 360;
+    }
+    if ((sensed_lower < sensor_lower) && (sensed_upper > sensor_upper)) {
+      return true;
     }
     if ((sensed_lower >= sensor_lower) && (sensed_lower <= sensor_upper)) {
       return true;
@@ -56,8 +59,8 @@ bool SensorProximity::in_range(double sensor_lower, double sensor_upper,
 
 void SensorProximity::Reset() {
   distance_ = -1;
-  point_of_detection(Position(0, 0));
-  angle_of_detection(0);
+  point_of_detection_ = Position(0, 0);
+  angle_of_detection_ = 0;
   activated(0);
 } /* reset() */
 

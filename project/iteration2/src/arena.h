@@ -22,7 +22,6 @@
 #include "src/player.h"
 #include "src/home_base.h"
 #include "src/recharge_station.h"
-#include "src/superbot.h"
 
 /*******************************************************************************
  * Namespaces
@@ -35,8 +34,8 @@ NAMESPACE_BEGIN(csci3081);
 struct arena_params;
 
 /**
- * @brief The main class for the simulation of a 2D world with many robots
- * running around.
+ * @brief The main class for the simulation of a 2D world with many
+ * robots and other obstacles running around.
  *
  * While GraphicsArenaViewer handles the graphics, Arena handles all the
  * data and all the entities. This means that the responsibility of
@@ -59,6 +58,11 @@ class Arena {
    * @brief Arena's destructor. `delete` all entities created.
    */
   ~Arena();
+
+  void HandleCollision(const ArenaEntity *const ent1,
+                       const ArenaEntity *const ent2,
+                       EventBaseClass *const event,
+                       double angle);
 
   /**
    * @brief Advance the simulation by the specified # of steps.
@@ -124,43 +128,15 @@ class Arena {
   class Player *player() const { return player_; }
 
   /**
-   * @brief Get the Robot (there's only 1) in Arena.
+   * @brief Get the Robot (there's only 5) in Arena.
    *
    * @return A pointer to the Robot.
    */
   class Robot *robot1() const { return robot1_; }
-
-  /**
-   * @brief Get the Robot (there's only 1) in Arena.
-   *
-   * @return A pointer to the Robot.
-   */
   class Robot *robot2() const { return robot2_; }
-
-  /**
-   * @brief Get the Robot (there's only 1) in Arena.
-   *
-   * @return A pointer to the Robot.
-   */
   class Robot *robot3() const { return robot3_; }
-
-  /**
-   * @brief Get the Robot (there's only 1) in Arena.
-   *
-   * @return A pointer to the Robot.
-   */
   class Robot *robot4() const { return robot4_; }
-
-  /**
-   * @brief Get the Robot (there's only 1) in Arena.
-   *
-   * @return A pointer to the Robot.
-   */
   class Robot *robot5() const { return robot5_; }
-
-  class Superbot *superbot() const { return superbot_;}
-
-
 
   /**
    * @brief Get the HomeBase (there's only 1) in Arena.
@@ -179,25 +155,17 @@ class Arena {
   /**
    * @brief Win stats.
    *
-   * @return The number of times the player has won (i.e. touched the HomeBase
-   * with his/her Robot).
+   * @return The number of times the player has won (i.e. freeze all 5 robots)
    */
   int win() const { return win_; }
 
   /**
    * @brief Lose stats.
    *
-   * @return The number of times the player has lost (i.e. Robot's battery
-   * gets completely depleted).
+   * @return The number of times the player has lost (i.e. all robots become
+   * superbots
    */
   int lose() const { return lose_; }
-
-  /**
-   * @brief check whether or not a superbot has just been created in arena
-   */
-  bool superbot_present() const { return superbot_exist_; }
-
-  void superbot_present(bool s) { superbot_exist_ = s; }
 
  private:
   /**
@@ -210,8 +178,9 @@ class Arena {
   bool any_entities_overlap(void);
 
   /**
-   * @brief Determine if entity is within range of proximity sensor of a robot have. If so, they bounce
-   * off of each other at angle of reflection to avoid contact.
+   * @brief Determine if entity is within range of proximity sensor of a robot.
+   * If so, have it bounce off of the sensing robot at angle of reflection
+   * to avoid contact. This is conceptually similar to CheckForEntityCollision()
    *
    * @param ent1 Robot with sensor.
    * @param ent2 Entity being sensed.
@@ -263,12 +232,13 @@ class Arena {
    * heading angle, and position. Then check for collisions between entities
    * or between an entity and a wall.
    *
-   * Some specific events are also checked. 1) If the Robot touches the
-   * HomeBase, then the player has won and Arena::Reset is called and game stats
-   * are updated. 2) If the Robot touches the RechargeStation, then the Robot's
-   * battery is completely recharged. 3) If the Robot's battery is completely
-   * depleted, then the player has lost and Arena::Reset is called and game
-   * stats are updated.
+   * Some specific events are also checked. 1) If all robots are frozen, then
+   * the player has won and Arena::Reset is called and game stats and game stats
+   * are updated. 2) If Player touches the RechargeStation, then the Robot's
+   * battery is completely recharged. 3) If all robots become superbots, then
+   * the player has lost and Arena::Reset is called and game stats are updated.
+   * 4) If the player runs out of battery, the game is simply reset but it is
+   * neither won or lost
    */
   void UpdateEntitiesTimestep();
 
@@ -296,19 +266,16 @@ class Arena {
   Robot *robot3_;
   Robot *robot4_;
   Robot *robot5_;
-  Superbot *superbot_;
   Player *player_;
   RechargeStation *recharge_station_;
   HomeBase *home_base_;
   std::vector<class ArenaEntity *> entities_;
   std::vector<class ArenaMobileEntity *> mobile_entities_;
-
-  // win/lose stats
   int win_;
   int lose_;
   int number_frozen_;
-  bool superbot_exist_ = false;
-  const arena_params* saved_params = 0;
+  int number_superbots_;
+  int time_ = 0;
 };
 
 NAMESPACE_END(csci3081);

@@ -43,9 +43,7 @@ NAMESPACE_BEGIN(csci3081);
  * events. Robots have 2 left/right proximity sensors, a distress call sensor,
  * an entity type sensor, and a touch sensor.
  *
- * Robots can take command from the player through keypress. They also have
- * batteries that will get depleted as they move or collide with other
- * entities.
+ * Robots can't take command from the player through keypress.
  */
 class Robot : public ArenaMobileEntity {
  public:
@@ -213,6 +211,23 @@ class Robot : public ArenaMobileEntity {
     return "Robot" + std::to_string(id_);
   }
 
+  /**
+   * @brief "transforms" the robot into superbot by updating the status of the
+   * robot being a superbot into true
+   *
+   * Allows the motion handler to appropriately deal with the motion of the
+   * robot/superbot
+   */
+  void Transform();
+
+  /**
+   * @brief Getter method that return status on whether or not robot is a
+   * superbot
+   *
+   * @return The superbot status of the robot
+   */
+  bool is_superbot() const {return is_superbot_;}
+
  private:
   static unsigned int next_id_;
 
@@ -229,6 +244,7 @@ class Robot : public ArenaMobileEntity {
   SensorProximity * left_proximity_sensor_;
   SensorProximity * right_proximity_sensor_;
   Position initial_pos_;  // initial position of the Robot, used by Reset()
+  bool is_superbot_ = false;
 };
 
 NAMESPACE_END(csci3081);

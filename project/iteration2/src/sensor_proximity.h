@@ -39,7 +39,6 @@ class SensorProximity : public Sensor {
      * @brief constructor with sensor's robot user and field of view (fov) as
      * parameters.
      */
-    //  SensorProximity();
     SensorProximity(double range, double fov):
     range_(range),
     fov_(fov),
@@ -51,35 +50,30 @@ class SensorProximity : public Sensor {
     /**
      * @brief Compute a new reading based on a proximity event.
      *
-     * used sensor_reading() and in_range() to compute distance between
+     * used sensor_reading() and In_Range() to compute distance between
      * robot being sensed and robot with proximity sensor.
      */
     void Accept(const EventProximity *const e);
 
     /**
-     * @brief compute the distance between sensor robot and entity being sensed.
-     *
-     * @return If there isn't an obstacle in fov, -1 is returned
-     */
-    double sensor_reading(class ArenaEntity *const ent1,
-      class ArenaEntity *const ent2);
-
-    /**
      * @brief check whether or not sensed entity is in range of proximity sensor
+     *
+     * This methof is equivalent to the InRange() method in the proximity.py
+     * file provided by Professor Larson
      *
      * @return If sensed entity is in range of the sensor, true is returned.
      * Otherwise, false is returned.
      */
-    bool in_range(double sensor_lower, double sensor_upper,
+    bool In_Range(double sensor_lower, double sensor_upper,
       double sensed_lower, double sensed_upper);
 
     double get_distance() { return distance_; }
 
     int get_range() { return range_; }
-    int set_range(double r) { range_ = r; }
+    void set_range(double r) { range_ = r; }
 
     int get_fov() { return fov_; }
-    int set_fov(double f) { fov_ = f; }
+    void set_fov(double f) { fov_ = f; }
 
     Position point_of_detection() { return point_of_detection_; }
     void point_of_detection(Position p) { point_of_detection_ = p; }
@@ -88,7 +82,7 @@ class SensorProximity : public Sensor {
     void angle_of_detection(double aoc) { angle_of_detection_ = aoc; }
 
     int activated() const { return activated_; }
-    int activated(int value) { activated_ = value; }
+    void activated(int value) { activated_ = value; }
 
     void Reset() override;
 

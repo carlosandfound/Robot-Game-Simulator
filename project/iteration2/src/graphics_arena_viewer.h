@@ -267,18 +267,18 @@ class GraphicsArenaViewer : public GraphicsApp {
   double last_dt;
 
   // text fields showing game/simulation stats
-  nanogui::IntBox<int> *win_;
-  nanogui::IntBox<int> *lose_;
-  nanogui::IntBox<int> *player_pos_x_;
-  nanogui::IntBox<int> *player_pos_y_;
-  nanogui::IntBox<int> *player_speed_;
-  nanogui::IntBox<int> *player_angle_;
-  nanogui::IntBox<int> *player_battery_text_;
-  nanogui::IntBox<int> *home_pos_x_;
-  nanogui::IntBox<int> *home_pos_y_;
-  nanogui::IntBox<int> *home_speed_;
-  nanogui::IntBox<int> *home_angle_;
-  nanogui::ProgressBar *player_battery_;
+  nanogui::IntBox<int> *win_ = nullptr;
+  nanogui::IntBox<int> *lose_ = nullptr;
+  nanogui::IntBox<int> *player_pos_x_ = nullptr;
+  nanogui::IntBox<int> *player_pos_y_ = nullptr;
+  nanogui::IntBox<int> *player_speed_ = nullptr;
+  nanogui::IntBox<int> *player_angle_ = nullptr;
+  nanogui::IntBox<int> *player_battery_text_ = nullptr;
+  nanogui::IntBox<int> *home_pos_x_ = nullptr;
+  nanogui::IntBox<int> *home_pos_y_ = nullptr;
+  nanogui::IntBox<int> *home_speed_ = nullptr;
+  nanogui::IntBox<int> *home_angle_ = nullptr;
+  nanogui::ProgressBar *player_battery_ = nullptr;
 };
 
 NAMESPACE_END(csci3081);

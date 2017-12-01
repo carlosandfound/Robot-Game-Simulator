@@ -38,18 +38,41 @@ void MotionHandlerRobot::UpdateVelocity(SensorTouch st) {
   }
 }
 
-void MotionHandlerRobot::UpdateVelocity(SensorProximity * sp) {
-  if (sp->activated()) {
-    heading_angle(-sp->angle_of_detection());
-    sp->Reset();
+void MotionHandlerRobot::UpdateVelocity(SensorProximity * sp, bool superbot_) {
+  /*
+  robot's motion handler should only change heading angle of the robot if it's
+  not a superbot or the proximity sensor is turned off.
+  */
+  if (superbot_) {
+    sp->activated(false);
+  } else {
+    if (sp->activated()) {
+      heading_angle(-sp->angle_of_detection());
+      set_speed(get_speed()*0.9);  // decrease speed by 10% if detected
+      sp->Reset();
+    }
   }
 }
 
-void MotionHandlerRobot::UpdateVelocity(SensorDistress * sd) {
-  if (sd->output() == 1) {
-    set_speed(0);  // decrease speed 10% if collided
-    // sd->Reset();
+void MotionHandlerRobot::UpdateVelocity(SensorDistress * sd, bool superbot) {
+  /*
+  robot's motion handler should only change the robot's speed angle if it's not
+  a superbot or the proximity sensor is turned off.
+  */
+  if (superbot) {
+    sd->output(0);
+    set_speed(5);
+  } else {
+    if (sd->output() == 1) {
+      set_speed(0);
+    } else {
+      set_speed(5);
+    }
   }
+}
+
+void MotionHandlerRobot::Reset() {
+  set_speed(5);
 }
 
 NAMESPACE_END(csci3081);

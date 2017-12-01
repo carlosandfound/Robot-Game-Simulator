@@ -22,8 +22,8 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class managing an ArenaMobileEntity's speed and heading angle based
- * on collisions and (in the case of Robot) user inputs.
+ * @brief Class managing the Robot's speed and heading angle based on sensor
+ * readings in wake of an event collision or proximity event.
  *
  * Currently, both wheels are always going at maximum speed, and
  * cannot be controlled independently.
@@ -36,22 +36,35 @@ class MotionHandlerRobot : public MotionHandler {
   MotionHandlerRobot();
 
   /**
-  * @brief Update the speed and the heading angle according to the sensor
-  * readings.
+  * @brief Update the speed and the heading angle according to the reading of
+  * the sensor touch based on collision data.
   *
   * @param st A SensorTouch to be read.
   */
   void UpdateVelocity(SensorTouch st) override;
 
-  void UpdateVelocity(SensorProximity * sp);
-
-  void UpdateVelocity(SensorDistress * sd);
+  /**
+  * @brief Update the speed and the heading angle according to the reading of
+  * the proximity sensor based on proximity data.
+  *
+  * @param st A SensorTouch to be read
+  * @param superbot A bool determining whether or not robot is superbot
+  */
+  void UpdateVelocity(SensorProximity * sp, bool superbot_);
 
   /**
-   * @brief Getter method for speed.
-   *
-   * @return The current speed.
+  @brief Update the speed and the heading angle according to the reading of
+  * the distress sensor based on the distress event data.
+  *
+  * @param st A SensorTouch to be read.
+  * @param superbot A bool determining whether or not robot is superbot
+  */
+  void UpdateVelocity(SensorDistress * sd, bool superbot_);
+
+  /**
+  @brief reset the motion handler to its original state
    */
+  void Reset() override;
 
  private:
   double heading_angle_;
