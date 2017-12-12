@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_
-#define PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_
+#ifndef PROJECT_ITERATION3_SRC_ENTITY_TYPE_H_
+#define PROJECT_ITERATION3_SRC_ENTITY_TYPE_H_
 
 /*******************************************************************************
  * Includes
@@ -36,4 +36,4 @@ enum entity_type {
 };
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_ENTITY_TYPE_H_
+#endif  // PROJECT_ITERATION3_SRC_ENTITY_TYPE_H_

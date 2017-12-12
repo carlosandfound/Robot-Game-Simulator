@@ -4,8 +4,8 @@
  * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
-#define PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
+#ifndef PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
+#define PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
 
 /*******************************************************************************
  * Includes
@@ -97,4 +97,4 @@ class SensorProximity : public Sensor {
 
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
+#endif  // PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
