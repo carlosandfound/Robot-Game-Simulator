@@ -60,10 +60,10 @@ void MotionHandlerRobot::UpdateVelocity(SensorDistress * sd, bool superbot) {
   a superbot or the proximity sensor is turned off.
   */
   if (superbot) {
-    sd->output(0);
+    sd->activated(0);
     set_speed(5);
   } else {
-    if (sd->output() == 1) {
+    if (sd->activated() == 1) {
       set_speed(0);
     } else {
       set_speed(5);

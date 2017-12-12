@@ -218,7 +218,7 @@ class Robot : public ArenaMobileEntity {
    * Allows the motion handler to appropriately deal with the motion of the
    * robot/superbot
    */
-  void Transform();
+  void ChangeToSuperbot();
 
   /**
    * @brief Getter method that return status on whether or not robot is a

@@ -20,7 +20,7 @@ TEST(SensorDistress, Initialization) {
   csci3081::SensorDistress sd(&r1, 45);
 
   EXPECT_EQ(sd.get_range(), 45);
-  EXPECT_EQ(sd.output(), 0);
+  EXPECT_EQ(sd.activated(), 0);
 }
 
 TEST(SensorDistress, Accept_and_Ouput) {
@@ -29,19 +29,19 @@ TEST(SensorDistress, Accept_and_Ouput) {
   csci3081::SensorDistress sd(&r1, 45);
 
   EXPECT_EQ(sd.get_range(), 45);
-  EXPECT_EQ(sd.output(), 0);
+  EXPECT_EQ(sd.activated(), 0);
 
   csci3081::EventDistressCall ed;
   sd.Accept(&ed);
-  EXPECT_EQ(sd.output(), 0);
+  EXPECT_EQ(sd.activated(), 0);
 
   ed.set_distress_status(true);
   ed.point_of_distress(csci3081::Position(10, 0));
 
   sd.Accept(&ed);
-  EXPECT_EQ(sd.output(), 1);
+  EXPECT_EQ(sd.activated(), 1);
 
   sd.Reset();
   EXPECT_EQ(sd.get_range(), 0);
-  EXPECT_EQ(sd.output(), 0);
+  EXPECT_EQ(sd.activated(), 0);
 }

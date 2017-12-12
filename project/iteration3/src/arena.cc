@@ -196,7 +196,7 @@ void Arena::UpdateEntitiesTimestep() {
             (entities_[i]->get_entity_type_id() != 2)) {
               if (entities_[i]->get_entity_type_id() == 1) {
                 if (dynamic_cast<Robot *> (entities_[i]) ->
-                get_distress_sensor()->output() == 0) {
+                get_distress_sensor()->activated() == 0) {
                   CheckForEntityProximity(dynamic_cast<Robot *> (ent),
                                           entities_[i], &ep);
                 }
@@ -228,7 +228,7 @@ void Arena::UpdateEntitiesTimestep() {
                 // player collides with a robot whose distress sensor is off
                 // robot then freezes until another robot or superbot touches it
                 if (dynamic_cast<Robot *> (entities_[i])->get_distress_sensor()
-                  ->output() == 0) {
+                  ->activated() == 0) {
                     if (!dynamic_cast<Robot *> (entities_[i])->is_superbot()) {
                       /*
                       update number of frozen robots accordingly without
@@ -249,7 +249,7 @@ void Arena::UpdateEntitiesTimestep() {
                     ed.set_distress_status(true);
                     dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
                     bool new_status = dynamic_cast<Robot *> (entities_[i])->
-                                      get_distress_sensor()->output();
+                                      get_distress_sensor()->activated();
                     ed.set_distress_status(new_status);
                   }
                   // robot collides with home base to become a superbot
@@ -258,7 +258,7 @@ void Arena::UpdateEntitiesTimestep() {
                   entities_[i]->get_entity_type_id() == 2 &&
                   !dynamic_cast<Robot *>(ent)->is_superbot()) {
                     ent->set_color(Color(900, 300, 200, 900));
-                    dynamic_cast<Robot *>(ent)->Transform();
+                    dynamic_cast<Robot *>(ent)->ChangeToSuperbot();
                     number_superbots_++;
                     // lose when all 5 robots become superbots
                     if (number_superbots_ == 5) {

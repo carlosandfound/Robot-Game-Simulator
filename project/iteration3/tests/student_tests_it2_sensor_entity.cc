@@ -17,7 +17,7 @@ TEST(SensorEntityType, Initialization) {
 
   EXPECT_EQ(st.get_range(), 45);
   EXPECT_EQ(st.activated(), 0);
-  EXPECT_EQ(st.output(),csci3081::NONE);
+  EXPECT_EQ(st.activated(),csci3081::NONE);
 }
 
 TEST(SensorEntityType, AcceptandGet) {
@@ -29,37 +29,37 @@ TEST(SensorEntityType, AcceptandGet) {
   em.set_id(0);
   em.set_entity_status(true);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KROBOT);
+  EXPECT_EQ(st.activated(), csci3081::KROBOT);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(1);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KSUPERBOT);
+  EXPECT_EQ(st.activated(), csci3081::KSUPERBOT);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(2);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KPLAYER);
+  EXPECT_EQ(st.activated(), csci3081::KPLAYER);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(3);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KHOMEBASE);
+  EXPECT_EQ(st.activated(), csci3081::KHOMEBASE);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(4);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KRECHARGESTATION);
+  EXPECT_EQ(st.activated(), csci3081::KRECHARGESTATION);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(5);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::KWALL);
+  EXPECT_EQ(st.activated(), csci3081::KWALL);
   EXPECT_EQ(st.activated(), 1);
 
   em.set_id(10);
   st.Accept(&em);
-  EXPECT_EQ(st.output(), csci3081::NONE);
+  EXPECT_EQ(st.activated(), csci3081::NONE);
   EXPECT_EQ(st.activated(), 1);
 }
 
@@ -75,6 +75,6 @@ TEST(SensorEntityType, Reset) {
   st.Reset();
   EXPECT_EQ(st.get_range(), 0);
   EXPECT_EQ(st.activated(), 0);
-  EXPECT_EQ(st.output(), csci3081::NONE);
+  EXPECT_EQ(st.activated(), csci3081::NONE);
 
 }

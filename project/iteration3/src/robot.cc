@@ -84,7 +84,7 @@ void Robot::Accept(const EventDistressCall *const e) {
   distress_sensor_->Accept(e);
 }
 
-void Robot::Transform() {
+void Robot::ChangeToSuperbot() {
   is_superbot_ = true;
 }
 

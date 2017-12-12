@@ -56,9 +56,9 @@ class SensorDistress : public Sensor {
    *
    * @return 1 for a sensed call and 0 Otherwise
    */
-  int output() { return status_; }
+  int activated() { return status_; }
 
-  void output(int s) {status_ = s;}
+  void activated(int s) {status_ = s;}
 
   int get_range() { return range_; }
 
