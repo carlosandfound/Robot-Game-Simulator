@@ -464,12 +464,9 @@ void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
                                     EventCollision *const event,
                                     double collision_delta) {
   /* Note: this assumes circular entities */
-  double ent1_x = ent1->get_pos().x;
-  double ent1_y = ent1->get_pos().y;
-  double ent2_x = ent2->get_pos().x;
-  double ent2_y = ent2->get_pos().y;
   double dist = std::sqrt(
-      std::pow(ent2_x - ent1_x, 2) + std::pow(ent2_y - ent1_y, 2));
+      std::pow(ent2->get_pos().x - ent1->get_pos().x, 2) +
+      std::pow(ent2->get_pos().y - ent1->get_pos().y, 2));
   if (dist > ent1->radius() + ent2->radius() + collision_delta) {
     event->collided(false);
   } else {
@@ -480,88 +477,101 @@ void Arena::CheckForEntityCollision(const ArenaEntity *const ent1,
     // ref: https://stackoverflow.com/a/1736741
     event->collided(true);
 
-    double angle = std::asin(std::abs(ent2_x - ent1_x) / dist);
+    double angle =
+              std::asin(std::abs(ent2->get_pos().x - ent1->get_pos().x) / dist);
 
-    if ((ent2_x - ent1_x) > 0) {
-      if ((ent2_y - ent1_y) > 0) {
-        // lower right
-        event->point_of_contact(
-            {
-                ent1_x + std::sin(angle) * ent1->radius(),
-                ent1_y + std::cos(angle) * ent1->radius()
-            });
-        angle = M_PI_2 - angle;
-      } else if ((ent2_y - ent1_y) < 0) {
-        // upper right
-        event->point_of_contact(
-            {
-                ent1_x + std::sin(angle) * ent1->radius(),
-                ent1_y - std::cos(angle) * ent1->radius()
-            });
-        angle += (3 * M_PI_2);
-      } else {  // if ((ent2_y - ent1_y) == 0)
-        // 0 or 360 deg
-        event->point_of_contact(
-            {
-                ent1_x + ent1->radius(),
-                ent1_y
-            });
-        angle = 0;
-      }
-    } else if ((ent2_x - ent1_x) < 0)  {
-      if ((ent2_y - ent1_y) > 0) {
-        // lower left
-        event->point_of_contact(
-            {
-                ent1_x - std::sin(angle) * ent1->radius(),
-                ent1_y + std::cos(angle) * ent1->radius()
-            });
-        angle += M_PI_2;
-      } else if ((ent2_y - ent1_y) < 0) {
-        // upper left
-        event->point_of_contact(
-            {
-                ent1_x - std::sin(angle) * ent1->radius(),
-                ent1_y - std::cos(angle) * ent1->radius()
-            });
-        angle = (M_PI_2 * 2) + (M_PI_2 - angle);
-      } else {  // if ((ent2_y - ent1_y) == 0)
-        // 180 deg
-        event->point_of_contact(
-            {
-                ent1_x - ent1->radius(),
-                ent1_y
-            });
-        angle = M_PI;
-      }
-    } else {  // if ((ent2_x - ent1_x) == 0)
-      if ((ent2_y - ent1_y) > 0) {
-        // 90 deg
-        event->point_of_contact(
-            {
-                ent1_x,
-                ent1_y + ent1->radius()
-            });
-        angle = M_PI_2;
-      } else if ((ent2_y - ent1_y) < 0) {
-        // 270 deg
-        event->point_of_contact(
-            {
-                ent1_x,
-                ent1_y - ent1->radius()
-            });
-        angle = (3 * M_PI_2);
-      } else {  // if ((ent2_y - ent1_y) == 0)
-        // completely overlap, which is theoretically impossible...
-        std::cerr << ent1->get_name() << " is in complete overlap with "
-                  << ent2->get_name() << ".\n";
-        assert(false);
-      }
-    }
-
-    event->angle_of_contact((M_PI - angle) / M_PI * 180);
+    // Extract the HandleCollision method
+    HandleCollision(ent1, ent2, event, angle);
   }
 } /* entities_have_collided() */
+
+// Method extracted from within CheckForEntityCollision()
+void Arena::HandleCollision(const ArenaEntity *const ent1,
+                     const ArenaEntity *const ent2,
+                     EventCollision *const event,
+                     double angle) {
+  double ent1_x = ent1->get_pos().x;
+  double ent1_y = ent1->get_pos().y;
+  double ent2_x = ent2->get_pos().x;
+  double ent2_y = ent2->get_pos().y;
+  if ((ent2_x - ent1_x) > 0) {
+    if ((ent2_y - ent1_y) > 0) {
+      // lower right
+      event->point_of_contact(
+          {
+              ent1_x + std::sin(angle) * ent1->radius(),
+              ent1_y + std::cos(angle) * ent1->radius()
+          });
+      angle = M_PI_2 - angle;
+    } else if ((ent2_y - ent1_y) < 0) {
+      // upper right
+      event->point_of_contact(
+          {
+              ent1_x + std::sin(angle) * ent1->radius(),
+              ent1_y - std::cos(angle) * ent1->radius()
+          });
+      angle += (3 * M_PI_2);
+    } else {  // if ((ent2_y - ent1_y) == 0)
+      // 0 or 360 deg
+      event->point_of_contact(
+          {
+              ent1_x + ent1->radius(),
+              ent1_y
+          });
+      angle = 0;
+    }
+  } else if ((ent2_x - ent1_x) < 0)  {
+    if ((ent2_y - ent1_y) > 0) {
+      // lower left
+      event->point_of_contact(
+          {
+              ent1_x - std::sin(angle) * ent1->radius(),
+              ent1_y + std::cos(angle) * ent1->radius()
+          });
+      angle += M_PI_2;
+    } else if ((ent2_y - ent1_y) < 0) {
+      // upper left
+      event->point_of_contact(
+          {
+              ent1_x - std::sin(angle) * ent1->radius(),
+              ent1_y - std::cos(angle) * ent1->radius()
+          });
+      angle = (M_PI_2 * 2) + (M_PI_2 - angle);
+    } else {  // if ((ent2_y - ent1_y) == 0)
+      // 180 deg
+      event->point_of_contact(
+          {
+              ent1_x - ent1->radius(),
+              ent1_y
+          });
+      angle = M_PI;
+    }
+  } else {  // if ((ent2_x - ent1_x) == 0)
+    if ((ent2_y - ent1_y) > 0) {
+      // 90 deg
+      event->point_of_contact(
+          {
+              ent1_x,
+              ent1_y + ent1->radius()
+          });
+      angle = M_PI_2;
+    } else if ((ent2_y - ent1_y) < 0) {
+      // 270 deg
+      event->point_of_contact(
+          {
+              ent1_x,
+              ent1_y - ent1->radius()
+          });
+      angle = (3 * M_PI_2);
+    } else {  // if ((ent2_y - ent1_y) == 0)
+      // completely overlap, which is theoretically impossible...
+      std::cerr << ent1->get_name() << " is in complete overlap with "
+                << ent2->get_name() << ".\n";
+      assert(false);
+    }
+  }
+  event->angle_of_contact((M_PI - angle) / M_PI * 180);
+}
 
 void Arena::Accept(const EventKeypress *const e) {
   // don't handle unsupported keys

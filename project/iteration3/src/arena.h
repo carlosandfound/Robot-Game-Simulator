@@ -59,11 +59,6 @@ class Arena {
    */
   ~Arena();
 
-  void HandleCollision(const ArenaEntity *const ent1,
-                       const ArenaEntity *const ent2,
-                       EventBaseClass *const event,
-                       double angle);
-
   /**
    * @brief Advance the simulation by the specified # of steps.
    *
@@ -173,7 +168,6 @@ class Arena {
    *
    * @return `true` if any 2 entities overlap, `false` if no entity overlap.
    *
-   * Currently unimplemented.
    */
   bool any_entities_overlap(void);
 
@@ -211,6 +205,23 @@ class Arena {
                                const class ArenaEntity *const ent2,
                                EventCollision *const ec,
                                double collision_delta);
+
+ /**
+  * @brief Computes the angle of collision and the angle at which the entity
+  * should bounce off so that it's at an angle of reflection. This information
+  * is updated in the collision event and subsequently passed to the colliding
+  * entity.
+  *
+  * @param ent1 Entity that will bounce off
+  * @param ent2 Entity being hit
+  * @param EventCollision Event that contains information about the collision
+  * and will be passed to the entity
+  * @param angle between the colliding entities
+  */
+  void HandleCollision(const ArenaEntity *const ent1,
+                       const ArenaEntity *const ent2,
+                       EventCollision *const event,
+                       double angle);
 
   /**
    * @brief Determine if a particular entity has gone out of the boundaries of
