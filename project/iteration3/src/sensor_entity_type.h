@@ -4,8 +4,8 @@
  * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION2_SRC_SENSOR_ENTITY_TYPE_H_
-#define PROJECT_ITERATION2_SRC_SENSOR_ENTITY_TYPE_H_
+#ifndef PROJECT_ITERATION3_SRC_SENSOR_ENTITY_TYPE_H_
+#define PROJECT_ITERATION3_SRC_SENSOR_ENTITY_TYPE_H_
 
 /*******************************************************************************
  * Includes
@@ -71,4 +71,4 @@ class SensorEntityType : public Sensor {
 
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_SENSOR_ENTITY_TYPE_H_
+#endif  // PROJECT_ITERATION3_SRC_SENSOR_ENTITY_TYPE_H_

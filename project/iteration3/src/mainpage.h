@@ -1,5 +1,5 @@
-#ifndef PROJECT_ITERATION2_SRC_MAINPAGE_H_
-#define PROJECT_ITERATION2_SRC_MAINPAGE_H_
+#ifndef PROJECT_ITERATION3_SRC_MAINPAGE_H_
+#define PROJECT_ITERATION3_SRC_MAINPAGE_H_
 
 /*! \mainpage CSCI3081 Robot Simulator Project
  *
@@ -62,4 +62,4 @@
  * angle of the robot so that it never avoids objects and keeps its speed fixed. Thus, it’ll be able to unfreeze robots
  * and freeze the player.
  */
-#endif  // PROJECT_ITERATION2_SRC_MAINPAGE_H_
+#endif  // PROJECT_ITERATION3_SRC_MAINPAGE_H_

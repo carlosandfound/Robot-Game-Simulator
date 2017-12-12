@@ -4,8 +4,8 @@
  * @copyright 2017 Carlos Alvarenga, All rights reserved.
  */
 
-#ifndef PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
-#define PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
+#ifndef PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
+#define PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
 
 /*******************************************************************************
  * Includes
@@ -87,14 +87,22 @@ class SensorProximity : public Sensor {
     void Reset() override;
 
  private:
+    /**
+     * @brief compute distance lower_sensor angle and 360 degrees
+     *
+     * Query refactor that's used to replace the distanceToCrossing temp
+     * variable in In_Range()
+     */
+    double DistanceToCrossing();
     double range_;
     double fov_;
     double distance_;
     Position point_of_detection_;
     double angle_of_detection_;
     int activated_;
+    double lower_sensor_;
 };
 
 NAMESPACE_END(csci3081);
 
-#endif  // PROJECT_ITERATION2_SRC_SENSOR_PROXIMITY_H_
+#endif  // PROJECT_ITERATION3_SRC_SENSOR_PROXIMITY_H_
