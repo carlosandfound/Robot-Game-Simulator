@@ -22,7 +22,7 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class representing the battery for a Robot.
+ * @brief Class representing the battery for the player.
  */
 class RobotBattery {
  public:

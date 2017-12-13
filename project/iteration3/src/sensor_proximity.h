@@ -23,7 +23,8 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
  /**
-  * @brief Class representing a proximity sensor.
+  * @brief Class representing a proximity sensor that's used by robots to avoid
+  * obstacles within range of the sensor.
   *
   * Proximity sensors have a range and field of view where it can sense onjects.
   * A single cone emanating from the center of the robot, split in two,

@@ -26,7 +26,8 @@ NAMESPACE_BEGIN(csci3081);
  * Class Definitions
  ******************************************************************************/
 /**
- * @brief Class representing a mobile home base within the Arena.
+ * @brief Class representing a mobile home base within the Arena that can
+ * randomly change direction.
  *
  * HomeBase is the goal of the game. Once the Robot of the player has touched
  * the HomeBase, the player has won and the Arena is reset.

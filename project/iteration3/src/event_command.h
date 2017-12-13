@@ -24,7 +24,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief An event representing a keypress command from the user that should be
- * sent to the robot.
+ * sent to the player.
  */
 class EventCommand : public EventBaseClass {
  public:

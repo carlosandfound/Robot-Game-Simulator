@@ -43,7 +43,7 @@ int main(int, char **) {
   rparams.color = csci3081::Color(0, 0, 255, 255);  // blue
 
   csci3081::robot_params rparams1;
-  rparams1.pos = csci3081::Position(100, 600);
+  rparams1.pos = csci3081::Position(200, 600);
   rparams1.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams2;
@@ -55,7 +55,7 @@ int main(int, char **) {
   rparams3.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams4;
-  rparams4.pos = csci3081::Position(900, 600);
+  rparams4.pos = csci3081::Position(800, 600);
   rparams4.color = csci3081::Color(0, 200, 0, 200);  // bright green
 
   csci3081::robot_params rparams5;

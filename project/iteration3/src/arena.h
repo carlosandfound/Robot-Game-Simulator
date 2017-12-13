@@ -59,11 +59,6 @@ class Arena {
    */
   ~Arena();
 
-  void HandleCollision(const ArenaEntity *const ent1,
-                       const ArenaEntity *const ent2,
-                       EventBaseClass *const event,
-                       double angle);
-
   /**
    * @brief Advance the simulation by the specified # of steps.
    *

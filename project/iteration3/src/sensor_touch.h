@@ -27,7 +27,7 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class representing a touch sensor.
+ * @brief Class representing a touch sensor that's used to register collisions.
  *
  * Touch or "bump" sensors are "active" when pressed. For our purposes, imagine
  * a series of bump sensors around the perimeter of the Robot. A collision will

@@ -67,7 +67,6 @@ void MotionHandlerPlayer::AcceptCommand(enum event_commands cmd) {
 void MotionHandlerPlayer::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
     heading_angle(-st.angle_of_contact());
-    set_speed(get_speed() * 0.9);  // decrease speed 10% if collided
     st.Reset();
   }
 }

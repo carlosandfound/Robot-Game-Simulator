@@ -34,7 +34,6 @@ MotionHandlerHomeBase::MotionHandlerHomeBase() :
 void MotionHandlerHomeBase::UpdateVelocity(SensorTouch st) {
   if (st.activated()) {
     heading_angle(-st.angle_of_contact());
-    set_speed(get_speed() * 0.9);  // decrease speed by 10% if collided
     st.Reset();
   }
 }

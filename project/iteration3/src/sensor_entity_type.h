@@ -23,10 +23,10 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class representing entity type sensor
+ * @brief Class representing entity type sensor that can sense the type of the
+ * entity emitting the signal within a defined range.
  *
- * The class can sense the type of the entity emitting the signal within a
- * defined range. However, the direction of the signal can't be determined.
+ * However, the direction of the signal can't be determined.
  */
 class SensorEntityType : public Sensor {
  public:

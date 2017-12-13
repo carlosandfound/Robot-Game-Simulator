@@ -8,6 +8,8 @@
  * Includes
  ******************************************************************************/
 #include "src/sensor_distress.h"
+#include <iostream>
+
 
 /*******************************************************************************
  * Namespaces
@@ -28,7 +30,7 @@ void SensorDistress::Accept(const EventDistressCall *const e) {
 }
 
 void SensorDistress::Reset() {
-  status_ = 0;
+  output(0);
 } /* reset() */
 
 NAMESPACE_END(csci3081);

@@ -24,7 +24,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief A class representing a recharge station within the Arena that is used
- * to recharge the Robot's battery.
+ * to recharge the player's battery.
  */
 class RechargeStation : public Obstacle {
  public:

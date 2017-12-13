@@ -96,7 +96,7 @@ void Robot::Reset() {
   motion_handler_.set_speed(10);
   motion_handler_.max_speed(10);
   sensor_touch_.Reset();
-  distress_sensor_->Reset();
+  distress_sensor_->output(0);
   set_color(Color(0, 200, 0, 200));
   is_superbot_ = false;
 } /* Reset() */

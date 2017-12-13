@@ -24,7 +24,7 @@ NAMESPACE_BEGIN(csci3081);
  ******************************************************************************/
 /**
  * @brief A collision event class, which is used after a ArenaMobileEntity
- * within a specified distance of another entity in the Arena.
+ * collides with another entity in the Arena.
  */
 class EventCollision : public EventBaseClass {
  public:

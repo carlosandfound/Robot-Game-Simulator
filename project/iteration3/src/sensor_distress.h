@@ -23,7 +23,8 @@ NAMESPACE_BEGIN(csci3081);
  * Classes
  ******************************************************************************/
 /**
- * @brief Class representing a distress sensor.
+ * @brief Class representing a distress sensor that is used to sense whether or
+ * not a robot within range is emitting a distress signal.
  *
  * The distress signal can be sensed when it is within a defined range, but the
  * direction of the signal can't be determined.Sensor output is 1 for a sensed

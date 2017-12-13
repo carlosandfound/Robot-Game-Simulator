@@ -117,6 +117,7 @@ void Arena::UpdateEntitiesTimestep() {
    * Next, check if the player has run out of battery
    */
   if (player_->get_battery_level() <= 0) {
+    lose_++;
     Reset();
     time_ = 0;
   }
@@ -156,11 +157,14 @@ void Arena::UpdateEntitiesTimestep() {
    * accordingly. However, if the obstacle is the recharge station, recharge
    * the player's battery.
    */
-  for (uint i = 0; i < n_obstacles_; i++) {
+  for (uint i = 0; i <= n_obstacles_; i++) {
     CheckForEntityCollision(player_, obstacles()[i], &ec,
                             player_->get_collision_delta());
 
     if (ec.collided()) {
+      if (obstacles()[i]->get_entity_type_id() == 4) {
+        player_->set_speed(player_->get_speed() * 0.9);
+      }
       player_->Accept(&ec);
 
       if (obstacles()[i] == recharge_station_) {
@@ -181,6 +185,7 @@ void Arena::UpdateEntitiesTimestep() {
   for (auto ent : mobile_entities_) {
     // Check if it is out of bounds. If so, use that as point of contact.
     CheckForEntityOutOfBounds(ent, &ec);
+    ed.set_distress_status(false);
 
     // If not at wall, check if colliding with any other entities (not itself)
     if (!ec.collided()) {
@@ -204,94 +209,83 @@ void Arena::UpdateEntitiesTimestep() {
                 CheckForEntityProximity(dynamic_cast<Robot *> (ent),
                                         entities_[i], &ep);
                 }
+                // robot's proximity sensor detects an entity
+                if (ep.detected()) {
+                  dynamic_cast<Robot *> (ent) -> Accept(&ep);
+              }
         }
-        // robot's proximity sensor detects an entity
-        if ((ep.detected()) && !(dynamic_cast<Robot *> (ent)->is_superbot())) {
-          dynamic_cast<Robot *> (ent) -> Accept(&ep);
-      } else {
-          // check for collision event if proximity event hasn't occured or the
-          // entity colliding is a superbot.
-          CheckForEntityCollision(ent, entities_[i], &ec,
-          ent->get_collision_delta());
-          if (ec.collided()) {
-            // player collides with a robot
-            if (ent->get_entity_type_id() == 0 &&
-              entities_[i]->get_entity_type_id() == 1) {
-                // player collides with a superbot
-                // player freezes for 100 iterations
-                if ((dynamic_cast<Robot *> (entities_[i])->is_superbot()) &&
-                    (!player_->get_frozen())) {
-                      player_->set_frozen(true);
-                      player_->set_unfreeze_time(time_+100);
-                      player_->set_speed(0);
-                }
-                // player collides with a robot whose distress sensor is off
-                // robot then freezes until another robot or superbot touches it
-                if (dynamic_cast<Robot *> (entities_[i])->get_distress_sensor()
-                  ->output() == 0) {
-                    if (!dynamic_cast<Robot *> (entities_[i])->is_superbot()) {
-                      /*
-                      update number of frozen robots accordingly without
-                      redundancies
-                      */
-                      number_frozen_++;
-                      if (number_frozen_ == 5) {
-                        win_++;
-                        time_ = 0;
-                        Reset();
-                      }
-                    }
-                    /*
-                    check that the distress status is actually correct because
-                    although a robot accepts the event distress, it doesn't
-                    apply to superbots because they're never frozen.
-                    */
-                    ed.set_distress_status(true);
-                    dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
-                    bool new_status = dynamic_cast<Robot *> (entities_[i])->
-                                      get_distress_sensor()->output();
-                    ed.set_distress_status(new_status);
-                  }
-                  // robot collides with home base to become a superbot
-                  // superbots are the color purple
-                } else if (ent->get_entity_type_id() == 1 &&
-                  entities_[i]->get_entity_type_id() == 2 &&
-                  !dynamic_cast<Robot *>(ent)->is_superbot()) {
-                    ent->set_color(Color(900, 300, 200, 900));
-                    dynamic_cast<Robot *>(ent)->Transform();
-                    number_superbots_++;
-                    // lose when all 5 robots become superbots
-                    if (number_superbots_ == 5) {
-                      lose_++;
+        // check for collision event
+        CheckForEntityCollision(ent, entities_[i], &ec,
+        ent->get_collision_delta());
+        if (ec.collided()) {
+          // player collides with a robot
+          if (ent->get_entity_type_id() == 0 &&
+            entities_[i]->get_entity_type_id() == 1) {
+              // player collides with a superbot
+              // player freezes for 100 iterations
+              if ((dynamic_cast<Robot *> (entities_[i])->is_superbot()) &&
+                  (!player_->get_frozen())) {
+                    player_->set_frozen(true);
+                    player_->set_unfreeze_time(time_+100);
+                    player_->set_speed(0);
+              } else if (dynamic_cast<Robot *>
+                         (entities_[i])->get_distress_sensor()->output() == 0) {
+                    // player collides with a robot whose distress sensor is off
+                    // robot then freezes until other robot/superbot touches it
+                    number_frozen_++;
+                    if ((number_frozen_ == 5) && (number_superbots_ == 0)) {
+                      win_++;
                       time_ = 0;
                       Reset();
+                    } else {
+                      ed.set_distress_status(true);
+                      dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
                     }
-                    // robot/superbot collides with another robot
-                    // turn off distess signal and unfreeze robot
-                  } else if (ent->get_entity_type_id() == 1 &&
-                    entities_[i]->get_entity_type_id() == 1) {
+                }
+                // robot collides with home base to become a superbot
+                // superbots are the color purple
+              } else if (ent->get_entity_type_id() == 1 &&
+                entities_[i]->get_entity_type_id() == 2 &&
+                !dynamic_cast<Robot *>(ent)->is_superbot()) {
+                  ent->set_color(Color(900, 300, 200, 900));
+                  dynamic_cast<Robot *>(ent)->Transform();
+                  number_superbots_++;
+                  if (number_frozen_ > 0) {
+                    number_frozen_--;
+                  }
+                  // lose when all 5 robots become superbots
+                  if (number_superbots_ == 5) {
+                    lose_++;
+                    time_ = 0;
+                    Reset();
+                  }
+                  // robot/superbot collides with another robot
+                  // turn off distess signal and unfreeze robot
+                } else if (ent->get_entity_type_id() == 1 &&
+                  entities_[i]->get_entity_type_id() == 1) {
+                    if (dynamic_cast<Robot *>(entities_[i])->
+                                        get_distress_sensor()->output() == 1) {
+                      /*
+                      if robot is unfrozen, update the count of robots
+                      frozen accordingly
+                      */
+                      if (number_frozen_ > 0) {
+                        number_frozen_ = number_frozen_-1;
+                      }
                       ed.set_distress_status(false);
                       ep.detected(false);
                       dynamic_cast<Robot *> (ent)->Accept(&ed);
                       dynamic_cast<Robot *> (entities_[i])->Accept(&ed);
-                      if ((dynamic_cast<Robot *> (ent)->get_speed() == 0) ||
-                      (dynamic_cast<Robot *>(entities_[i])->get_speed() == 0)) {
-                        /*
-                        if robot is unfrozen, update the count of robots
-                        frozen accordingly
-                        */
-                        number_frozen_--;
-                      }
                     }
-            ent->Accept(&ec);
+                  }
+          ent->Accept(&ec);
 
-            // player collides with recharge station
-            if ((ent == player_) && (entities_[i] == recharge_station_)) {
-              EventRecharge er;
-              player_->Accept(&er);
-            }
-            break;
+          // player collides with recharge station
+          if ((ent == player_) && (entities_[i] == recharge_station_)) {
+            EventRecharge er;
+            player_->Accept(&er);
           }
+          break;
         }
       } /* for(i..) */
     } /* else */
