@@ -114,7 +114,7 @@ void Arena::UpdateEntitiesTimestep() {
   } /* for(ent..) */
 
   /*
-   * Next, check if the player has run out of battery
+   * Now check if the player has run out of battery
    */
   if (player_->get_battery_level() <= 0) {
     lose_++;
